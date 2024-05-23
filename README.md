@@ -5,14 +5,10 @@ A template for building web applications using the PERN (PostgreSQL, Express.js,
 ## 🏁 Getting Started
 
 1. **Don't fork or clone this repo!** Instead, create a new, empty directory on your machine and `git init` (or create an _empty_ repo on GitHub and clone it to your local machine)
-   <<<<<<< HEAD
-   --------------------added row 8 and 9 for purpose of branch stratey training
-   ----------------------------hmmm, i wonder if step 2 is needed?
-   =======
-   ---Chloe was here.
-   yes yes
-   > > > > > > > main
-2. Add this template as a remote and merge it into your own repository
+
+2. Add this template as a remote and merge it into your own repository 
+
+adding someingthing
 
 ```bash
 git remote add boilermaker git@github.com:FullstackAcademy/capstone-app-template.git
