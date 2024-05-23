@@ -10,7 +10,7 @@ A template for building web applications using the PERN (PostgreSQL, Express.js,
    ----------------------------hmmm, i wonder if step 2 is needed?
    =======
    ---Chloe was here.
-   yes she was
+   yes yes
    > > > > > > > main
 2. Add this template as a remote and merge it into your own repository
 
