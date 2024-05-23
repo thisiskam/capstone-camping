@@ -8,6 +8,8 @@ A template for building web applications using the PERN (PostgreSQL, Express.js,
    --test by arthur
 2. Add this template as a remote and merge it into your own repository
 
+adding someingthing
+
 ```bash
 git remote add boilermaker git@github.com:FullstackAcademy/capstone-app-template.git
 git fetch boilermaker
