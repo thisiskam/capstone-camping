@@ -90,212 +90,226 @@ const insertCategories = async () => {
 
 const items = [
   {
-    title: "Backpack 1",
-    description: "Gregory multi-day backpack",
+    title: "Gregory multi-day backpack",
+    description: "A great multi-day pack for taking on the trails",
     category_id: 1,
     imageURL: "bp1.png",
   },
   {
-    title: "Backpack 2",
-    description: "REI multi-day backpack",
+    title: "REI multi-day backpack",
+    description: "Backpack ideal for long trecks in the wilderness",
     category_id: 1,
     imageURL: "bp2.png",
   },
   {
-    title: "Backpack 3",
-    description: "Blue Gregory multi-day backpack",
+    title: "Blue Gregory multi-day backpack",
+    description: "our classic Gregory multi-day pack, now in blue!",
     category_id: 1,
     imageURL: "bp3.png",
   },
   {
-    title: "Backpack 4",
-    description: "Green REI multi-day backpack",
+    title: "Green REI multi-day backpack",
+    description:
+      "Durable, waterproof backpack for multiple nights and long hikes",
     category_id: 1,
     imageURL: "bp4.png",
   },
   {
-    title: "Backpack 5",
-    description: "Blue REI multi-day backpack",
+    title: "Blue REI multi-day backpack",
+    description: "The classic REI multi-day backpack in a fashionable blue!",
     category_id: 1,
     imageURL: "bp5.png",
   },
   {
-    title: "Backpack 6",
-    description: "Green Osprey multi-day backpack",
+    title: "Green Osprey multi-day backpack",
+    description:
+      "This Osprey pack is great for several days on a trecherous trail.",
     category_id: 1,
     imageURL: "bp6.png",
   },
   {
-    title: "Backpack 7",
-    description: "Black and blue MultiGear multi-day backpack",
+    title: "Black and blue MultiGear multi-day backpack",
+    description: "Waterproof, easy to clean, and lightweight",
     category_id: 1,
     imageURL: "bp7.png",
   },
   {
-    title: "Backpack 8",
-    description: "Brown Osprey multi-day backpack",
+    title: "Brown Osprey multi-day backpack",
+    description:
+      "the classic Osprey in brown, weatherproof and blends in with nature",
     category_id: 1,
     imageURL: "bp8.png",
   },
   {
-    title: "Backpack 9",
-    description: "Teal Osprey multi-day backpack",
+    title: "Teal Osprey multi-day backpack",
+    description: "the classic multi-day trail pack in teal",
     category_id: 1,
     imageURL: "bp9.png",
   },
   {
-    title: "Backpack 10",
-    description: "Brown and Green MultiGear multi-day backpack",
+    title: "Brown and Green MultiGear multi-day backpack",
+    description:
+      "Waterproof, weatherproof, dirtproof, everything proof.  It's green!",
     category_id: 1,
     imageURL: "bp10.png",
   },
   {
-    title: "Backpack 11",
-    description: "REI single-day backpack",
+    title: "REI single-day backpack",
+    description: "single-day hikers pack, 20L capacity",
     category_id: 1,
     imageURL: "bp11.png",
   },
   {
-    title: "Backpack 12",
-    description: "light brown/orange REI single-day backpack",
+    title: "light brown/orange REI single-day backpack",
+    description: "classic single-day pack in light brown/orange",
     category_id: 1,
     imageURL: "bp12.png",
   },
   {
-    title: "Backpack 13",
-    description: "Gray Osprey single-day backpack",
+    title: "Gray Osprey single-day backpack",
+    description: "Waterproof daypack perfect for long single-day hikes",
     category_id: 1,
     imageURL: "bp13.png",
   },
   {
-    title: "Backpack 14",
-    description: "Ocean Blue Gregory single-day backpack",
+    title: "Ocean Blue Gregory single-day backpack",
+    description: "Waterproof 20L lightweight daypack",
     category_id: 1,
     imageURL: "bp14.png",
   },
   {
-    title: "Backpack 15",
-    description: "Dark Green Osprey single-day backpack",
+    title: "Dark Green Osprey single-day backpack",
+    description:
+      "The classic Osprey single-day pack in dark green. 20L capacity",
     category_id: 1,
     imageURL: "bp15.png",
   },
   {
-    title: "Backpack 16",
-    description: "Orange/red Patagonia single-day backpack",
+    title: "Orange/red Patagonia single-day backpack",
+    description:
+      "The Bougie Patagonia hikers pak in a sophisticated orange/red for those who want stand out and look rich. #patagucci",
     category_id: 1,
     imageURL: "bp16.png",
   },
   {
-    title: "Backpack 17",
-    description: "Black and Gray Camelback single-day backpack",
+    title: "Black and Gray Camelback single-day backpack",
+    description:
+      "single-day hiking backpack, comes with 32oz camelback water bladder.  Stay hydrated!",
     category_id: 1,
     imageURL: "bp17.png",
   },
   {
-    title: "Hiking Boot 1",
-    description: "Brown Columbia hiking boot",
+    title: "Brown Columbia hiking boot",
+    description: "the utmost classic hiking boot.  Classic brown.",
     category_id: 3,
     imageURL: "boots1.png",
   },
   {
-    title: "Hiking Boot 2",
-    description: "Light blue Womens hiking boot",
+    title: "Light blue Womens hiking boot",
+    description: "waterproof and durable blue boot for hiking",
     category_id: 3,
     imageURL: "boots2.png",
   },
   {
-    title: "Hiking Boot 3",
-    description: "Pink Columbia hiking boot",
+    title: "Pink Columbia hiking boot",
+    description: "cute fashionable boot for taking on the trails",
     category_id: 3,
     imageURL: "boots3.png",
   },
   {
-    title: "Hiking Boot 4",
-    description: "Light Green The North Face hiking boot",
+    title: "The North Face Green hiking boot",
+    description:
+      "Durable, waterproof, and great for long trecks in the mountains",
     category_id: 3,
     imageURL: "boots4.png",
   },
   {
-    title: "Hiking Boot 5",
-    description: "Brown and Coral Merrell Waterproof hiking boot",
+    title: "Brown and Coral Merrell Waterproof hiking boot",
+    description: "mud resistant, warm waterproof hiking boots",
     category_id: 3,
     imageURL: "boots5.png",
   },
   {
-    title: "Hiking Boot 6",
-    description: "Brown and orange Lowa hiking boot",
+    title: "Brown and orange Lowa hiking boot",
+    description: "rubber sole, steel toed, great for working or hiking",
     category_id: 3,
     imageURL: "boots6.png",
   },
   {
-    title: "Hiking Boot 7",
-    description: "Brown Comfort hiking boot",
+    title: "Brown Comfort hiking boot",
+    description: "Comfortable single-day hiking boot, build for long day hikes",
     category_id: 3,
     imageURL: "boots7.png",
   },
   {
-    title: "Hiking Boot 8",
-    description: "Gray and Orange hiking boot",
+    title: "Gray and Orange hiking boot",
+    description:
+      "what more to say? it's gray and orange and they go on your feet",
     category_id: 3,
     imageURL: "boots8.png",
   },
   {
-    title: "Hiking Boot 9",
-    description: "Brown fashionable boot",
+    title: "Brown ankle boot",
+    description:
+      "built for fashion over function, this boot is good for short hikes with your rich friends",
     category_id: 3,
     imageURL: "boots9.png",
   },
   {
-    title: "Hiking Boot 10",
-    description: "Black and Brown Salomon hiking boot",
+    title: "Black and Brown Salomon hiking boot",
+    description: "classic colors, classic style, classic boot",
     category_id: 3,
     imageURL: "boots10.png",
   },
   {
-    title: "Hiking Boot 11",
-    description: "Brown hiking boot",
+    title: "Brown hiking boot",
+    description:
+      "this boot is brown.  You can wear them to hike!  also to camp.",
     category_id: 3,
     imageURL: "boots11.png",
   },
   {
-    title: "Hiking Boot 12",
-    description: "multi-color Salewa powertex hiking boot",
+    title: "multi-color Salewa powertex hiking boot",
+    description: "Waterproof, mudproof, ultra warm hiking and camping boot.",
     category_id: 3,
     imageURL: "boots12.png",
   },
   {
-    title: "Hiking Boot 13",
-    description: "Solid black Keen hiking boot",
+    title: "Solid black Keen hiking boot",
+    description:
+      "all black sleek stylish hiking boot, perfect for the goth forced to take a hike.",
     category_id: 3,
     imageURL: "boots13.png",
   },
   {
-    title: "Hiking Boot 14",
-    description: "Brown Hi-Tec hiking boot",
+    title: "Brown Hi-Tec hiking boot",
+    description: "weatherproof, multi-day long treck trail boot.",
     category_id: 3,
     imageURL: "boots14.png",
   },
   {
-    title: "Hiking Boot 15",
-    description: "Light brown Oboz hiking boot",
+    title: "Light brown Oboz hiking boot",
+    description: "classic single day hiking boot.",
     category_id: 3,
     imageURL: "boots15.png",
   },
   {
-    title: "Hiking Boot 16",
-    description: "Brown Keen hiking boot",
+    title: "Brown Keen hiking boot",
+    description: "classic Keen hiking boot for long trails or short day hikes",
     category_id: 3,
     imageURL: "boots16.png",
   },
   {
-    title: "Hiking Boot 17",
-    description: "Ocean blue La Sportiva hiking boot",
+    title: "Ocean blue La Sportiva hiking boot",
+    description:
+      "La Sportiva hiking, camping, or trail riding boot.  Waterproof and quick drying",
     category_id: 3,
     imageURL: "boots17.png",
   },
   {
-    title: "Hiking Boot 18",
-    description: "Multi-color Keen hiking boot",
+    title: "Multi-color Keen hiking boot",
+    description:
+      " the classic durable and waterproof Keen boot, now in a cute multicolor design",
     category_id: 3,
     imageURL: "boots18.png",
   },
@@ -789,7 +803,7 @@ const reviews = [
   },
 ];
 
-const insertReview = async ({ text, item_id, user_id, rating }) => {
+const createReview = async ({ text, item_id, user_id, rating }) => {
   try {
     const {
       rows: [review],
@@ -810,11 +824,139 @@ const insertReview = async ({ text, item_id, user_id, rating }) => {
 const insertReviews = async () => {
   try {
     for (const review of reviews) {
-      await insertReview(review);
+      await createReview(review);
     }
     console.log("reviews seeded successfully");
   } catch (error) {
     console.error("error seeding reviews", error);
+  }
+};
+
+const comments = [
+  {
+    text: loremIpsum({
+      count: 1,
+      units: "paragraphs",
+      sentenceLowerBound: 5,
+      sentenceUpperBound: 15,
+      paragraphLowerBound: 1,
+      paragraphUpperBound: 5,
+    }),
+    user_id: 5,
+    review_id: 8,
+  },
+  {
+    text: loremIpsum({
+      count: 1,
+      units: "paragraphs",
+      sentenceLowerBound: 5,
+      sentenceUpperBound: 15,
+      paragraphLowerBound: 1,
+      paragraphUpperBound: 5,
+    }),
+    user_id: 1,
+    review_id: 10,
+  },
+  {
+    text: loremIpsum({
+      count: 1,
+      units: "paragraphs",
+      sentenceLowerBound: 5,
+      sentenceUpperBound: 15,
+      paragraphLowerBound: 1,
+      paragraphUpperBound: 5,
+    }),
+    user_id: 2,
+    review_id: 6,
+  },
+  {
+    text: loremIpsum({
+      count: 1,
+      units: "paragraphs",
+      sentenceLowerBound: 5,
+      sentenceUpperBound: 15,
+      paragraphLowerBound: 1,
+      paragraphUpperBound: 5,
+    }),
+    user_id: 3,
+    review_id: 7,
+  },
+  {
+    text: loremIpsum({
+      count: 1,
+      units: "paragraphs",
+      sentenceLowerBound: 5,
+      sentenceUpperBound: 15,
+      paragraphLowerBound: 1,
+      paragraphUpperBound: 5,
+    }),
+    user_id: 4,
+    review_id: 2,
+  },
+  {
+    text: loremIpsum({
+      count: 1,
+      units: "paragraphs",
+      sentenceLowerBound: 5,
+      sentenceUpperBound: 15,
+      paragraphLowerBound: 1,
+      paragraphUpperBound: 5,
+    }),
+    user_id: 6,
+    review_id: 10,
+  },
+  {
+    text: loremIpsum({
+      count: 1,
+      units: "paragraphs",
+      sentenceLowerBound: 5,
+      sentenceUpperBound: 15,
+      paragraphLowerBound: 1,
+      paragraphUpperBound: 5,
+    }),
+    user_id: 1,
+    review_id: 9,
+  },
+  {
+    text: loremIpsum({
+      count: 1,
+      units: "paragraphs",
+      sentenceLowerBound: 5,
+      sentenceUpperBound: 15,
+      paragraphLowerBound: 1,
+      paragraphUpperBound: 5,
+    }),
+    user_id: 6,
+    review_id: 3,
+  },
+];
+
+const createComment = async ({ text, user_id, review_id }) => {
+  try {
+    const {
+      rows: [comment],
+    } = await db.query(
+      `
+      INSERT INTO comments(text, user_id, review_id)
+      VALUES($1, $2, $3)
+      RETURNING *
+      `,
+      [text, user_id, review_id]
+    );
+    return comment;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const insertComments = async () => {
+  try {
+    for (const comment of comments) {
+      await createComment(comment);
+    }
+    console.log("comments seeded successfully!");
+  } catch (error) {
+    console.error("error seeding comments:", error);
   }
 };
 
@@ -863,6 +1005,7 @@ const createTables = async () => {
   );
   CREATE TABLE comments(
     id SERIAL PRIMARY KEY,
+    text VARCHAR(1000),
     review_id INTEGER REFERENCES reviews(id),
     user_id INTEGER REFERENCES users(id)
   );
@@ -897,6 +1040,7 @@ const seedDatabase = async () => {
     await insertCategories();
     await insertItems();
     await insertReviews();
+    await insertComments();
   } catch (err) {
     throw err;
   } finally {
