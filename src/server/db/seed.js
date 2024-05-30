@@ -28,12 +28,13 @@ const dropTables = async () => {
   }
 };
 
+//---------------------------------------------------------TABLES DEFINITION---------------------------------------------------------
 const createTables = async () => {
   try {
     await db.query(/*sql*/ `
     CREATE TABLE users(
       id SERIAL PRIMARY KEY,
-      name VARCHAR(255),
+      username VARCHAR(255) UNIQUE NOT NULL,
       email VARCHAR(255) UNIQUE NOT NULL,
       password VARCHAR(255) NOT NULL,
       is_admin BOOLEAN DEFAULT false
@@ -51,14 +52,14 @@ const createTables = async () => {
   );
   CREATE TABLE reviews(
     id SERIAL PRIMARY KEY,
-    text VARCHAR(1000),
+    review_text VARCHAR(1000),
     rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
     item_id INTEGER REFERENCES items(id),
     user_id INTEGER REFERENCES users(id)
   );
   CREATE TABLE comments(
     id SERIAL PRIMARY KEY,
-    text VARCHAR(1000),
+    comment_text VARCHAR(1000),
     review_id INTEGER REFERENCES reviews(id),
     user_id INTEGER REFERENCES users(id)
   );
@@ -69,52 +70,52 @@ const createTables = async () => {
   }
 };
 
+//---------------------------------------------------------USERS SEED DATA---------------------------------------------------------
 const users = [
   {
-    name: "Emily Johnson",
+    username: "Emily Johnson",
     email: "emily@example.com",
     password: "securepass",
     is_admin: false,
   },
   {
-    name: "Liu Wei",
+    username: "Liu Wei",
     email: "liu@example.com",
     password: "strongpass",
     is_admin: false,
   },
   {
-    name: "Isabella García",
+    username: "Isabella García",
     email: "bella@example.com",
     password: "pass1234",
     is_admin: false,
   },
   {
-    name: "Mohammed Ahmed",
+    username: "Mohammed Ahmed",
     email: "mohammed@example.com",
     password: "mysecretpassword",
     is_admin: false,
   },
   {
-    name: "John Smith",
+    username: "John Smith",
     email: "john@example.com",
     password: "password123",
     is_admin: false,
   },
   {
-    name: "Chloe Speshock",
+    username: "Chloe Speshock",
     email: "cespeshock@gmail.com",
     password: "thisisasecret",
     is_admin: true,
   },
-
-  // Add more user objects as needed
 ];
 
+//---------------------------------------------------------INSERT USERS function---------------------------------------------------------
 const insertUsers = async () => {
   try {
     for (const user of users) {
       await createUser({
-        name: user.name,
+        username: user.username,
         email: user.email,
         password: user.password,
         is_admin: user.is_admin,
@@ -126,20 +127,23 @@ const insertUsers = async () => {
   }
 };
 
+//---------------------------------------------------------CATEGORIES SEED DATA---------------------------------------------------------
 const categories = [
-  { name: "backpacks" },
-  { name: "tents" },
-  { name: "hiking boots" },
-  { name: "cookware" },
-  { name: "sleeping bags" },
-  { name: "water bottles" },
+  { name: "Backpack" },
+  { name: "Tent" },
+  { name: "Hiking Boots" },
+  { name: "Cookware" },
+  { name: "Sleeping Bag" },
+  { name: "Water Bottle" },
 ];
 
+//---------------------------------------------------------CREATE CATEGORY function---------------------------------------------------------
 const createCategory = async ({ name }) => {
   try {
     const {
       rows: [category],
-    } = await db.query( /*sql*/
+    } = await db.query(
+      /*sql*/
       `
           INSERT INTO categories(name)
           VALUES($1)
@@ -152,6 +156,7 @@ const createCategory = async ({ name }) => {
   }
 };
 
+//---------------------------------------------------------INSERT CATEGORIES function---------------------------------------------------------
 const insertCategories = async () => {
   try {
     for (const category of categories) {
@@ -165,6 +170,7 @@ const insertCategories = async () => {
   }
 };
 
+//---------------------------------------------------------ITEMS SEED DATA ends after row 700------------------------------
 const items = [
   {
     title: "Gregory multi-day backpack",
@@ -739,11 +745,13 @@ const items = [
   },
 ];
 
-const insertItem = async ({ title, description, category_id, imageURL }) => {
+//---------------------------------------------------------INSERT ITEMS function---------------------------------------------------------
+const createItem = async ({ title, description, category_id, imageURL }) => {
   try {
     const {
       rows: [item],
-    } = await db.query( /*sql*/
+    } = await db.query(
+      /*sql*/
       `
       INSERT INTO items(title, description, category_id, imageURL)
       VALUES($1, $2, $3, $4)
@@ -757,10 +765,11 @@ const insertItem = async ({ title, description, category_id, imageURL }) => {
   }
 };
 
+//---------------------------------------------------------INSERT ITEMS function---------------------------------------------------------
 const insertItems = async () => {
   try {
     for (const item of items) {
-      await insertItem(item);
+      await createItem(item);
     }
     console.log("items seeded successfully!");
   } catch (error) {
@@ -768,27 +777,29 @@ const insertItems = async () => {
   }
 };
 
+//---------------------------------------------------------REVIEWS SEED DATA---------------------------------------------------------
 const reviews = [
   {
-    text: "What an incredible item.",
+    review_text: "What an incredible item.",
     item_id: 1,
     user_id: 1,
     rating: 5,
   },
   {
-    text: "Wow! This waterbottle is incredible! It holds water and everything!",
+    review_text:
+      "Wow! This waterbottle is incredible! It holds water and everything!",
     item_id: 79,
     user_id: 6,
     rating: 5,
   },
   {
-    text: "This propane tank is great, I use it all the time",
+    review_text: "This propane tank is great, I use it all the time",
     item_id: 49,
     user_id: 3,
     rating: 4,
   },
   {
-    text: loremIpsum({
+    review_text: loremIpsum({
       count: 1,
       units: "paragraphs",
       sentenceLowerBound: 5,
@@ -801,7 +812,7 @@ const reviews = [
     rating: 3,
   },
   {
-    text: loremIpsum({
+    review_text: loremIpsum({
       count: 1,
       units: "paragraphs",
       sentenceLowerBound: 5,
@@ -814,7 +825,7 @@ const reviews = [
     rating: 2,
   },
   {
-    text: loremIpsum({
+    review_text: loremIpsum({
       count: 1,
       units: "paragraphs",
       sentenceLowerBound: 5,
@@ -827,7 +838,7 @@ const reviews = [
     rating: 4,
   },
   {
-    text: loremIpsum({
+    review_text: loremIpsum({
       count: 1,
       units: "paragraphs",
       sentenceLowerBound: 5,
@@ -840,7 +851,7 @@ const reviews = [
     rating: 3,
   },
   {
-    text: loremIpsum({
+    review_text: loremIpsum({
       count: 1,
       units: "paragraphs",
       sentenceLowerBound: 5,
@@ -853,7 +864,7 @@ const reviews = [
     rating: 1,
   },
   {
-    text: loremIpsum({
+    review_text: loremIpsum({
       count: 1,
       units: "paragraphs",
       sentenceLowerBound: 5,
@@ -866,7 +877,7 @@ const reviews = [
     rating: 5,
   },
   {
-    text: loremIpsum({
+    review_text: loremIpsum({
       count: 1,
       units: "paragraphs",
       sentenceLowerBound: 5,
@@ -880,17 +891,19 @@ const reviews = [
   },
 ];
 
-const createReview = async ({ text, item_id, user_id, rating }) => {
+//---------------------------------------------------------CREATE REVIEW function---------------------------------------------------------
+const createReview = async ({ review_text, item_id, user_id, rating }) => {
   try {
     const {
       rows: [review],
-    } = await db.query( /*sql*/
+    } = await db.query(
+      /*sql*/
       `
-      INSERT INTO reviews(text, item_id, user_id, rating)
+      INSERT INTO reviews(review_text, item_id, user_id, rating)
       VALUES($1, $2, $3, $4)
       RETURNING *
       `,
-      [text, item_id, user_id, rating]
+      [review_text, item_id, user_id, rating]
     );
     return review;
   } catch (error) {
@@ -898,6 +911,7 @@ const createReview = async ({ text, item_id, user_id, rating }) => {
   }
 };
 
+//---------------------------------------------------------INSERT REVIEWS function---------------------------------------------------------
 const insertReviews = async () => {
   try {
     for (const review of reviews) {
@@ -909,9 +923,10 @@ const insertReviews = async () => {
   }
 };
 
+//---------------------------------------------------------COMMENTS SEED DATA---------------------------------------------------------
 const comments = [
   {
-    text: loremIpsum({
+    comment_text: loremIpsum({
       count: 1,
       units: "paragraphs",
       sentenceLowerBound: 5,
@@ -923,7 +938,7 @@ const comments = [
     review_id: 8,
   },
   {
-    text: loremIpsum({
+    comment_text: loremIpsum({
       count: 1,
       units: "paragraphs",
       sentenceLowerBound: 5,
@@ -935,7 +950,7 @@ const comments = [
     review_id: 10,
   },
   {
-    text: loremIpsum({
+    comment_text: loremIpsum({
       count: 1,
       units: "paragraphs",
       sentenceLowerBound: 5,
@@ -947,7 +962,7 @@ const comments = [
     review_id: 6,
   },
   {
-    text: loremIpsum({
+    comment_text: loremIpsum({
       count: 1,
       units: "paragraphs",
       sentenceLowerBound: 5,
@@ -959,7 +974,7 @@ const comments = [
     review_id: 7,
   },
   {
-    text: loremIpsum({
+    comment_text: loremIpsum({
       count: 1,
       units: "paragraphs",
       sentenceLowerBound: 5,
@@ -971,7 +986,7 @@ const comments = [
     review_id: 2,
   },
   {
-    text: loremIpsum({
+    comment_text: loremIpsum({
       count: 1,
       units: "paragraphs",
       sentenceLowerBound: 5,
@@ -983,7 +998,7 @@ const comments = [
     review_id: 10,
   },
   {
-    text: loremIpsum({
+    comment_text: loremIpsum({
       count: 1,
       units: "paragraphs",
       sentenceLowerBound: 5,
@@ -995,7 +1010,7 @@ const comments = [
     review_id: 9,
   },
   {
-    text: loremIpsum({
+    comment_text: loremIpsum({
       count: 1,
       units: "paragraphs",
       sentenceLowerBound: 5,
@@ -1008,17 +1023,19 @@ const comments = [
   },
 ];
 
-const createComment = async ({ text, user_id, review_id }) => {
+//---------------------------------------------------------CREATE COMMENT function---------------------------------------------------------
+const createComment = async ({ comment_text, user_id, review_id }) => {
   try {
     const {
       rows: [comment],
-    } = await db.query( /*sql*/
+    } = await db.query(
+      /*sql*/
       `
-      INSERT INTO comments(text, user_id, review_id)
+      INSERT INTO comments(comment_text, user_id, review_id)
       VALUES($1, $2, $3)
       RETURNING *
       `,
-      [text, user_id, review_id]
+      [comment_text, user_id, review_id]
     );
     return comment;
   } catch (error) {
@@ -1026,6 +1043,7 @@ const createComment = async ({ text, user_id, review_id }) => {
   }
 };
 
+//---------------------------------------------------------INSERT COMMENTS function---------------------------------------------------------
 const insertComments = async () => {
   try {
     for (const comment of comments) {
@@ -1037,6 +1055,7 @@ const insertComments = async () => {
   }
 };
 
+//---------------------------------------------------------AGGREGATE SEED DATABASE FUNCTION---------------------------------------------------------
 const seedDatabase = async () => {
   try {
     db.connect();
