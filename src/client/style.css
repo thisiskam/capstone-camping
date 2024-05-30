@@ -60,9 +60,24 @@ header nav a.active {
 main {
   padding: 1rem;
   background-color: var(quaternary-color);
+  display: flex;
+  justify-content: center;
 }
 
 /* single item */
+.single-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.single-item-review {
+  padding-right: 15px;
+}
+
+.single-item img {
+  height: 13px;
+}
 
 /* another page */
 
