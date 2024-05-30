@@ -13,31 +13,92 @@ const loremText = loremIpsum({
   paragraphUpperBound: 5, // Maximum number of sentences per paragraph
 });
 
+const dropTables = async () => {
+  try {
+    await db.query(/*sql*/ `
+        
+        DROP TABLE IF EXISTS comments;
+        DROP TABLE IF EXISTS reviews;
+        DROP TABLE IF EXISTS users;
+        DROP TABLE IF EXISTS items;
+        DROP TABLE IF EXISTS categories;
+        `);
+  } catch (err) {
+    throw err;
+  }
+};
+
+const createTables = async () => {
+  try {
+    await db.query(/*sql*/ `
+    CREATE TABLE users(
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255),
+      email VARCHAR(255) UNIQUE NOT NULL,
+      password VARCHAR(255) NOT NULL,
+      is_admin BOOLEAN DEFAULT false
+  );
+  CREATE TABLE categories(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL
+  );
+  CREATE TABLE items(
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description VARCHAR(1000),
+    category_id INTEGER REFERENCES categories(id),
+    imageURL VARCHAR(1000)
+  );
+  CREATE TABLE reviews(
+    id SERIAL PRIMARY KEY,
+    text VARCHAR(1000),
+    rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
+    item_id INTEGER REFERENCES items(id),
+    user_id INTEGER REFERENCES users(id)
+  );
+  CREATE TABLE comments(
+    id SERIAL PRIMARY KEY,
+    text VARCHAR(1000),
+    review_id INTEGER REFERENCES reviews(id),
+    user_id INTEGER REFERENCES users(id)
+  );
+
+        `);
+  } catch (err) {
+    throw err;
+  }
+};
+
 const users = [
   {
     name: "Emily Johnson",
     email: "emily@example.com",
     password: "securepass",
+    is_admin: false,
   },
   {
     name: "Liu Wei",
     email: "liu@example.com",
     password: "strongpass",
+    is_admin: false,
   },
   {
     name: "Isabella García",
     email: "bella@example.com",
     password: "pass1234",
+    is_admin: false,
   },
   {
     name: "Mohammed Ahmed",
     email: "mohammed@example.com",
     password: "mysecretpassword",
+    is_admin: false,
   },
   {
     name: "John Smith",
     email: "john@example.com",
     password: "password123",
+    is_admin: false,
   },
   {
     name: "Chloe Speshock",
@@ -48,6 +109,22 @@ const users = [
 
   // Add more user objects as needed
 ];
+
+const insertUsers = async () => {
+  try {
+    for (const user of users) {
+      await createUser({
+        name: user.name,
+        email: user.email,
+        password: user.password,
+        is_admin: user.is_admin,
+      });
+    }
+    console.log("Seed data inserted successfully.");
+  } catch (error) {
+    console.error("Error inserting seed data:", error);
+  }
+};
 
 const categories = [
   { name: "backpacks" },
@@ -62,7 +139,7 @@ const createCategory = async ({ name }) => {
   try {
     const {
       rows: [category],
-    } = await db.query(
+    } = await db.query( /*sql*/
       `
           INSERT INTO categories(name)
           VALUES($1)
@@ -666,7 +743,7 @@ const insertItem = async ({ title, description, category_id, imageURL }) => {
   try {
     const {
       rows: [item],
-    } = await db.query(
+    } = await db.query( /*sql*/
       `
       INSERT INTO items(title, description, category_id, imageURL)
       VALUES($1, $2, $3, $4)
@@ -807,7 +884,7 @@ const createReview = async ({ text, item_id, user_id, rating }) => {
   try {
     const {
       rows: [review],
-    } = await db.query(
+    } = await db.query( /*sql*/
       `
       INSERT INTO reviews(text, item_id, user_id, rating)
       VALUES($1, $2, $3, $4)
@@ -935,7 +1012,7 @@ const createComment = async ({ text, user_id, review_id }) => {
   try {
     const {
       rows: [comment],
-    } = await db.query(
+    } = await db.query( /*sql*/
       `
       INSERT INTO comments(text, user_id, review_id)
       VALUES($1, $2, $3)
@@ -957,77 +1034,6 @@ const insertComments = async () => {
     console.log("comments seeded successfully!");
   } catch (error) {
     console.error("error seeding comments:", error);
-  }
-};
-
-const dropTables = async () => {
-  try {
-    await db.query(/*sql*/ `
-        
-        DROP TABLE IF EXISTS comments;
-        DROP TABLE IF EXISTS reviews;
-        DROP TABLE IF EXISTS users;
-        DROP TABLE IF EXISTS items;
-        DROP TABLE IF EXISTS categories;
-        `);
-  } catch (err) {
-    throw err;
-  }
-};
-
-const createTables = async () => {
-  try {
-    await db.query(/*sql*/ `
-    CREATE TABLE users(
-      id SERIAL PRIMARY KEY,
-      name VARCHAR(255) DEFAULT 'name',
-      email VARCHAR(255) UNIQUE NOT NULL,
-      password VARCHAR(255) NOT NULL,
-      is_admin BOOLEAN DEFAULT false
-  );
-  CREATE TABLE categories(
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) UNIQUE NOT NULL
-  );
-  CREATE TABLE items(
-    id SERIAL PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    description VARCHAR(1000),
-    category_id INTEGER REFERENCES categories(id),
-    imageURL VARCHAR(1000)
-  );
-  CREATE TABLE reviews(
-    id SERIAL PRIMARY KEY,
-    text VARCHAR(1000),
-    rating INTEGER NOT NULL,
-    item_id INTEGER REFERENCES items(id),
-    user_id INTEGER REFERENCES users(id)
-  );
-  CREATE TABLE comments(
-    id SERIAL PRIMARY KEY,
-    text VARCHAR(1000),
-    review_id INTEGER REFERENCES reviews(id),
-    user_id INTEGER REFERENCES users(id)
-  );
-
-        `);
-  } catch (err) {
-    throw err;
-  }
-};
-
-const insertUsers = async () => {
-  try {
-    for (const user of users) {
-      await createUser({
-        name: user.username,
-        email: user.email,
-        password: user.password,
-      });
-    }
-    console.log("Seed data inserted successfully.");
-  } catch (error) {
-    console.error("Error inserting seed data:", error);
   }
 };
 
