@@ -79,9 +79,9 @@ const users = [
     is_admin: false,
   },
   {
-    username: "Liu Wei",
-    email: "liu@example.com",
-    password: "strongpass",
+    username: "A",
+    email: "a@a.com",
+    password: "a",
     is_admin: false,
   },
   {

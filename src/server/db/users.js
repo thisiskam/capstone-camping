@@ -25,6 +25,22 @@ const createUser = async ({ username, email, password, is_admin }) => {
   }
 };
 
+// get all users
+const getAllUsers = async () => {
+  try {
+    const { rows } = await db.query(
+      /*sql*/
+      `
+      SELECT *
+      FROM users
+    `
+    );
+    return rows;
+  } catch (err) {
+    throw err;
+  }
+};
+
 //---------------authenticate a user
 const authenticate = async ({ email, password }) => {
   const SQL = `--sql
@@ -42,10 +58,50 @@ const authenticate = async ({ email, password }) => {
     throw error;
   }
   const token = await jwt.sign({ id: response.rows[0].id }, JWT);
-  console.log("this is the token from users.js", token);
+  // console.log("this is the token from db/users.js", token);
   return token;
 };
 
+// find user by token
+const findUserByToken = async (token) => {
+  let id;
+  // console.log("in findUserByToken", token);
+  try {
+    const payload = await jwt.verify(token, JWT);
+    // console.log(`payoad`, payload);
+    id = payload.id;
+  } catch (err) {
+    const error = Error("you not authorized, yo");
+    error.status = 401;
+    throw error;
+  }
+  const SQL = `--sql
+  SELECT * FROM users WHERE id = $1
+  `;
+  const response = await db.query(SQL, [id]);
+  if (!response.rows.length) {
+    const error = Error("you not authorized, yo");
+    error.status = 401;
+    throw error;
+  }
+  return response.rows[0];
+};
+// findUserByToken();
+// const getUserFromToken = async (token) => {
+//   try {
+//     const { id } = jwt.verify(token, JWT);
+//     const SQL = `--sql
+//     SELECT *
+//     FROM users
+//     WHERE id = $1
+//     `;
+//     const response = await db.query(SQL, [id]);
+//     return response.rows[0];
+//   } catch (error) {
+//     error.status = 401;
+//     throw error;
+//   }
+// };
 // stuff below was from starter code
 // const getUser = async ({ email, password }) => {
 //   if (!email || !password) {
@@ -89,6 +145,8 @@ const authenticate = async ({ email, password }) => {
 module.exports = {
   createUser,
   authenticate,
+  findUserByToken,
+  getAllUsers,
   // getUser,
   // getUserByEmail,
 };
