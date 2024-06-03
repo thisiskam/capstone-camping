@@ -1,23 +1,28 @@
 const express = require("express");
 const apiRouter = express.Router();
 const jwt = require("jsonwebtoken");
+const { findUserByToken } = require("../db");
 
+//ignore this middleware logger
 const volleyball = require("volleyball");
 apiRouter.use(volleyball);
 
 // TO BE COMPLETED - set `req.user` if possible, using token sent in the request header
-apiRouter.use(async (req, res, next) => {
-  const auth = req.header("Authorization");
-
+const setReqUser = async (req, res, next) => {
+  const auth = req.header("Authorization"); //we get the Authorization header from the request
+  console.log("auth", auth);
   if (!auth) {
+    //if we did not find the Authorization header, hit the next(else{next({) and respond with you need the header
     next();
-  } else if (auth.startsWith("REPLACE_ME")) {
-    // TODO - Get JUST the token out of 'auth'
-    const token = "REPLACE_ME";
+  } else if (auth.startsWith("Bearer")) {
+    // if the Authorization header was found and starts with the string "Bearer"
+
+    const token = auth.replace("Bearer ", ""); // get rid of the "Bearer " part of the string
 
     try {
-      const parsedToken = "REPLACE_ME";
-      // TODO - Call 'jwt.verify()' to see if the token is valid. If it is, use it to get the user's 'id'. Look up the user with their 'id' and set 'req.user'
+      const myuser = await findUserByToken(token); // pass token to find user in the ../db/index.js file
+      console.log("myuser", myuser);
+      next();
     } catch (error) {
       next(error);
     }
@@ -27,7 +32,9 @@ apiRouter.use(async (req, res, next) => {
       message: `Authorization token must start with 'Bearer'`,
     });
   }
-});
+};
+
+apiRouter.use(setReqUser);
 
 // this is where we need to put all the custom routers
 const usersRouter = require("./users");
