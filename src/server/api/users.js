@@ -7,6 +7,7 @@ const {
   authenticate,
   findUserByToken,
   getAllUsers,
+  logout,
   getUser,
   getUserByEmail,
 } = require("../db");
@@ -23,6 +24,15 @@ usersRouter.get("/", async (req, res, next) => {
     });
   } catch ({ name, message }) {
     next({ name, message });
+  }
+});
+
+// call this after login
+usersRouter.get("/me", async (req, res, next) => {
+  try {
+    res.send(req.user);
+  } catch (error) {
+    next(error);
   }
 });
 
@@ -106,5 +116,19 @@ usersRouter.post("/register", async (req, res, next) => {
     next({ name, message });
   }
 });
+//log out a user: USE http://localhost:3000/api/logout
+usersRouter.post("/logout", async (req, res, next) => {
+  console.log("where is the break, it is not here");
 
+  try {
+    console.log("this is blah blah blah", req.header("Authorization"));
+    const token = req.header("Authorization").replace("Bearer ", "");
+    const id = await logout(token);
+    res.send({
+      message: "Logout successful!",
+    });
+  } catch (err) {
+    next(err);
+  }
+});
 module.exports = usersRouter;

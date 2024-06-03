@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -27,6 +30,8 @@ const Login = () => {
       });
       const result = await response.json();
       setMessage(result.message);
+      localStorage.setItem("token", result.token);
+      navigate("/account");
       if (!response.ok) {
         //below looks wrong - KB
         throw result;
@@ -71,7 +76,14 @@ const Login = () => {
         </div>
         <button type="submit">Login</button>
       </form>
-      <p>{message}</p>
+      <br />
+      <br />
+      <p style={{ color: "red" }}>{message}</p>
+      <br />
+      <br />
+      <p>
+        DON'T HAVE AN ACCOUNT? <NavLink to="register">REGISTER HERE</NavLink>
+      </p>
     </div>
   );
 };

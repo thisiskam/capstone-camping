@@ -17,17 +17,20 @@ import Account from "./components/Account";
 
 // bring in the layouts
 import RootLayout from "./layouts/RootLayout";
+import LoginLayout from "./layouts/LoginLayout";
 
 //define your router
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<RootLayout />}>
-      <Route index element={<CR />} />
-      <Route path="/cr/:id" element={<SingleItem />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/account" element={<Account />} />
-    </Route>
+    <>
+      <Route path="/" element={<RootLayout />}>
+        <Route index element={<CR />} />
+        <Route path="items/:id" element={<SingleItem />} />
+        <Route path="account" element={<Account />} />
+        <Route path="login" element={<Login />} />
+        <Route path="login/register" element={<Register />} />
+      </Route>
+    </>
   )
 );
 
@@ -37,8 +40,8 @@ function App() {
   return (
     <>
       <RouterProvider router={router}>
-        <Register />
-        <Account />
+        {/* <Register />
+        <Account /> */}
       </RouterProvider>
     </>
   );

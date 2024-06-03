@@ -46,3 +46,17 @@ apiRouter.use((err, req, res, next) => {
 });
 
 module.exports = apiRouter;
+
+//log out a user: USE http://localhost:3000/api/logout
+// apiRouter.post("/users/logout", async (req, res, next) => {
+//   console.log("in api/index.js", token);
+//   try {
+//     const token = req.header("Authorization").replace("Bearer ", "");
+//     const id = await logout(token);
+//     res.send({
+//       message: "Logout successful!",
+//     });
+//   } catch (err) {
+//     next(err);
+//   }
+// });
