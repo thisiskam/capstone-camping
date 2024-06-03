@@ -39,11 +39,13 @@ const CR = () => {
       <img src="src/client/assets/pexels-bazil-elias-1351340-2612228.jpg" alt="" className="main-img"/>
       <h1>this will be a camp review site</h1>
       <div className="home-content">
-        <div class="search-container">
-          <input type="text" placeholder="Search..."/>
-          <button type="submit"><i class="fa fa-search"></i></button>
-        </div>
+      <div class="search-container">
+        <div class="search-header">Search</div>
+        <input type="text" class="search-input" placeholder="Enter your search query"/>
+        <button class="search-button">Search</button>
+      </div>
         <div className="all-items">
+            <h2 className="items-header">Items</h2>
             {items.map((item)=>{
                 return (
                     <div key={item.id} className="single-item">
