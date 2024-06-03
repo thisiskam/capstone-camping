@@ -86,6 +86,21 @@ const findUserByToken = async (token) => {
   }
   return response.rows[0];
 };
+
+//log out
+const logout = async (token) => {
+  let userToLogOut = token;
+  console.log("guessing at log out, tis is token:", token);
+  try {
+    await jwt.verify(token, JWT);
+    return;
+  } catch (err) {
+    const error = Error("you not authorized, yo");
+    error.status = 401;
+    throw error;
+  }
+};
+
 // findUserByToken();
 // const getUserFromToken = async (token) => {
 //   try {
@@ -147,6 +162,7 @@ module.exports = {
   authenticate,
   findUserByToken,
   getAllUsers,
+  logout,
   // getUser,
   // getUserByEmail,
 };
