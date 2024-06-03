@@ -1,10 +1,19 @@
+//these two lines are needed for each new major section
 const express = require("express");
 const usersRouter = express.Router();
 
-const { createUser, authenticate, getUser, getUserByEmail } = require("../db");
+const {
+  createUser,
+  authenticate,
+  findUserByToken,
+  getAllUsers,
+  getUser,
+  getUserByEmail,
+} = require("../db");
 
 const jwt = require("jsonwebtoken");
 
+//get all users: USE http://localhost:3000/api/users/
 usersRouter.get("/", async (req, res, next) => {
   try {
     const users = await getAllUsers();
@@ -17,6 +26,7 @@ usersRouter.get("/", async (req, res, next) => {
   }
 });
 
+//log in a user: USE http://localhost:3000/api/users/login
 usersRouter.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -52,6 +62,9 @@ usersRouter.post("/login", async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+  //   const token = await jwt.sign({ id: response.rows[0].id }, JWT);
+  //   console.log("this is the token you want to use:", token);
+  //   return token;
 });
 
 usersRouter.post("/register", async (req, res, next) => {
@@ -67,6 +80,7 @@ usersRouter.post("/register", async (req, res, next) => {
       });
     }
 
+    //create users
     const user = await createUser({
       name,
       email,

@@ -52,6 +52,7 @@ const Login = () => {
           <input
             type="email"
             id="email"
+            style={{ color: "black" }}
             value={email}
             onChange={handleEmailChange}
             required
@@ -62,6 +63,7 @@ const Login = () => {
           <input
             type="password"
             id="password"
+            style={{ color: "black" }}
             value={password}
             onChange={handlePasswordChange}
             required
