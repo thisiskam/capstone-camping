@@ -28,6 +28,7 @@ const Login = () => {
       const result = await response.json();
       setMessage(result.message);
       if (!response.ok) {
+        //below looks wrong - KB
         throw result;
       }
       setEmail("");
