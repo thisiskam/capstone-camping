@@ -40,6 +40,10 @@ apiRouter.use(setReqUser);
 const usersRouter = require("./users");
 apiRouter.use("/users", usersRouter);
 
+//this is for the items router
+const itemsRouter = require("./items");
+apiRouter.use("/items", itemsRouter);
+
 //classic error handling stuff
 apiRouter.use((err, req, res, next) => {
   res.status(err.status || 500).send({ error: err.message || err });
