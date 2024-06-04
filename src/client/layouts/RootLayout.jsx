@@ -28,11 +28,12 @@ export default function RootLayout() {
             </h1>
             {isLoggedIn() ? (
               <>
-                <NavLink to="/account">Account</NavLink>
+                <NavLink to="/account">ACCOUNT</NavLink>
               </>
             ) : (
               <>
-                <NavLink to="/login">Login</NavLink>
+                <NavLink to="/login">LOGIN</NavLink>
+                {/* <NavLink to="/register">REGISTER HERE</NavLink> */}
               </>
             )}
           </nav>

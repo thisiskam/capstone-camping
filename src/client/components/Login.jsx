@@ -82,7 +82,7 @@ const Login = () => {
       <br />
       <br />
       <p>
-        DON'T HAVE AN ACCOUNT? <NavLink to="register">REGISTER HERE</NavLink>
+        DON'T HAVE AN ACCOUNT? <NavLink to="/register">REGISTER HERE</NavLink>
       </p>
     </div>
   );
