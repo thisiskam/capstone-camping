@@ -17,7 +17,6 @@ import Account from "./components/Account";
 
 // bring in the layouts
 import RootLayout from "./layouts/RootLayout";
-import LoginLayout from "./layouts/LoginLayout";
 
 //define your router
 const router = createBrowserRouter(
@@ -28,7 +27,8 @@ const router = createBrowserRouter(
         <Route path="items/:id" element={<SingleItem />} />
         <Route path="account" element={<Account />} />
         <Route path="login" element={<Login />} />
-        <Route path="login/register" element={<Register />} />
+        <Route path="register" element={<Register />} />
+        {/* <Route path="login/register" element={<Register />} /> */}
       </Route>
     </>
   )
@@ -40,8 +40,8 @@ function App() {
   return (
     <>
       <RouterProvider router={router}>
-        {/* <Register />
-        <Account /> */}
+        {/* <Register /> */}
+        <Account />
       </RouterProvider>
     </>
   );
