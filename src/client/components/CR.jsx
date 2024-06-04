@@ -37,21 +37,21 @@ const CR = () => {
   return (
     <div className="App">
       <img src="src/client/assets/pexels-bazil-elias-1351340-2612228.jpg" alt="" className="main-img"/>
-      <h1>this will be a camp review site</h1>
+      <h1 className="main-header">this will be a camp review site</h1>
       <div className="home-content">
-      <div class="search-container">
-        <div class="search-header">Search</div>
-        <input type="text" class="search-input" placeholder="Enter your search query"/>
-        <button class="search-button">Search</button>
-      </div>
-        <div className="all-items">
-            <h2 className="items-header">Items</h2>
+        <div class="left-container">
+          <div class="search-header">Search</div>
+          <input type="text" class="search-input" placeholder="Enter your search query"/>
+          <button class="search-button">Search</button>
+        </div>
+        <div className="center-container">
+            <h2 className="items-header">Item Name</h2>
             {items.map((item)=>{
                 return (
                     <div key={item.id} className="single-item">
                         <img src="src/client/assets/star-icon.svg" alt="star" />
                         <p className="single-item-rating">{item.rating.toFixed(1)}</p>
-                        <p className="single-item-title" onClick={() => navigate(`/cr/${item.id}`)}>{item.title}</p>
+                        <p className="single-item-title" onClick={() => navigate(`/items/${item.id}`)}>{item.title}</p>
                     </div>
                 )})
             }
