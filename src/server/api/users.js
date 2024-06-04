@@ -27,6 +27,47 @@ usersRouter.get("/", async (req, res, next) => {
   }
 });
 
+//register api call
+usersRouter.post("/register", async (req, res, next) => {
+  const { username, email, password } = req.body;
+
+  try {
+    const _user = await getUserByEmail(email);
+
+    if (_user) {
+      next({
+        name: "UserExistsError",
+        message: "A user with that email already exists",
+      });
+    }
+
+    //create user
+    const user = await createUser({
+      username,
+      email,
+      password,
+    });
+
+    const token = jwt.sign(
+      {
+        id: user.id,
+        email,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1w",
+      }
+    );
+
+    res.send({
+      message: "Sign up successful!",
+      token,
+    });
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
 // call this after login
 usersRouter.get("/me", async (req, res, next) => {
   try {
@@ -116,6 +157,7 @@ usersRouter.post("/register", async (req, res, next) => {
     next({ name, message });
   }
 });
+
 //log out a user: USE http://localhost:3000/api/logout
 usersRouter.post("/logout", async (req, res, next) => {
   console.log("where is the break, it is not here");

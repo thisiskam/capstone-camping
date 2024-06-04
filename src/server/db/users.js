@@ -135,27 +135,27 @@ const logout = async (token) => {
 //   }
 // };
 
-// const getUserByEmail = async (email) => {
-//   try {
-//     const {
-//       rows: [user],
-//     } = await db.query(
-//       /*sql*/
-//       `
-//         SELECT *
-//         FROM users
-//         WHERE email=$1;`,
-//       [email]
-//     );
+const getUserByEmail = async (email) => {
+  try {
+    const {
+      rows: [user],
+    } = await db.query(
+      /*sql*/
+      `
+        SELECT *
+        FROM users
+        WHERE email=$1;`,
+      [email]
+    );
 
-//     if (!user) {
-//       return;
-//     }
-//     return user;
-//   } catch (err) {
-//     throw err;
-//   }
-// };
+    if (!user) {
+      return;
+    }
+    return user;
+  } catch (err) {
+    throw err;
+  }
+};
 
 module.exports = {
   createUser,
@@ -164,5 +164,5 @@ module.exports = {
   getAllUsers,
   logout,
   // getUser,
-  // getUserByEmail,
+  getUserByEmail,
 };
