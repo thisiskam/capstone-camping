@@ -49,11 +49,12 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="login">
+      <h1>LOGIN</h1>
+      <br></br>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
+        <div className="email">
+          <label htmlFor="email">EMAIL:</label>
           <input
             type="email"
             id="email"
@@ -62,9 +63,8 @@ const Login = () => {
             onChange={handleEmailChange}
             required
           />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
+          <br></br>
+          <label htmlFor="password">PASSWORD:</label>
           <input
             type="password"
             id="password"
@@ -73,17 +73,23 @@ const Login = () => {
             onChange={handlePasswordChange}
             required
           />
+
+          <br></br>
+          <button className="green-btn" type="submit">
+            LOGIN
+          </button>
+
+          <br />
+          <br />
+          <p style={{ color: "red" }}>{message}</p>
+          <br />
+          <br />
+          <p>
+            DON'T HAVE AN ACCOUNT?{" "}
+            <NavLink to="register">REGISTER HERE</NavLink>
+          </p>
         </div>
-        <button type="submit">Login</button>
       </form>
-      <br />
-      <br />
-      <p style={{ color: "red" }}>{message}</p>
-      <br />
-      <br />
-      <p>
-        DON'T HAVE AN ACCOUNT? <NavLink to="register">REGISTER HERE</NavLink>
-      </p>
     </div>
   );
 };
