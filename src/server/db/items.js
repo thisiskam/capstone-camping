@@ -42,8 +42,20 @@ const createItem = async ({ title, description, imageURL, category_id }) => {
   return response.rows[0];
 };
 
+//this is fetch review//
+const fetchReviews = async (item_id) => {
+  const SQL = `--sql
+    SELECT * FROM reviews
+    WHERE item_id = $1
+    `;
+  const response = await db.query(SQL, [item_id]);
+  return response.rows;
+  console.log("response rows", response.rows);
+};
+
 module.exports = {
   fetchItems,
   fetchSingleItem,
   createItem,
+  fetchReviews,
 };
