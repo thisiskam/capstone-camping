@@ -1,7 +1,7 @@
 const express = require("express");
 const itemsRouter = express.Router();
 
-const { fetchItems, fetchSingleItem } = require("../db/items.js");
+const { fetchItems, fetchSingleItem, createItem } = require("../db/items.js");
 
 itemsRouter.get("/", async (req, res, next) => {
   try {
@@ -21,6 +21,22 @@ itemsRouter.get("/:id", async (req, res, next) => {
     res.send({
       singleItem,
     });
+  } catch (error) {
+    next(error);
+  }
+});
+
+itemsRouter.post("/", async (req, res, next) => {
+  const { title, description, imageURL, category_id } = req.body;
+  try {
+    const newItem = await createItem({
+      title,
+      description,
+      imageURL,
+      category_id,
+    });
+
+    res.status(201).json(newItem);
   } catch (error) {
     next(error);
   }
