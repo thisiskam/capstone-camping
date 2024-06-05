@@ -10,21 +10,23 @@ const fetchItems = async () => {
   } catch (error) {
     throw error;
   }
+};
 
-  // try {
-  //   const { rows } = await db.query(
-  //     /*sql*/
-  //     `
-  //       SELECT * FROM items
-  //       `
-  //   );
-  //   return rows;
-  //   console.log(rows);
-  // } catch (err) {
-  //   throw err;
-  // }
+const fetchSingleItem = async (item_id) => {
+  try {
+    const SQL =
+      /*sql*/
+      `
+    SELECT * FROM items WHERE id = $1
+    `;
+    const response = await db.query(SQL, [item_id]);
+    return response.rows;
+  } catch (error) {
+    throw error;
+  }
 };
 
 module.exports = {
   fetchItems,
+  fetchSingleItem,
 };
