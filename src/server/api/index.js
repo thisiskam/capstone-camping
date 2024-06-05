@@ -44,6 +44,10 @@ apiRouter.use("/users", usersRouter);
 const itemsRouter = require("./items");
 apiRouter.use("/items", itemsRouter);
 
+// //this is the review router//
+// const reviewsRouter = require("./reviews");
+// apiRouter.use("/reviews", reviewsRouter);
+
 //classic error handling stuff
 apiRouter.use((err, req, res, next) => {
   res.status(err.status || 500).send({ error: err.message || err });

@@ -58,7 +58,7 @@ const authenticate = async ({ email, password }) => {
     throw error;
   }
   const token = await jwt.sign({ id: response.rows[0].id }, JWT);
-  // console.log("this is the token from db/users.js", token);
+  console.log("this is the token from db/users.js", token);
   return token;
 };
 
