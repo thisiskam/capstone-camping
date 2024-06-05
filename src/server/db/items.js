@@ -26,7 +26,24 @@ const fetchSingleItem = async (item_id) => {
   }
 };
 
+const createItem = async ({ title, description, imageURL, category_id }) => {
+  const SQL =
+    /*sql*/
+    `
+  INSERT INTO items(title, description, imageURL, category_id) VALUES ($1, $2, $3, $4) 
+  RETURNING *
+  `;
+  const response = await db.query(SQL, [
+    title,
+    description,
+    imageURL,
+    category_id,
+  ]);
+  return response.rows[0];
+};
+
 module.exports = {
   fetchItems,
   fetchSingleItem,
+  createItem,
 };
