@@ -55,7 +55,8 @@ const createTables = async () => {
     review_text VARCHAR(1000),
     rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
     item_id INTEGER REFERENCES items(id),
-    user_id INTEGER REFERENCES users(id)
+    user_id INTEGER REFERENCES users(id),
+    CONSTRAINT unique_review UNIQUE (item_id, user_id)
   );
   CREATE TABLE comments(
     id SERIAL PRIMARY KEY,
@@ -886,6 +887,19 @@ const reviews = [
       paragraphUpperBound: 5,
     }),
     item_id: 77,
+    user_id: 3,
+    rating: 5,
+  },
+  {
+    review_text: loremIpsum({
+      count: 1,
+      units: "paragraphs",
+      sentenceLowerBound: 5,
+      sentenceUpperBound: 15,
+      paragraphLowerBound: 1,
+      paragraphUpperBound: 5,
+    }),
+    item_id: 1,
     user_id: 3,
     rating: 5,
   },
