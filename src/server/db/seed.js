@@ -47,8 +47,8 @@ const createTables = async () => {
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     description VARCHAR(1000),
-    category_id INTEGER REFERENCES categories(id),
-    imageURL VARCHAR(1000)
+    category_id INTEGER REFERENCES categories(id) NOT NULL,
+    imageURL VARCHAR(1000) 
   );
   CREATE TABLE reviews(
     id SERIAL PRIMARY KEY,
