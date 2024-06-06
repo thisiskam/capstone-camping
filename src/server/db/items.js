@@ -26,22 +26,28 @@ const fetchSingleItem = async (item_id) => {
   }
 };
 
-const createItem = async ({ title, description, imageURL, category_id }) => {
+const createItem = async ({ title, description, imageURL }) => {
   const SQL =
     /*sql*/
     `
-  INSERT INTO items(title, description, imageURL, category_id) VALUES ($1, $2, $3, $4) 
+  INSERT INTO items(title, description, imageURL) VALUES ($1, $2, $3) 
   RETURNING *
   `;
-  const response = await db.query(SQL, [
-    title,
-    description,
-    imageURL,
-    category_id,
-  ]);
+  const response = await db.query(SQL, [title, description, imageURL]);
   return response.rows[0];
 };
 
+const updateItem = async (itemId, newData) => {
+  await db.query(
+    `UPDATE items SET title = $1, description = $2, imageURL = $3 WHERE id = $4`,
+    [newData.title, newData.description, newData.imageURL, itemId]
+  );
+  const updatedItem = await db.query(`SELECT * FROM items WHERE id = $1`, [
+    itemId,
+  ]);
+
+  return updatedItem.rows[0];
+};
 //this is fetch review//
 const fetchReviews = async (item_id) => {
   const SQL = `--sql
@@ -58,4 +64,5 @@ module.exports = {
   fetchSingleItem,
   createItem,
   fetchReviews,
+  updateItem,
 };
