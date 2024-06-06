@@ -13,47 +13,45 @@ import { useNavigate } from "react-router-dom";
 const CR = () => {
   const [items, setItems] = useState([])
   const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useState("")
+  const [isAdmin, setIsAdmin] = useState(false)
+  const token = localStorage.getItem("token")
 
   useEffect(() => {
-    const sampleItems = [
-      {rating:5.0, title:"camping item 1", id:1},
-      {rating:4.0, title:"camping item 2" , id:2},
-      {rating:3.2, title:"camping item 3", id:3},
-      {rating:4.0, title:"camping item 4", id:4},
-      {rating:2.0, title:"camping item 5", id:5},
-      {rating:4.0, title:"camping item 6", id:6},
-      {rating:1.0, title:"camping item 7", id:7},
-      {rating:2.0, title:"camping item 8", id:8},
-      {rating:3.0, title:"camping item 9", id:9},
-      {rating:1.4, title:"camping item 10", id:10},
-      {rating:2.6, title:"camping item 11", id:11},
-      {rating:4.3, title:"camping item 12", id:12},
-      {rating:4.2, title:"camping item 13", id:13}  
-    ];
 
-    setItems(sampleItems);
+    async function fetchItems () {
+      const response = await fetch("http://localhost:3000/api/items") 
+      const api = await response.json()
+      setItems(api.items)
+    }
+    fetchItems()
+
+    token ? setIsAdmin(true) :setIsAdmin(false)
   }, []); 
 
+
+
+  const displayedItems = !searchParams ? items : items.filter((item) => item.title.toLowerCase().includes(searchParams.toLowerCase()))
   return (
     <div className="App">
       <img src="src/client/assets/pexels-bazil-elias-1351340-2612228.jpg" alt="" className="main-img"/>
-      <h1 className="main-header">this will be a camp review site</h1>
+      <h1 className="main-header">LOCALLY REVIEWED CAMPING ITEMS</h1>
       <div className="home-content">
-        <div class="left-container">
-          <div class="search-header">Search</div>
-          <input type="text" class="search-input" placeholder="Enter your search query"/>
-          <button class="search-button">Search</button>
+        <div className="left-container">
+          <div className="search-header">SEARCH</div>
+          <input type="text" className="search-input" placeholder="Hydroflask" onChange={(e) => {setSearchParams(e.target.value)}}/>
+          {isAdmin === true ? (<div><img src="src/client/assets/user-id-svgrepo-com (1).svg" width="30px" alt="" /><button onClick={() => {navigate("/allusers")}}>Users</button><br /><img src="src/client/assets/tent-4-svgrepo-com.svg" width="30px" alt="" /><button onClick={() => {navigate("/adminitems")}}>Items</button></div>) : (<div></div>)}
         </div>
         <div className="center-container">
-            <h2 className="items-header">Item Name</h2>
-            {items.map((item)=>{
+            <h2 className="items-header">REVIEWED ITEMS</h2>
+            {displayedItems.map((item)=>{
                 return (
                     <div key={item.id} className="single-item">
                         <img src="src/client/assets/star-icon.svg" alt="star" />
-                        <p className="single-item-rating">{item.rating.toFixed(1)}</p>
+                        <p className="single-item-rating">4</p>
                         <p className="single-item-title" onClick={() => navigate(`/items/${item.id}`)}>{item.title}</p>
                     </div>
-                )})
+                )}) 
             }
         </div>
       </div>
