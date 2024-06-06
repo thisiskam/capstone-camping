@@ -1,6 +1,7 @@
 // import stuff
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Login from "./Login";
 
 // the main page stuff
 const Register = () => {
@@ -57,43 +58,53 @@ const Register = () => {
   };
   return (
     <>
-      <div>
-        <h2>REGISTER</h2>
+      <div className="login">
+        <h1>REGISTER</h1>
+        <br></br>
         <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="email">EMAIL:</label>
-            <input
-              type="email"
-              id="email"
-              style={{ color: "black" }}
-              value={email}
-              onChange={handleEmailChange}
-              required
-            />
+          <div className="form-container">
+            <div>
+              <label htmlFor="email" className="email-lable">
+                EMAIL:{" "}
+              </label>
+              <input
+                type="email"
+                id="email"
+                style={{ color: "black" }}
+                value={email}
+                onChange={handleEmailChange}
+                required
+              />
+            </div>
+            <br></br>
+            <div>
+              <label htmlFor="password">PASSWORD: </label>
+              <input
+                type="password"
+                id="password"
+                style={{ color: "black" }}
+                value={password}
+                onChange={handlePasswordChange}
+                required
+              />
+            </div>
+            <br></br>
+            <div>
+              <label htmlFor="username">USERNAME: </label>
+              <input
+                type="text"
+                id="username"
+                style={{ color: "black" }}
+                value={username}
+                onChange={handleUsernameChange}
+                required
+              />
+            </div>
+            <br></br>
+            <button className="green-btn" type="submit">
+              REGISTER
+            </button>
           </div>
-          <div>
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              style={{ color: "black" }}
-              value={password}
-              onChange={handlePasswordChange}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="username">USERNAME:</label>
-            <input
-              type="text"
-              id="username"
-              style={{ color: "black" }}
-              value={username}
-              onChange={handleUsernameChange}
-              required
-            />
-          </div>
-          <button type="submit">REGISTER</button>
         </form>
         <br />
         <br />
@@ -101,7 +112,10 @@ const Register = () => {
         <br />
         <br />
         <p>
-          {/* ALREADY HAVE AN ACCOUNT? <NavLink to="login">LOGIN HERE</NavLink> */}
+          ALREADY HAVE AN ACCOUNT?{" "}
+          <NavLink to="/login" className="text-link">
+            LOGIN HERE
+          </NavLink>
         </p>
       </div>
     </>
