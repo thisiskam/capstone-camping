@@ -6,8 +6,10 @@ const {
   fetchSingleItem,
   createItem,
   fetchReviews,
+  updateItem,
 } = require("../db/items.js");
 
+//this is for getting all items
 itemsRouter.get("/", async (req, res, next) => {
   try {
     const items = await fetchItems();
@@ -19,6 +21,7 @@ itemsRouter.get("/", async (req, res, next) => {
   }
 });
 
+//this is for getting a single item
 itemsRouter.get("/:id", async (req, res, next) => {
   try {
     const itemId = req.params.id;
@@ -31,6 +34,7 @@ itemsRouter.get("/:id", async (req, res, next) => {
   }
 });
 
+//this is for creating an item as an admin
 itemsRouter.post("/", async (req, res, next) => {
   const { title, description, imageURL, category_id } = req.body;
   try {
@@ -47,7 +51,22 @@ itemsRouter.post("/", async (req, res, next) => {
   }
 });
 
-// this is for getting review for a single item//
+itemsRouter.put("/:id", async (req, res, next) => {
+  const itemId = req.params.id;
+  const { title, description, imageURL } = req.body;
+  try {
+    const updatedItem = await updateItem(itemId, {
+      title,
+      description,
+      imageURL,
+    });
+    res.status(200).json(updatedItem);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// this is for getting review for an item review//
 itemsRouter.get("/:id/reviews", async (req, res, next) => {
   try {
     const itemId = req.params.id;

@@ -53,28 +53,37 @@ const Login = () => {
       <h1>LOGIN</h1>
       <br></br>
       <form onSubmit={handleSubmit}>
-        <div className="email">
-          <label htmlFor="email">EMAIL:</label>
-          <input
-            type="email"
-            id="email"
-            style={{ color: "black" }}
-            value={email}
-            onChange={handleEmailChange}
-            required
-          />
+        <div className="form-container">
+          <div>
+            <label htmlFor="email" className="email-lable">
+              EMAIL:{" "}
+            </label>
+            <input
+              type="email"
+              id="email"
+              style={{ color: "black" }}
+              value={email}
+              onChange={handleEmailChange}
+              required
+            />
+          </div>
           <br></br>
-          <label htmlFor="password">PASSWORD:</label>
-          <input
-            type="password"
-            id="password"
-            style={{ color: "black" }}
-            value={password}
-            onChange={handlePasswordChange}
-            required
-          />
+          <div>
+            <label htmlFor="password">PASSWORD: </label>
+            <input
+              type="password"
+              id="password"
+              style={{ color: "black" }}
+              value={password}
+              onChange={handlePasswordChange}
+              required
+            />
+          </div>
+          <br></br>
+          <button className="green-btn" type="submit">
+            LOGIN
+          </button>
         </div>
-        <button type="submit">Login</button>
       </form>
       <br />
       <br />
@@ -82,7 +91,10 @@ const Login = () => {
       <br />
       <br />
       <p>
-        DON'T HAVE AN ACCOUNT? <NavLink to="register">REGISTER HERE</NavLink>
+        DON'T HAVE AN ACCOUNT?{" "}
+        <NavLink to="register" className="text-link">
+          REGISTER HERE
+        </NavLink>
       </p>
     </div>
   );

@@ -29,9 +29,10 @@ const router = createBrowserRouter(
         <Route path="items/:id" element={<SingleItem />} />
         <Route path="account" element={<Account />} />
         <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
+        <Route path="login/register" element={<Register />} />
         <Route path="allusers" element={<AllUsers />} />
         <Route path="adminitems" element={<AdminItems />} />
+        <Route path="register" element={<Register />} />
         {/* <Route path="login/register" element={<Register />} /> */}
       </Route>
     </>
