@@ -5,7 +5,6 @@ import { useState , useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useRef } from "react";
 
-
 export default function SingleItem() {
   const [categories, setCategories] = useState([])
   const [itemCategory, setItemCategory] = useState()
@@ -18,10 +17,14 @@ export default function SingleItem() {
   const [fourStar, setFourStar] = useState(0)
   const [fiveStar, setFiveStar] = useState(0)
   const [average, setAverage] = useState (0)
-  const [isAdmin, setIsAdmin] = useState(false)
+  const [reviewClicked, setReviewClicked] = useState(false)
+  const [commentClicked, setCommentClicked] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [reviewInput, setReviewInput] = useState('')
+  const [numInput, setNumInput] = useState('')
   const { id } = useParams()
   const navigate = useNavigate()
+  const token = localStorage.getItem("token")
 
                       //will need to be deleted later after getting the right api path
                       const [users, setUsers] = useState([])
@@ -59,6 +62,8 @@ export default function SingleItem() {
                   setUsers(api.users)
                 }
                 fetchUsers()
+
+                
   },[])
 
   useEffect (() => {
@@ -68,6 +73,10 @@ export default function SingleItem() {
         setItemCategory(res[0].name);
     }}
     findCategory()
+
+            token ? setIsLoggedIn(true) : setIsLoggedIn(false)
+                        console.log(token);
+                        console.log(isLoggedIn);
   },[itemDetails])
 
   function getCategory() {
@@ -138,18 +147,9 @@ export default function SingleItem() {
     }
   })}
 
-// useEffect (() => {
-//   async function b () {
-//     if (users.length !== 0) {
-//     const res = getUserName(3)
-//     console.log(res);
-//   }}
-//   b()
-// },[])
-
 function getUserName (id) {
-    const res = users.find(user => user.id === id)
-    return res.username
+    const user = users.find(user => user.id === id)
+    return user ? user.username : "unknown user"
   }
 
 
@@ -166,12 +166,16 @@ function getUserName (id) {
     }
     reviewAverage()
   },[itemReviews])
+
+  async function submitReview () {
+    console.log("review submitted");
+  }
   return (
     <>
       <div className="App">
         <div className="home-content">
           <div className="left-container" id="left-container-single-item" >
-            <h5 className="item-category"><b>CATEGORY:</b>{itemCategory}</h5>
+            <h5 className="item-category"><b>CATEGORY:  </b>{itemCategory}</h5>
             <div className="review-overview">
               <div className="star-category">
                 <div className="star-box">
@@ -225,36 +229,66 @@ function getUserName (id) {
               </div>
             </div>
             <div className="average">
-              <h5>REVIEW AVERAGE</h5>
+              <h5>REVIEW AVERAGE:</h5>
               <div>
                 <img src="/src/client/assets/star-icon.svg" width="30px" alt="" />
-                <h4>{average}</h4>
+                <h2>{average}</h2>
               </div>
             </div>
           </div>
           <div className="center-container" id="center-container-single-item">
               <h2>{itemDetails.title}</h2>
               <div className="item-description">
-                <h4>DESCRIPTION</h4>
                 <p>{itemDetails.description}</p>
               </div>
               <div className="item-reviews">
                 <h4>REVIEWS</h4>
+                {isLoggedIn && !reviewClicked &&
+                      (<button onClick={() => {setReviewClicked(true), setCommentClicked(false)}}>Leave A Review</button>)
+                    }
+                  {reviewClicked &&
+                    <div className="review">
+                      <form>
+                          <div className="first-line-review">
+                            <h6 style={{ color: '#' + Math.floor(Math.random()*16777215).toString(16)}}>my username will go here</h6>
+                            <input className="num-input" type="number" min='1' max='5' value={numInput} onChange={(e) => {setNumInput(e.target.value)}}/>
+                            <img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/>
+                          </div>
+                          <div className="text-submit">
+                            <textarea className="text-input" type="textarea" rows="6" cols="50" value={reviewInput} onChange={(e) => {setReviewInput(e.target.value)}}/>
+                            <br />
+                            <button onClick={(e) => {submitReview(e)}}>submit</button>
+                            <a href="">cancel</a>
+                          </div>
+                      </form>
+                    </div>
+                  }
                   {itemReviews.map((review) => {
                     return (
                       <div className="review" key={review.id}>
                         <div className="first-line-review">
-                          <h6>{getUserName(review.user_id)}</h6>
+                          <h6 style={{ color: '#' + Math.floor(Math.random()*16777215).toString(16)}}>{getUserName(review.user_id)}</h6>
                           <p>{review.rating}</p>
                           <img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/>
                         </div>
                         <p className="review-p">{review.review_text}</p>
                         <div className="item-comments">
-                          <h5>Comments</h5>
+                          <h5>COMMENTS</h5>
                           <div className="comment">
-                            <h6>username</h6>
+                            <h6 style={{ color: '#' + Math.floor(Math.random()*16777215).toString(16)}}>username</h6>
                             <p>auctor laoreet. Praesent eget tellus augue. Donec</p>
                           </div>
+                          {isLoggedIn && !commentClicked &&
+                            (<button onClick={() => {setCommentClicked(review.id), setReviewClicked(false)}}>Leave Comment</button>)}
+                          {commentClicked === review.id &&
+                            (<div className="comment">
+                              <h6 style={{ color: '#' + Math.floor(Math.random()*16777215).toString(16)}}>my username here</h6>
+                              <form className="comment-form">
+                                <textarea className="text-input" type="textarea" rows="4" cols="50" value={reviewInput} onChange={(e) => {setReviewInput(e.target.value)}}/>
+                                <button>submit</button>
+                                <a href="">cancel</a>
+                              </form>
+                            </div>)}
                         </div>
                       </div>
                     )})}
