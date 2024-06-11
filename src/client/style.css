@@ -264,6 +264,10 @@ main {
   margin-top: 20px;
 }
 
+.item-category b {
+  color: var(--secondary-color);
+}
+
 .right-container img {
   width: 100%;
   border-radius: 10px;
@@ -299,19 +303,38 @@ main {
   display: flex;
 }
 
+.average div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.average h5 {
+  color: var(--secondary-color);
+}
+
+.average div h2 {
+  padding-left: 5px;
+  color: var(--quaternary-color);
+}
+
 #left-container-single-item {
-  height: 250px;
+  height: 260px;
+  min-width: 200px;
 }
 
 #center-container-single-item h2 {
   margin-top: 10px;
-  margin-bottom: 20px;
   color: var(--primary-color);
+  text-transform: uppercase;
+  padding-right: 20px;
 }
 
 #center-container-single-item h4 {
   text-decoration: underline;
   text-align: center;
+  color: var(--primary-color);
 }
 
 #center-container-single-item {
@@ -324,16 +347,21 @@ main {
 }
 
 .item-description {
-  padding-left: 20px;
   padding-right: 20px;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.item-description p {
+  color: var(--quaternary-color);
 }
 
 .item-reviews {
-  padding-left: 40px;
-  padding-right: 40px;
-  padding-bottom: 20px;
-  margin-right: 20px;
-}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 20px; 
+} 
 .item-reviews h4 {
   margin-bottom: 20px;
 }
@@ -357,6 +385,9 @@ main {
   background-color: white;
   border-radius: 10px;
   padding-left: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  width: 80%;
 }
 .review h5,
 .review p,
@@ -364,22 +395,79 @@ main {
   color: #1f222b;
 }
 
+.item-reviews a {
+  color: var(--quaternary-color);
+}
+
+.review p {
+  padding-right: 20px;
+}
+
 .item-comments h5 {
   text-decoration: overline;
   color: var(--primary-color);
   text-align: center;
+  margin-top: 40px;
+}
+
+.item-comments {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-right: 20px;
 }
 
 .comment {
-  background-color: var(--quaternary-color);
+  border: var(--primary-color) solid 1px;
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 20px;
   padding-bottom: 5px;
   margin-top: 10px;
-  margin-left: 20px;
-  margin-right: 40px;
+  width: 80%;
   border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.comment p, .comment h6 {
+  color: var(--primary-color);
+}
+
+.item-reviews button{
+  margin-bottom: 20px;
+  background-color: var(--quaternary-color);
+}
+
+.num-input {
+  color: var(--primary-color);
+  margin: 20px 0px;
+}
+
+.text-input {
+  width: 90%;
+  color: var(--primary-color);
+}
+
+.text-submit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.comment-form button {
+  margin-top: 10px;
+}
+
+.comment-form a {
+  color: var(--quaternary-color);
 }
 /* another page */
 
