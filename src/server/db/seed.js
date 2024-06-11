@@ -23,8 +23,9 @@ const dropTables = async () => {
         DROP TABLE IF EXISTS items;
         DROP TABLE IF EXISTS categories;
         `);
+    console.log("tables dropped successfully");
   } catch (err) {
-    throw err;
+    console.error("error dropping tables".err);
   }
 };
 

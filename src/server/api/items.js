@@ -4,9 +4,10 @@ const itemsRouter = express.Router();
 const {
   fetchItems,
   fetchSingleItem,
-  createItem,
   fetchReviews,
+  createItem,
   updateItem,
+  deleteItem,
 } = require("../db/items.js");
 
 //this is for getting all items
@@ -61,6 +62,22 @@ itemsRouter.put("/:id", async (req, res, next) => {
       imageURL,
     });
     res.status(200).json(updatedItem);
+  } catch (error) {
+    next(error);
+  }
+});
+
+itemsRouter.delete("/:id", async (req, res, next) => {
+  const itemId = req.params.id;
+  try {
+    const deletedItem = await deleteItem(itemId);
+    if (deletedItem) {
+      res
+        .status(200)
+        .json({ message: "Item deleted successfully", deletedItem });
+    } else {
+      res.status(404).json({ message: "item not found" });
+    }
   } catch (error) {
     next(error);
   }
