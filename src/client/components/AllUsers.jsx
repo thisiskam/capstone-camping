@@ -1,9 +1,7 @@
-
-
 export default function AllUsers () {
     return (
         <>
-            <h1 className="hi">Users</h1>
+            <h1>Users</h1>
         </>
     )
 }
