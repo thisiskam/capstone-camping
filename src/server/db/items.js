@@ -49,6 +49,7 @@ const updateItem = async (itemId, newData) => {
   return updatedItem.rows[0];
 };
 
+
 const deleteItem = async (itemId) => {
   try {
     const reviews = await db.query(`SELECT * FROM reviews WHERE item_id = $1`, [
@@ -78,12 +79,13 @@ const deleteItem = async (itemId) => {
     throw error;
   }
 };
+
 //this is fetch review//
 const fetchReviews = async (item_id) => {
   const SQL = `--sql
-    SELECT * FROM reviews
-    WHERE item_id = $1
-    `;
+      SELECT * FROM reviews
+      WHERE item_id = $1
+      `;
   const response = await db.query(SQL, [item_id]);
   return response.rows;
   console.log("response rows", response.rows);
@@ -92,8 +94,8 @@ const fetchReviews = async (item_id) => {
 module.exports = {
   fetchItems,
   fetchSingleItem,
-  createItem,
   fetchReviews,
+  createItem,
   updateItem,
   deleteItem,
 };

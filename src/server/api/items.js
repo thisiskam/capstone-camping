@@ -4,8 +4,8 @@ const itemsRouter = express.Router();
 const {
   fetchItems,
   fetchSingleItem,
-  createItem,
   fetchReviews,
+  createItem,
   updateItem,
   deleteItem,
 } = require("../db/items.js");
