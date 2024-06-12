@@ -121,6 +121,30 @@ const createReview = async ({ review_text, rating, item_id, user_id }) => {
   }
 };
 
+const updateReview = async (reviewId, newData) => {
+  try {
+    const { review_text, rating } = newData;
+
+    await db.query(
+      `UPDATE reviews SET review_text =$1, rating = $2 WHERE id = $3`,
+      [review_text, rating, reviewId]
+    );
+
+    const updatedReview = await db.query(
+      `SELECT * FROM  reviews WHERE id = $1`,
+      [reviewId]
+    );
+
+    if (updatedReview.rows.length === 0) {
+      throw new Error("Review not found");
+    }
+
+    return updatedReview.rows[0];
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   fetchItems,
   fetchSingleItem,
@@ -129,4 +153,5 @@ module.exports = {
   updateItem,
   deleteItem,
   createReview,
+  updateReview,
 };
