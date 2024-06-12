@@ -18,9 +18,9 @@ const createUser = async ({ username, email, password, is_admin }) => {
         RETURNING *`,
       [username, email, hashedPassword, is_admin]
     );
-
     return user;
   } catch (err) {
+    console.error(err.message);
     throw err;
   }
 };
@@ -64,6 +64,7 @@ const authenticate = async ({ email, password }) => {
 
 // find user by token
 const findUserByToken = async (token) => {
+  console.log("in findUserByToken function", token);
   let id;
   // console.log("in findUserByToken", token);
   try {

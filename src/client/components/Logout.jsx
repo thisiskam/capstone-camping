@@ -6,13 +6,13 @@ export default function Logout() {
   const navigate = useNavigate();
   const [token, setToken] = useState(localStorage.getItem("token"));
 
-  console.log("value of token in loggout", localStorage.getItem("token"));
+  // console.log("value of token in loggout", localStorage.getItem("token"));
   async function handleClick() {
     try {
       setToken(localStorage.removeItem("token"));
       navigate("/");
     } catch (error) {
-      console.error("error in logout", error);
+      // console.error("error in logout", error);
     }
   }
   return (

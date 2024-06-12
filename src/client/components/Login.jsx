@@ -35,6 +35,7 @@ const Login = () => {
       if (!response.ok) {
         //below looks wrong - KB
         throw result;
+        console.log("this is the result", result);
       }
       setEmail("");
       setPassword("");
