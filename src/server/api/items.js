@@ -8,6 +8,7 @@ const {
   createItem,
   updateItem,
   deleteItem,
+  createReview,
 } = require("../db/items.js");
 
 //this is for getting all items
@@ -94,5 +95,30 @@ itemsRouter.get("/:id/reviews", async (req, res, next) => {
     next(error);
   }
 });
+
+itemsRouter.post("/:id/reviews", async (req, res, next) => {
+  try {
+    const { review_text, rating } = req.body;
+    console.log(req.params);
+    const { id } = req.params;
+
+    // console.log("id", req.user.id);
+
+    const userId = req.user;
+    console.log("user", userId);
+    console.log("oscar");
+    const newReview = await createReview({
+      review_text,
+      rating,
+      item_id: id,
+      user_id: 1,
+    });
+
+    res.status(201).json(newReview);
+  } catch (error) {
+    next(error);
+  }
+});
+// this is not finished, the user ID is hardcoded in.
 
 module.exports = itemsRouter;

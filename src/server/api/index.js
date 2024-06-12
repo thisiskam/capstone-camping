@@ -20,6 +20,7 @@ const setReqUser = async (req, res, next) => {
     const token = auth.replace("Bearer ", ""); // get rid of the "Bearer " part of the string
 
     try {
+      console.log("oscar");
       const myuser = await findUserByToken(token); // pass token to find user in the ../db/index.js file
       console.log("myuser", myuser);
       next();

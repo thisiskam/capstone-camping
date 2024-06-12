@@ -49,7 +49,6 @@ const updateItem = async (itemId, newData) => {
   return updatedItem.rows[0];
 };
 
-
 const deleteItem = async (itemId) => {
   try {
     const reviews = await db.query(`SELECT * FROM reviews WHERE item_id = $1`, [
@@ -91,6 +90,37 @@ const fetchReviews = async (item_id) => {
   console.log("response rows", response.rows);
 };
 
+const createReview = async ({ review_text, rating, item_id, user_id }) => {
+  console.log("lincoln");
+  try {
+    const item = await db.query(`SELECT * FROM items WHERE id = $1`, [item_id]);
+
+    if (item.rows.length === 0) {
+      throw new Error("Item does not exist");
+    }
+
+    const user = await db.query(`SELECT * FROM users WHERE id = $1`, [user_id]);
+    if (user.rows.length === 0) {
+      throw new Error("User does not exist");
+    }
+
+    const SQL = /*sql*/ `
+  INSERT INTO reviews(review_text, rating, item_id, user_id)
+  VALUES ($1, $2, $3, $4)
+  RETURNING *
+  `;
+    const response = await db.query(SQL, [
+      review_text,
+      rating,
+      item_id,
+      user_id,
+    ]);
+    return response.rows[0];
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   fetchItems,
   fetchSingleItem,
@@ -98,4 +128,5 @@ module.exports = {
   createItem,
   updateItem,
   deleteItem,
+  createReview,
 };
