@@ -121,25 +121,52 @@ const createReview = async ({ review_text, rating, item_id, user_id }) => {
   }
 };
 
-const updateReview = async (reviewId, newData) => {
+const updateReview = async (reviewId, { review_text, rating }) => {
   try {
-    const { review_text, rating } = newData;
+    // const { review_text, rating } = newData;
+    // await db.query(
+    //   `UPDATE reviews SET review_text =$1, rating = $2 WHERE id = $3`,
+    //   [review_text, rating, reviewId]
+    // );
+    // const updatedReview = await db.query(
+    //   `SELECT * FROM  reviews WHERE id = $1`,
+    //   [reviewId]
+    // );
+    // if (updatedReview.rows.length === 0) {
+    //   throw new Error("Review not found");
+    // }
+    // return updatedReview.rows[0];
+    const SQL = `
+      UPDATE reviews
+      SET review_text = $1, rating = $2
+      WHERE id = $3
+      RETURNING *
+    `;
+    const response = await db.query(SQL, [review_text, rating, reviewId]);
 
-    await db.query(
-      `UPDATE reviews SET review_text =$1, rating = $2 WHERE id = $3`,
-      [review_text, rating, reviewId]
-    );
-
-    const updatedReview = await db.query(
-      `SELECT * FROM  reviews WHERE id = $1`,
-      [reviewId]
-    );
-
-    if (updatedReview.rows.length === 0) {
+    if (response.rows.length === 0) {
       throw new Error("Review not found");
     }
 
-    return updatedReview.rows[0];
+    return response.rows[0];
+  } catch (error) {
+    throw error;
+  }
+};
+
+const deleteReview = async (reviewId) => {
+  try {
+    const reviewToDelete = await db.query(
+      `SELECT * FROM reviews WHERE id = $1`,
+      [reviewId]
+    );
+    if (reviewToDelete.rows.length === 0) {
+      throw new Error("review not found");
+    }
+
+    await db.query(`DELETE FROM reviews WHERE id = $1`, [reviewId]);
+
+    return reviewToDelete.rows[0];
   } catch (error) {
     throw error;
   }
@@ -154,4 +181,5 @@ module.exports = {
   deleteItem,
   createReview,
   updateReview,
+  deleteReview,
 };
