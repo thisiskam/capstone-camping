@@ -12,6 +12,7 @@ const {
   updateReview,
   deleteReview,
   fetchComments,
+  createComment,
 } = require("../db/items.js");
 
 //this is for getting all items
@@ -166,5 +167,20 @@ itemsRouter.get("/reviews/:id/comments", async (req, res, next) => {
     next(error);
   }
 });
+
+itemsRouter.post("/reviews/:id/comments", async (req, res, next) => {
+  try {
+    const { comment_text } = req.body;
+    const { id: review_id } = req.params;
+
+    const newComment = await createComment({ comment_text, review_id });
+
+    res.status(201).json(newComment);
+  } catch (error) {
+    console.error("Error creating comment:", error.message);
+    next(error);
+  }
+});
+//route not complete, user id comes back null until authentication is fixed (req.user)
 
 module.exports = itemsRouter;
