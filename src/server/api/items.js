@@ -9,6 +9,7 @@ const {
   updateItem,
   deleteItem,
   createReview,
+  updateReview,
 } = require("../db/items.js");
 
 //this is for getting all items
@@ -113,12 +114,28 @@ itemsRouter.post("/:id/reviews", async (req, res, next) => {
       item_id: id,
       user_id: 1,
     });
-
     res.status(201).json(newReview);
   } catch (error) {
     next(error);
   }
 });
+
 // this is not finished, the user ID is hardcoded in.
+
+itemsRouter.put("/:id/reviews/:reviewId", async (req, res, next) => {
+  try {
+    const { reviewId } = req.params;
+    const { review_text, rating } = req.body;
+
+    const updatedReview = await updateReview(reviewId, {
+      review_text,
+      rating,
+    });
+
+    res.status(200).json(updatedReview);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = itemsRouter;
