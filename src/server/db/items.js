@@ -188,6 +188,21 @@ const fetchComments = async (reviewId) => {
   }
 };
 
+const createComment = async ({ comment_text, review_id }) => {
+  try {
+    const SQL = /*sql*/ `
+    INSERT INTO comments (comment_text, review_id)
+    VALUES ($1, $2)
+    RETURNING *
+    `;
+    const response = await db.query(SQL, [comment_text, review_id]);
+
+    return response.rows[0];
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   fetchItems,
   fetchSingleItem,
@@ -199,4 +214,5 @@ module.exports = {
   updateReview,
   deleteReview,
   fetchComments,
+  createComment,
 };
