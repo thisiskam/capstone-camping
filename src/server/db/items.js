@@ -172,6 +172,22 @@ const deleteReview = async (reviewId) => {
   }
 };
 
+const fetchComments = async (reviewId) => {
+  try {
+    console.log(`fetching comments for review ID: ${reviewId}`);
+    const SQL = /*sql*/ `
+    SELECT * FROM comments WHERE review_id = $1
+    `;
+    const response = await db.query(SQL, [reviewId]);
+    console.log(`SQL Response: ${JSON.stringify(response.rows)}`);
+
+    return response.rows;
+  } catch (error) {
+    console.error(`error fetching comments: ${error.message}`);
+    throw error;
+  }
+};
+
 module.exports = {
   fetchItems,
   fetchSingleItem,
@@ -182,4 +198,5 @@ module.exports = {
   createReview,
   updateReview,
   deleteReview,
+  fetchComments,
 };
