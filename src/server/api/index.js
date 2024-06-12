@@ -8,8 +8,10 @@ const volleyball = require("volleyball");
 apiRouter.use(volleyball);
 
 // TO BE COMPLETED - set `req.user` if possible, using token sent in the request header
-const setReqUser = async (req, res, next) => {
-  const auth = req.header("Authorization"); //we get the Authorization header from the request
+apiRouter.use(async (req, res, next) => {
+  console.log("req header", req.header);
+  const auth = req.header.authorization;
+  // const auth = req.header("Authorization"); //we get the Authorization header from the request
   console.log("auth", auth);
   if (!auth) {
     //if we did not find the Authorization header, hit the next(else{next({) and respond with you need the header
@@ -33,9 +35,9 @@ const setReqUser = async (req, res, next) => {
       message: `Authorization token must start with 'Bearer'`,
     });
   }
-};
+});
 
-apiRouter.use(setReqUser);
+// apiRouter.use(setReqUser);
 
 // this is where we need to put all the custom routers
 const usersRouter = require("./users");

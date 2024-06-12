@@ -5,7 +5,7 @@ const usersRouter = express.Router();
 const {
   createUser,
   authenticate,
-  findUserByToken,
+  // findUserByToken,
   getAllUsers,
   logout,
   getUser,
@@ -27,7 +27,7 @@ usersRouter.get("/", async (req, res, next) => {
   }
 });
 
-//register api call
+//register api call - CONFIRMED THIS IS WORKING AS DESIGNED
 usersRouter.post("/register", async (req, res, next) => {
   const { username, email, password } = req.body;
 
@@ -46,6 +46,7 @@ usersRouter.post("/register", async (req, res, next) => {
       username,
       email,
       password,
+      is_admin: false,
     });
 
     const token = jwt.sign(
@@ -63,6 +64,7 @@ usersRouter.post("/register", async (req, res, next) => {
       message: "Sign up successful!",
       token,
     });
+    //consider showing the message on the page -KB
   } catch ({ name, message }) {
     next({ name, message });
   }
@@ -155,6 +157,7 @@ usersRouter.post("/register", async (req, res, next) => {
       message: "Sign up successful!",
       token,
     });
+    console.log("this is the token you want to use:", token);
   } catch ({ name, message }) {
     next({ name, message });
   }
