@@ -10,6 +10,7 @@ const {
   deleteItem,
   createReview,
   updateReview,
+  deleteReview,
 } = require("../db/items.js");
 
 //this is for getting all items
@@ -133,6 +134,20 @@ itemsRouter.put("/:id/reviews/:reviewId", async (req, res, next) => {
     });
 
     res.status(200).json(updatedReview);
+  } catch (error) {
+    next(error);
+  }
+});
+
+itemsRouter.delete("/:id/reviews/:reviewId", async (req, res, next) => {
+  try {
+    const { reviewId } = req.params;
+
+    const deletedReview = await deleteReview(reviewId);
+
+    res
+      .status(200)
+      .json({ message: "review deleted successfully", deletedReview });
   } catch (error) {
     next(error);
   }
