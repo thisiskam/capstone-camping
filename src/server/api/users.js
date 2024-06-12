@@ -87,7 +87,9 @@ usersRouter.post("/login", async (req, res, next) => {
     });
   }
   try {
+    console.log("oscar");
     const user = await authenticate({ email, password });
+    console.log("user", user);
     if (user) {
       const token = jwt.sign(
         {
