@@ -11,6 +11,7 @@ const {
   createReview,
   updateReview,
   deleteReview,
+  fetchComments,
 } = require("../db/items.js");
 
 //this is for getting all items
@@ -149,6 +150,19 @@ itemsRouter.delete("/:id/reviews/:reviewId", async (req, res, next) => {
       .status(200)
       .json({ message: "review deleted successfully", deletedReview });
   } catch (error) {
+    next(error);
+  }
+});
+
+itemsRouter.get("/reviews/:id/comments", async (req, res, next) => {
+  const reviewId = req.params.id;
+  console.log(`recieved request to fetch comments for review ID: ${reviewId}`);
+  try {
+    const comments = await fetchComments(reviewId);
+
+    res.status(200).json(comments);
+  } catch (error) {
+    console.error(`error in route: ${error.message}`);
     next(error);
   }
 });
