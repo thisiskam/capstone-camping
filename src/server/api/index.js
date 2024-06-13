@@ -10,8 +10,8 @@ apiRouter.use(volleyball);
 // TO BE COMPLETED - set `req.user` if possible, using token sent in the request header
 apiRouter.use(async (req, res, next) => {
   console.log("req header", req.header);
-  const auth = req.header.authorization;
-  // const auth = req.header("Authorization"); //we get the Authorization header from the request
+  // const auth = req.header.("Authorization");
+  const auth = req.header("Authorization"); //we get the Authorization header from the request
   console.log("auth", auth);
   if (!auth) {
     //if we did not find the Authorization header, hit the next(else{next({) and respond with you need the header
@@ -22,7 +22,6 @@ apiRouter.use(async (req, res, next) => {
     const token = auth.replace("Bearer ", ""); // get rid of the "Bearer " part of the string
 
     try {
-      console.log("oscar");
       const myuser = await findUserByToken(token); // pass token to find user in the ../db/index.js file
       console.log("myuser", myuser);
       next();
