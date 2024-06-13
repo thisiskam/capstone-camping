@@ -203,6 +203,21 @@ const createComment = async ({ comment_text, review_id }) => {
   }
 };
 
+const deleteComment = async (commentId) => {
+  try {
+    const SQL = /*sql*/ `
+    DELETE FROM comments
+    WHERE id = $1
+    RETURNING *
+    `;
+    const response = await db.query(SQL, [commentId]);
+
+    return response.rows[0];
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   fetchItems,
   fetchSingleItem,
@@ -215,4 +230,5 @@ module.exports = {
   deleteReview,
   fetchComments,
   createComment,
+  deleteComment,
 };
