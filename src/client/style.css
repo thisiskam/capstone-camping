@@ -22,6 +22,11 @@ p {
   margin: 20px 0;
 }
 
+a:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 button {
   border: 0;
   padding: 8px;
@@ -468,6 +473,11 @@ main {
 
 .comment-form a {
   color: var(--quaternary-color);
+}
+
+.no-comment {
+  margin-left: 20px;
+  color: var(--secondary-color) !important;
 }
 /* another page */
 
