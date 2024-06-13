@@ -49,7 +49,7 @@ const authenticate = async ({ email, password }) => {
   WHERE email = $1
   `;
   const response = await db.query(SQL, [email]);
-  console.log("user id", response.rows[0].id);
+  console.log("db.users.js user id", response.rows[0].id);
   if (
     !response.rows.length ||
     (await bcrypt.compare(password, response.rows[0].password)) === false
