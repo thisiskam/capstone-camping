@@ -16,6 +16,8 @@ const {
   deleteComment,
 } = require("../db/items.js");
 
+const { isLoggedIn, isAdmin } = require("../db/users.js");
+
 //this is for getting all items
 itemsRouter.get("/", async (req, res, next) => {
   try {
@@ -42,7 +44,7 @@ itemsRouter.get("/:id", async (req, res, next) => {
 });
 
 //this is for creating an item as an admin
-itemsRouter.post("/", async (req, res, next) => {
+itemsRouter.post("/", isLoggedIn, isAdmin, async (req, res, next) => {
   const { title, description, imageURL, category_id } = req.body;
   try {
     const newItem = await createItem({
@@ -58,7 +60,7 @@ itemsRouter.post("/", async (req, res, next) => {
   }
 });
 
-itemsRouter.put("/:id", async (req, res, next) => {
+itemsRouter.put("/:id", isLoggedIn, isAdmin, async (req, res, next) => {
   const itemId = req.params.id;
   const { title, description, imageURL } = req.body;
   try {
@@ -73,7 +75,7 @@ itemsRouter.put("/:id", async (req, res, next) => {
   }
 });
 
-itemsRouter.delete("/:id", async (req, res, next) => {
+itemsRouter.delete("/:id", isLoggedIn, isAdmin, async (req, res, next) => {
   const itemId = req.params.id;
   try {
     const deletedItem = await deleteItem(itemId);
@@ -101,7 +103,7 @@ itemsRouter.get("/:id/reviews", async (req, res, next) => {
   }
 });
 
-itemsRouter.post("/:id/reviews", async (req, res, next) => {
+itemsRouter.post("/:id/reviews", isLoggedIn, async (req, res, next) => {
   try {
     const { review_text, rating } = req.body;
     console.log(req.params);
@@ -109,14 +111,14 @@ itemsRouter.post("/:id/reviews", async (req, res, next) => {
 
     // console.log("id", req.user.id);
 
-    const userId = req.user;
+    const userId = req.user.id;
     console.log("user", userId);
     console.log("oscar");
     const newReview = await createReview({
       review_text,
       rating,
       item_id: id,
-      user_id: 1,
+      user_id: userId,
     });
     res.status(201).json(newReview);
   } catch (error) {
@@ -126,35 +128,43 @@ itemsRouter.post("/:id/reviews", async (req, res, next) => {
 
 // this is not finished, the user ID is hardcoded in.
 
-itemsRouter.put("/:id/reviews/:reviewId", async (req, res, next) => {
-  try {
-    const { reviewId } = req.params;
-    const { review_text, rating } = req.body;
+itemsRouter.put(
+  "/:id/reviews/:reviewId",
+  isLoggedIn,
+  async (req, res, next) => {
+    try {
+      const { reviewId } = req.params;
+      const { review_text, rating } = req.body;
 
-    const updatedReview = await updateReview(reviewId, {
-      review_text,
-      rating,
-    });
+      const updatedReview = await updateReview(reviewId, {
+        review_text,
+        rating,
+      });
 
-    res.status(200).json(updatedReview);
-  } catch (error) {
-    next(error);
+      res.status(200).json(updatedReview);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
-itemsRouter.delete("/:id/reviews/:reviewId", async (req, res, next) => {
-  try {
-    const { reviewId } = req.params;
+itemsRouter.delete(
+  "/:id/reviews/:reviewId",
+  isLoggedIn,
+  async (req, res, next) => {
+    try {
+      const { reviewId } = req.params;
 
-    const deletedReview = await deleteReview(reviewId);
+      const deletedReview = await deleteReview(reviewId);
 
-    res
-      .status(200)
-      .json({ message: "review deleted successfully", deletedReview });
-  } catch (error) {
-    next(error);
+      res
+        .status(200)
+        .json({ message: "review deleted successfully", deletedReview });
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 itemsRouter.get("/reviews/:id/comments", async (req, res, next) => {
   const reviewId = req.params.id;
@@ -169,22 +179,30 @@ itemsRouter.get("/reviews/:id/comments", async (req, res, next) => {
   }
 });
 
-itemsRouter.post("/reviews/:id/comments", async (req, res, next) => {
-  try {
-    const { comment_text } = req.body;
-    const { id: review_id } = req.params;
+itemsRouter.post(
+  "/reviews/:id/comments",
+  isLoggedIn,
+  async (req, res, next) => {
+    try {
+      const { comment_text } = req.body;
+      const { id: review_id } = req.params;
+      const user_id = req.user.id;
 
-    const newComment = await createComment({ comment_text, review_id });
+      const newComment = await createComment({
+        comment_text,
+        review_id,
+        user_id,
+      });
 
-    res.status(201).json(newComment);
-  } catch (error) {
-    console.error("Error creating comment:", error.message);
-    next(error);
+      res.status(201).json(newComment);
+    } catch (error) {
+      console.error("Error creating comment:", error.message);
+      next(error);
+    }
   }
-});
-//route not complete, user id comes back null until authentication is fixed (req.user)
+);
 
-itemsRouter.delete("/comments/:id", async (req, res, next) => {
+itemsRouter.delete("/comments/:id", isLoggedIn, async (req, res, next) => {
   try {
     const { id: commentId } = req.params;
 

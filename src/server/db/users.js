@@ -41,15 +41,44 @@ const getAllUsers = async () => {
   }
 };
 
+const isLoggedIn = (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1];
+
+  if (!token) {
+    return res
+      .status(401)
+      .json({ message: "Unauthorized: not token provided" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    console.log("line 55", req.user);
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: "Unauthorized: invalid token" });
+  }
+};
+
+const isAdmin = (req, res, next) => {
+  console.log("req.user", req.user);
+  if (req.user && req.user.is_admin) {
+    next();
+  } else {
+    res.status(403).json({ message: "Forbidden: Admins only" });
+  }
+};
+
 //---------------authenticate a user
-const authenticate = async ({ email, password }) => {
+const authenticate = async ({ email, password, is_admin }) => {
   const SQL = `--sql
-  SELECT id, password
+  SELECT id, password, is_admin
   FROM users
   WHERE email = $1
   `;
   const response = await db.query(SQL, [email]);
   console.log("db.users.js user id", response.rows[0].id);
+  console.log(response.rows[0]);
   if (
     !response.rows.length ||
     (await bcrypt.compare(password, response.rows[0].password)) === false
@@ -58,7 +87,10 @@ const authenticate = async ({ email, password }) => {
     error.status = 401;
     throw error;
   }
-  const token = await jwt.sign({ id: response.rows[0].id }, JWT);
+  const token = await jwt.sign(
+    { id: response.rows[0].id, is_admin: response.rows[0].is_admin },
+    JWT
+  );
   console.log("this is the token from db/users.js", token);
   return token;
 };
@@ -167,4 +199,6 @@ module.exports = {
   logout,
   // getUser,
   getUserByEmail,
+  isLoggedIn,
+  isAdmin,
 };
