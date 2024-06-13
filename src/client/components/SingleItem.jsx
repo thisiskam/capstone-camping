@@ -10,6 +10,7 @@ export default function SingleItem() {
   const [itemCategory, setItemCategory] = useState()
   const [itemDetails, setItemDetails] = useState([])
   const [itemReviews, setItemReviews] = useState([])
+  const [comments, setComments] = useState([])
   const [imagePath, setImagePath] = useState('')
   const [oneStar, setOneStar] = useState(0)
   const [twoStar, setTwoStar] = useState(0)
@@ -67,6 +68,21 @@ export default function SingleItem() {
   },[])
 
   useEffect (() => {
+    async function getComments() {
+      const promises = itemReviews.map(async (review) => {
+        const res = await fetch(`http://localhost:3000/api/items/reviews/${review.id}/comments`)
+        const api = await res.json()
+        console.log(api);
+        return api
+      })
+      const results = await Promise.all(promises)
+      setComments(results[0])
+    }
+    getComments()
+
+  },[itemReviews])
+
+  useEffect (() => {
     async function findCategory () {
       let res = getCategory()
       if (res.length > 0 && res[0]) {
@@ -75,8 +91,7 @@ export default function SingleItem() {
     findCategory()
 
             token ? setIsLoggedIn(true) : setIsLoggedIn(false)
-                        console.log(token);
-                        console.log(isLoggedIn);
+                     
   },[itemDetails])
 
   function getCategory() {
@@ -152,8 +167,6 @@ function getUserName (id) {
     return user ? user.username : "unknown user"
   }
 
-
-
   useEffect (() => {
     function reviewAverage () {
       if (itemReviews.length !== 0) {
@@ -166,6 +179,18 @@ function getUserName (id) {
     }
     reviewAverage()
   },[itemReviews])
+
+  function filterComments(id) {
+    const commentsToDisplay = comments.filter(comment => comment.review_id === id)
+    console.log(commentsToDisplay);
+    return commentsToDisplay.map((comment) => {return (
+      <div className="comment">
+        <h6 style={{ color: '#' + Math.floor(Math.random()*16777215).toString(16)}}>{getUserName(comment.user_id)}</h6>
+        <p>{comment.comment_text}</p>
+      </div>
+    )})
+  }
+
 
   async function submitReview () {
     console.log("review submitted");
@@ -258,7 +283,7 @@ function getUserName (id) {
                             <textarea className="text-input" type="textarea" rows="6" cols="50" value={reviewInput} onChange={(e) => {setReviewInput(e.target.value)}}/>
                             <br />
                             <button onClick={(e) => {submitReview(e)}}>submit</button>
-                            <a href="">cancel</a>
+                            <a onClick={() => {setReviewClicked(false)}}>cancel</a>
                           </div>
                       </form>
                     </div>
@@ -274,10 +299,10 @@ function getUserName (id) {
                         <p className="review-p">{review.review_text}</p>
                         <div className="item-comments">
                           <h5>COMMENTS</h5>
-                          <div className="comment">
-                            <h6 style={{ color: '#' + Math.floor(Math.random()*16777215).toString(16)}}>username</h6>
-                            <p>auctor laoreet. Praesent eget tellus augue. Donec</p>
-                          </div>
+                          {comments && comments.length > 0  ? 
+                            filterComments(review.id) 
+                            : 
+                            (<p className="no-comment">No Comments</p>)}
                           {isLoggedIn && !commentClicked &&
                             (<button onClick={() => {setCommentClicked(review.id), setReviewClicked(false)}}>Leave Comment</button>)}
                           {commentClicked === review.id &&
@@ -286,7 +311,7 @@ function getUserName (id) {
                               <form className="comment-form">
                                 <textarea className="text-input" type="textarea" rows="4" cols="50" value={reviewInput} onChange={(e) => {setReviewInput(e.target.value)}}/>
                                 <button>submit</button>
-                                <a href="">cancel</a>
+                                <a onClick={() => {setCommentClicked(false)}}>cancel</a>
                               </form>
                             </div>)}
                         </div>
