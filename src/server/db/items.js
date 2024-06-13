@@ -26,14 +26,19 @@ const fetchSingleItem = async (item_id) => {
   }
 };
 
-const createItem = async ({ title, description, imageURL }) => {
+const createItem = async ({ title, description, category_id, imageURL }) => {
   const SQL =
     /*sql*/
     `
-  INSERT INTO items(title, description, imageURL) VALUES ($1, $2, $3) 
+  INSERT INTO items(title, description, category_id, imageURL) VALUES ($1, $2, $3, $4) 
   RETURNING *
   `;
-  const response = await db.query(SQL, [title, description, imageURL]);
+  const response = await db.query(SQL, [
+    title,
+    description,
+    category_id,
+    imageURL,
+  ]);
   return response.rows[0];
 };
 
@@ -188,14 +193,14 @@ const fetchComments = async (reviewId) => {
   }
 };
 
-const createComment = async ({ comment_text, review_id }) => {
+const createComment = async ({ comment_text, review_id, user_id }) => {
   try {
     const SQL = /*sql*/ `
-    INSERT INTO comments (comment_text, review_id)
-    VALUES ($1, $2)
+    INSERT INTO comments (comment_text, review_id, user_id)
+    VALUES ($1, $2, $3)
     RETURNING *
     `;
-    const response = await db.query(SQL, [comment_text, review_id]);
+    const response = await db.query(SQL, [comment_text, review_id, user_id]);
 
     return response.rows[0];
   } catch (error) {
