@@ -13,6 +13,7 @@ const {
   deleteReview,
   fetchComments,
   createComment,
+  deleteComment,
 } = require("../db/items.js");
 
 //this is for getting all items
@@ -182,5 +183,20 @@ itemsRouter.post("/reviews/:id/comments", async (req, res, next) => {
   }
 });
 //route not complete, user id comes back null until authentication is fixed (req.user)
+
+itemsRouter.delete("/comments/:id", async (req, res, next) => {
+  try {
+    const { id: commentId } = req.params;
+
+    const deletedComment = await deleteComment(commentId);
+
+    res
+      .status(200)
+      .json({ message: "Comment deleted successfully", deletedComment });
+  } catch (error) {
+    console.error("Error deleting comment:", error.message);
+    next(error);
+  }
+});
 
 module.exports = itemsRouter;
