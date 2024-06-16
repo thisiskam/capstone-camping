@@ -40,7 +40,7 @@ const Register = () => {
       });
       const result = await response.json();
       setMessage(result.message);
-      // localStorage.setItem("token", result.token);
+      localStorage.setItem("token", result.token);
       navigate("/account");
       if (!response.ok) {
         throw result;

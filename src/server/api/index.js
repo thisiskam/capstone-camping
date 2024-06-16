@@ -9,7 +9,7 @@ apiRouter.use(volleyball);
 
 // TO BE COMPLETED - set `req.user` if possible, using token sent in the request header
 apiRouter.use(async (req, res, next) => {
-  console.log("req header", req.header);
+  // console.log("req header", req.header);
   // const auth = req.header.("Authorization");
   const auth = req.header("Authorization"); //we get the Authorization header from the request
   console.log("auth", auth);
@@ -24,6 +24,7 @@ apiRouter.use(async (req, res, next) => {
     try {
       const myuser = await findUserByToken(token); // pass token to find user in the ../db/index.js file
       console.log("myuser", myuser);
+      return myuser;
       next();
     } catch (error) {
       next(error);
