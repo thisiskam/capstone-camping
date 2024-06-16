@@ -31,11 +31,15 @@ const Login = () => {
       const result = await response.json();
       setMessage(result.message);
       localStorage.setItem("token", result.token);
-      navigate("/account");
+      // console.log("from LOGIN expect token:", result.token);
+      setTimeout(() => {
+        navigate("/account");
+      }, 500);
+      // navigate("/account");
       if (!response.ok) {
         //below looks wrong - KB
         throw result;
-        console.log("this is the result", result);
+        // console.log("this is the result", result);
       }
       setEmail("");
       setPassword("");
