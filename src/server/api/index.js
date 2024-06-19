@@ -23,9 +23,8 @@ apiRouter.use(async (req, res, next) => {
 
     try {
       const myuser = await findUserByToken(token); // pass token to find user in the ../db/index.js file
-      // console.log("myuser", myuser);
-      req.user = myuser;
-      console.log("User set in request", req.user);
+      console.log("myuser", myuser);
+      return myuser;
       next();
     } catch (error) {
       next(error);

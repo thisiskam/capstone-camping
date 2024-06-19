@@ -79,8 +79,8 @@ const authenticate = async ({ email, password, is_admin }) => {
   WHERE email = $1
   `;
   const response = await db.query(SQL, [email]);
-  console.log("db.users.js user id", response.rows[0].id);
-  console.log(response.rows[0]);
+  console.log("BACKEND row 82 db.users.js user id", response.rows[0].id);
+  console.log("BACKEND ROW 83 db user.js", response.rows[0]);
   if (
     !response.rows.length ||
     (await bcrypt.compare(password, response.rows[0].password)) === false
@@ -93,21 +93,22 @@ const authenticate = async ({ email, password, is_admin }) => {
     { id: response.rows[0].id, is_admin: response.rows[0].is_admin },
     JWT
   );
-  console.log("this is the token from db/users.js", token);
+  console.log("BACKEND ROW 96 this is the token from db/users.js", token);
   return token;
 };
 
 // find user by token
 const findUserByToken = async (token) => {
-  console.log("in findUserByToken function", token);
+  console.log("BACKEND: ROW 102 findUserByToken function", token);
   let id;
   // console.log("in findUserByToken", token);
   try {
     const payload = await jwt.verify(token, JWT);
-    // console.log(`payoad`, payload);
+    console.log("BACKEND db/users.js row 107 payload", payload);
     id = payload.id;
+    console.log("BACKEND db/users.js row 108 payload id", payload.id);
   } catch (err) {
-    const error = Error("you not authorized, yo");
+    const error = Error("you not authorized row 110 inFindUserByTOken, yo");
     error.status = 401;
     throw error;
   }
@@ -116,7 +117,7 @@ const findUserByToken = async (token) => {
   `;
   const response = await db.query(SQL, [id]);
   if (!response.rows.length) {
-    const error = Error("you not authorized, yo");
+    const error = Error("you not authorized row 119 inFindUserByTOken, yo");
     error.status = 401;
     throw error;
   }
@@ -202,38 +203,8 @@ const getUserAccount = async (user_id) => {
     `;
     const response = await db.query(SQL, [user_id]);
     return response.rows[0];
-  } catch (error) {
-    throw error;
-  }
+  } catch (error) {}
 };
-
-const getUserReviews = async (user_id) => {
-  try {
-    const SQL = /*sql*/ `
-    SELECT *
-    FROM reviews 
-    WHERE user_id = $1
-    `;
-    const response = await db.query(SQL, [user_id]);
-    return response.rows;
-  } catch (error) {
-    throw error;
-  }
-};
-
-const getUserComments = async (user_id) => {
-  try {
-    const SQL = /*sql*/ `
-    SELECT *
-    FROM comments
-    WHERE user_id = $1
-    `;
-    const response = await db.query(SQL, [user_id]);
-    return response.rows;
-  } catch (error) {
-    throw error;
-  }
-}
 
 module.exports = {
   createUser,
@@ -246,6 +217,4 @@ module.exports = {
   isLoggedIn,
   isAdmin,
   getUserAccount,
-  getUserReviews,
-  getUserComments,
 };

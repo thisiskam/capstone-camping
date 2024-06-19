@@ -5,7 +5,7 @@ const usersRouter = express.Router();
 const {
   createUser,
   authenticate,
-  // findUserByToken,
+  findUserByToken,
   getAllUsers,
   logout,
   getUser,
@@ -94,20 +94,21 @@ usersRouter.post("/login", async (req, res, next) => {
     });
   }
   try {
-    console.log("oscar");
-    const user = await authenticate({ email, password });
-    console.log("user", user);
-    if (user) {
-      const token = jwt.sign(
-        {
-          id: user.id,
-          email,
-        },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: "1w",
-        }
-      );
+    const token = await authenticate({ email, password });
+    console.log("BACKEND AUTHENTICATE function row 98 in api/user.js", token);
+    if (token) {
+      // const findUser = await findUserByToken(user);
+      // return findUser;
+      // .sign
+      // {
+      //   id: user.id,
+      //   email,
+      // },
+      // process.env.JWT_SECRET,
+      // {
+      //   expiresIn: "1w",
+      // }
+      // ();
 
       res.send({
         message: "Login successful!",
