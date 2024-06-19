@@ -10,7 +10,10 @@ const {
   logout,
   getUser,
   getUserByEmail,
+  getUserAccount,
 } = require("../db");
+
+const { isLoggedIn } = require("../db/users.js");
 
 const jwt = require("jsonwebtoken");
 
@@ -178,4 +181,19 @@ usersRouter.post("/logout", async (req, res, next) => {
     next(err);
   }
 });
+
+usersRouter.get("/me", isLoggedIn, async (req, res, next) => {
+  try {
+    const user_id = req.user.id;
+    const accountInfo = await getUserAccount(user_id);
+    if (!accountInfo) {
+      return res.status(404).json({ error: "Account not found" });
+    }
+    res.status(200).json(accountInfo);
+  } catch (error) {
+    console.error("Error retrieving account information", error.message);
+    next(error);
+  }
+});
+
 module.exports = usersRouter;
