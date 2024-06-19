@@ -45,6 +45,7 @@ const isLoggedIn = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
 
   if (!token) {
+    console.log("No token provided on line 48 of isLoggedin");
     return res
       .status(401)
       .json({ message: "Unauthorized: not token provided" });
@@ -56,6 +57,7 @@ const isLoggedIn = (req, res, next) => {
     console.log("line 55", req.user);
     next();
   } catch (error) {
+    console.log("invalid token, line 60 isLoggedIn");
     return res.status(401).json({ message: "Unauthorized: invalid token" });
   }
 };
