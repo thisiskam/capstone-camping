@@ -193,6 +193,18 @@ const getUserByEmail = async (email) => {
   }
 };
 
+const getUserAccount = async (user_id) => {
+  try {
+    const SQL = /*sql*/ `
+    SELECT id, username, email
+    FROM users
+    WHERE id = $1
+    `;
+    const response = await db.query(SQL, [user_id]);
+    return response.rows[0];
+  } catch (error) {}
+};
+
 module.exports = {
   createUser,
   authenticate,
@@ -203,4 +215,5 @@ module.exports = {
   getUserByEmail,
   isLoggedIn,
   isAdmin,
+  getUserAccount,
 };
