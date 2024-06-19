@@ -122,6 +122,7 @@ const createReview = async ({ review_text, rating, item_id, user_id }) => {
     ]);
     return response.rows[0];
   } catch (error) {
+    console.log("Error creating review:", error);
     throw error;
   }
 };
@@ -208,6 +209,32 @@ const createComment = async ({ comment_text, review_id, user_id }) => {
   }
 };
 
+const updateComment = async ({ commentId, comment_text, userId }) => {
+  try {
+    console.log(
+      `updating comment ${commentId} with text "${comment_text}" for user ${userId}`
+    );
+    const SQL = /*sql*/ `
+    UPDATE comments
+    SET comment_text = $1, user_id = $2
+    WHERE id = $3
+    RETURNING *
+    `;
+
+    const response = await db.query(SQL, [comment_text, userId, commentId]);
+
+    if (response.rows.length === 0) {
+      console.log("no comment found with the given ID");
+      throw new Error("Comment not found");
+    }
+
+    return response.rows[0];
+  } catch (error) {
+    console.error("error in updateComment function:", error.message);
+    throw error;
+  }
+};
+
 const deleteComment = async (commentId) => {
   try {
     const SQL = /*sql*/ `
@@ -236,4 +263,5 @@ module.exports = {
   fetchComments,
   createComment,
   deleteComment,
+  updateComment,
 };

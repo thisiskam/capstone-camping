@@ -14,6 +14,7 @@ const {
   fetchComments,
   createComment,
   deleteComment,
+  updateComment,
 } = require("../db/items.js");
 
 const { isLoggedIn, isAdmin } = require("../db/users.js");
@@ -106,14 +107,14 @@ itemsRouter.get("/:id/reviews", async (req, res, next) => {
 itemsRouter.post("/:id/reviews", isLoggedIn, async (req, res, next) => {
   try {
     const { review_text, rating } = req.body;
-    console.log(req.params);
+    // console.log(req.params);
     const { id } = req.params;
 
     // console.log("id", req.user.id);
 
     const userId = req.user.id;
-    console.log("user", userId);
-    console.log("oscar");
+    console.log("Creating review with userId:", userId);
+
     const newReview = await createReview({
       review_text,
       rating,
@@ -122,6 +123,7 @@ itemsRouter.post("/:id/reviews", isLoggedIn, async (req, res, next) => {
     });
     res.status(201).json(newReview);
   } catch (error) {
+    console.log("Error creating review:", error);
     next(error);
   }
 });
@@ -184,8 +186,8 @@ itemsRouter.post(
   isLoggedIn,
   async (req, res, next) => {
     try {
-      const { comment_text } = req.body;
       const { id: review_id } = req.params;
+      const { comment_text } = req.body;
       const user_id = req.user.id;
 
       const newComment = await createComment({
@@ -216,5 +218,28 @@ itemsRouter.delete("/comments/:id", isLoggedIn, async (req, res, next) => {
     next(error);
   }
 });
+
+itemsRouter.put(
+  "/reviews/:reviewId/comments/:commentId",
+  isLoggedIn,
+  async (req, res, next) => {
+    try {
+      const { reviewId, commentId } = req.params;
+      console.log("line 228 in itemsRouter request body:", req.body);
+      const { comment_text } = req.body;
+      const userId = req.user.id;
+
+      const updatedComment = await updateComment({
+        commentId,
+        comment_text,
+        userId,
+      });
+      res.status(200).json(updatedComment);
+    } catch (error) {
+      console.error("Error updating comment:", error.message);
+      next(error);
+    }
+  }
+);
 
 module.exports = itemsRouter;

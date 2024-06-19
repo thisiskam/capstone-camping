@@ -748,24 +748,24 @@ const items = [
 ];
 
 //---------------------------------------------------------INSERT ITEMS function---------------------------------------------------------
-const createItem = async ({ title, description, category_id, imageURL }) => {
-  try {
-    const {
-      rows: [item],
-    } = await db.query(
-      /*sql*/
-      `
-      INSERT INTO items(title, description, category_id, imageURL)
-      VALUES($1, $2, $3, $4)
-      RETURNING *
-      `,
-      [title, description, category_id, imageURL]
-    );
-    return item;
-  } catch (error) {
-    throw error;
-  }
-};
+// const createItem = async ({ title, description, category_id, imageURL }) => {
+//   try {
+//     const {
+//       rows: [item],
+//     } = await db.query(
+//       /*sql*/
+//       `
+//       INSERT INTO items(title, description, category_id, imageURL)
+//       VALUES($1, $2, $3, $4)
+//       RETURNING *
+//       `,
+//       [title, description, category_id, imageURL]
+//     );
+//     return item;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 //---------------------------------------------------------INSERT ITEMS function---------------------------------------------------------
 const insertItems = async () => {
@@ -907,24 +907,24 @@ const reviews = [
 ];
 
 //---------------------------------------------------------CREATE REVIEW function---------------------------------------------------------
-const createReview = async ({ review_text, item_id, user_id, rating }) => {
-  try {
-    const {
-      rows: [review],
-    } = await db.query(
-      /*sql*/
-      `
-      INSERT INTO reviews(review_text, item_id, user_id, rating)
-      VALUES($1, $2, $3, $4)
-      RETURNING *
-      `,
-      [review_text, item_id, user_id, rating]
-    );
-    return review;
-  } catch (error) {
-    throw error;
-  }
-};
+// const createReview = async ({ review_text, item_id, user_id, rating }) => {
+//   try {
+//     const {
+//       rows: [review],
+//     } = await db.query(
+//       /*sql*/
+//       `
+//       INSERT INTO reviews(review_text, item_id, user_id, rating)
+//       VALUES($1, $2, $3, $4)
+//       RETURNING *
+//       `,
+//       [review_text, item_id, user_id, rating]
+//     );
+//     return review;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 //---------------------------------------------------------INSERT REVIEWS function---------------------------------------------------------
 const insertReviews = async () => {
@@ -1039,24 +1039,24 @@ const comments = [
 ];
 
 //---------------------------------------------------------CREATE COMMENT function---------------------------------------------------------
-const createComment = async ({ comment_text, user_id, review_id }) => {
-  try {
-    const {
-      rows: [comment],
-    } = await db.query(
-      /*sql*/
-      `
-      INSERT INTO comments(comment_text, user_id, review_id)
-      VALUES($1, $2, $3)
-      RETURNING *
-      `,
-      [comment_text, user_id, review_id]
-    );
-    return comment;
-  } catch (error) {
-    throw error;
-  }
-};
+// const createComment = async ({ comment_text, user_id, review_id }) => {
+//   try {
+//     const {
+//       rows: [comment],
+//     } = await db.query(
+//       /*sql*/
+//       `
+//       INSERT INTO comments(comment_text, user_id, review_id)
+//       VALUES($1, $2, $3)
+//       RETURNING *
+//       `,
+//       [comment_text, user_id, review_id]
+//     );
+//     return comment;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 //---------------------------------------------------------INSERT COMMENTS function---------------------------------------------------------
 const insertComments = async () => {
