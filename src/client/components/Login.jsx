@@ -7,6 +7,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  const [token, setToken] = useState(null);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -31,7 +32,7 @@ const Login = () => {
       const result = await response.json();
       setMessage(result.message);
       localStorage.setItem("token", result.token);
-      // console.log("from LOGIN expect token:", result.token);
+      console.log("FRONTEND ROW 34 from LOGIN expect token:", result.token);
       setTimeout(() => {
         navigate("/account");
       }, 500);

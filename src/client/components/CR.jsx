@@ -13,7 +13,8 @@ const CR = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
-  const token = localStorage.getItem("token");
+  // const token = localStorage.getItem("token");
+  console.log("FRONT END CR line 17 token", localStorage.getItem("token"));
 
   useEffect(() => {
     async function fetchItems() {
@@ -23,7 +24,7 @@ const CR = () => {
     }
     fetchItems();
 
-    token ? setIsAdmin(true) : setIsAdmin(false);
+    // token ? setIsAdmin(true) : setIsAdmin(false);
   }, []);
 
   const displayedItems = !searchParams

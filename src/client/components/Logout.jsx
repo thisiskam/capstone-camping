@@ -10,9 +10,13 @@ export default function Logout() {
   async function handleClick() {
     try {
       setToken(localStorage.removeItem("token"));
+      console.log(
+        "FRONTEND ROW 13 log out is the token gone?",
+        localStorage.getItem("token")
+      );
       navigate("/");
     } catch (error) {
-      // console.error("error in logout", error);
+      console.error("error in logout", error);
     }
   }
   return (
