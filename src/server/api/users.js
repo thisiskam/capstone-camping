@@ -12,6 +12,7 @@ const {
   getUserByEmail,
   getUserAccount,
   getUserReviews,
+  getUserComments,
 } = require("../db");
 
 const { isLoggedIn } = require("../db/users.js");
@@ -207,6 +208,20 @@ usersRouter.get("/me/reviews", isLoggedIn, async (req, res, next) => {
     res.status(200).json(reviews);
   } catch (error) {
     console.error("error retrieving user reviews:", error.message);
+    next(error);
+  }
+});
+
+usersRouter.get("/me/comments", isLoggedIn, async (req, res, next) => {
+  try {
+    const user_id = req.user.id;
+    const comments = await getUserComments(user_id);
+    if (!comments.length) {
+      return res.status(404).json({ error: "no comments found" });
+    }
+    res.status(200).json(comments);
+  } catch (error) {
+    console.error("Error retrieving user comments:", error.message);
     next(error);
   }
 });

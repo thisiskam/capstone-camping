@@ -219,6 +219,20 @@ const getUserReviews = async (user_id) => {
   } catch (error) {
     throw error;
   }
+};
+
+const getUserComments = async (user_id) => {
+  try {
+    const SQL = /*sql*/ `
+    SELECT *
+    FROM comments
+    WHERE user_id = $1
+    `;
+    const response = await db.query(SQL, [user_id]);
+    return response.rows;
+  } catch (error) {
+    throw error;
+  }
 }
 
 module.exports = {
@@ -233,4 +247,5 @@ module.exports = {
   isAdmin,
   getUserAccount,
   getUserReviews,
+  getUserComments,
 };
