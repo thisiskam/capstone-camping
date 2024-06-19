@@ -202,8 +202,24 @@ const getUserAccount = async (user_id) => {
     `;
     const response = await db.query(SQL, [user_id]);
     return response.rows[0];
-  } catch (error) {}
+  } catch (error) {
+    throw error;
+  }
 };
+
+const getUserReviews = async (user_id) => {
+  try {
+    const SQL = /*sql*/ `
+    SELECT *
+    FROM reviews 
+    WHERE user_id = $1
+    `;
+    const response = await db.query(SQL, [user_id]);
+    return response.rows;
+  } catch (error) {
+    throw error;
+  }
+}
 
 module.exports = {
   createUser,
@@ -216,4 +232,5 @@ module.exports = {
   isLoggedIn,
   isAdmin,
   getUserAccount,
+  getUserReviews,
 };
