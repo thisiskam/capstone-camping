@@ -34,6 +34,7 @@ export default function SingleItem() {
   const [newImage, setNewImage] = useState('')
   const [newCategory, setNewCategory] = useState('')
   const [editRating, setEditRating] = useState(null)
+  const [enlarged, setEnlarged] = useState(false)
 
 
   // used for disabling buttons
@@ -662,8 +663,8 @@ function getUserName (id) {
           {/* right container */}
           <div className="right-container">
 
-            {/* item image takes item from state after it finds the right path */}
-            <img src={imagePath}/>
+            {/* item image takes item from state after it finds the right path. when item is clicked it gives it a class name of enlarged and elarges on css*/}
+            <img onClick={() => {!enlarged ? setEnlarged(true) : setEnlarged(false)}} className={`right-image ${enlarged && 'enlarged'}`} src={imagePath}/>
 
             {/* if "edit item" is clicked it returns a inport for someone to send a new image, populates with the path of the old image */}
             {itemEditable && (<div><label>Image Url</label><input value={newImage} className="input_image" onChange={(e) => {setNewImage(e.target.value)}}></input></div>)}

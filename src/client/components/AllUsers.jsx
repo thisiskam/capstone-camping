@@ -6,10 +6,7 @@ import { useNavigate } from "react-router-dom";
 export default function AllUsers() {
   const navigate = useNavigate();
   const [users, setUsers] = useState();
-  const [isAdmin, setIsAdmin] = useState(false);
-  const token = localStorage.getItem("token");
-
-  // const [searchParams, setSearchParams] = useState("");
+  const [addUser, setAddUser] = useState(false)
 
   useEffect(() => {
     async function getAllUsers() {
@@ -19,8 +16,6 @@ export default function AllUsers() {
       setUsers(api.users);
     }
     getAllUsers();
-
-    token ? setIsAdmin(true) : setIsAdmin(false);
   }, []);
 
   // console.log("users", users);
@@ -32,7 +27,6 @@ export default function AllUsers() {
       <h1 className="h1">USERS</h1>
       <div className="home-content1">
         <div className="left-container1">
-          {isAdmin === true ? (
             <div>
               <img
                 src="src/client/assets/user-id-svgrepo-com (1).svg"
@@ -54,9 +48,6 @@ export default function AllUsers() {
                 ITEMS
               </button>
             </div>
-          ) : (
-            <div></div>
-          )}
         </div>
         <div className="center-container1">
           <table>
@@ -85,7 +76,6 @@ export default function AllUsers() {
         </div>
 
         <div className="right-container1">
-          {isAdmin === true ? (
             <div>
               <button
                 className="green-btn"
@@ -97,9 +87,6 @@ export default function AllUsers() {
               </button>
               <br />
             </div>
-          ) : (
-            <div></div>
-          )}
         </div>
       </div>
     </div>
