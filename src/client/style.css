@@ -371,7 +371,7 @@ main {
   margin-bottom: 20px;
 }
 
-.star-icon-review {
+.star-icon-edit {
   width: 20px;
   margin-left: 3px;
 }
@@ -529,6 +529,12 @@ main {
 
 .cat_select, .input_image{
   color: var(--primary-color);
+}
+.star-icon-review {
+  padding-top: 20px;
+  width: 20px;
+  margin-left: 3px;
+
 }
 /* another page */
 

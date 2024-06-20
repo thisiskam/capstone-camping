@@ -192,6 +192,20 @@ export default function SingleItem() {
     setImage()
   },[itemDetails])
 
+  function starCount (rating) {
+    if(rating === 1 ) {
+      return <img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/>
+    } if(rating === 2) {
+      return <><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/></>
+    } if(rating === 3) {
+      return <><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/></>
+    } if(rating === 4) {
+      return <><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/></>
+    } if(rating === 5) {
+      return <><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/></>
+    }
+  }
+
   // for each review, if statement that updates the state of ratings for each number rating
   function howManyStars() {
     itemReviews.forEach((review) => {
@@ -550,7 +564,7 @@ function getUserName (id) {
                           <div className="first-line-review">
                             <h6 style={{ color: '#' + Math.floor(Math.random()*16777215).toString(16)}}>{user && user.username}</h6>
                             <input className="num-input" type="number" min='1' max='5' value={numInput} onChange={(e) => {setNumInput(e.target.value)}}/>
-                            <img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/>
+                            <img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-edit"/>
                           </div>
                           <div className="text-submit">
                             <textarea className="text-input" type="textarea" rows="6" cols="50" value={reviewInput} onChange={(e) => {setReviewInput(e.target.value)}}/>
@@ -571,14 +585,15 @@ function getUserName (id) {
                         <div className="first-line-review">
 
                           {/* returns user that posted the review by calling get username function  */}
-                          <h6 style={{ color: '#' + Math.floor(Math.random()*16777215).toString(16)}}>{getUserName(review.user_id)}</h6>
+                          <h6 className="username" style={{ color: '#' + Math.floor(Math.random()*16777215).toString(16)}}>{getUserName(review.user_id)}</h6>
 
                           {/* reviewEditable stores the id of the review when any "edit review" button has been clicked. this ternary checks to see if an edit button was clicked and then makes the rating it was clicked for editable. if not it just returns the number rating  */}
                           {review.id === reviewEditable ? 
-                              <input className="num-input" type="number" min='1' max='5' value={editRating} onChange={(e) => {setEditRating(e.target.value)}}/>
+                              <><input className="num-input" type="number" min='1' max='5' value={editRating} onChange={(e) => {setEditRating(e.target.value)}}/>
+                              <img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-edit"/></>
                               : 
-                              <p>{review.rating}</p>}
-                              <img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/>
+                              starCount(review.rating)
+                              }
                         </div>
 
                         {/* reviewEditable stores the id of the review when any "edit review" button has been clicked. this ternary checks to see if an edit button was clicked and then makes the review it was clicked for editable. if not it just returns the review text  */}

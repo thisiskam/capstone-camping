@@ -15,13 +15,14 @@ const CR = () => {
   const [items, setItems] = useState([]);
   const [searchParams, setSearchParams] = useState("");
   const [isAdmin, setIsAdmin] = useState(true);
+  const [reviews, setReviews] = useState([])
 
   // variable to use navigate
   const navigate = useNavigate();
 
   // grab token
-  const token = localStorage.getItem("token");
-  console.log("FRONT END CR line 17 token", localStorage.getItem("token"));
+  // const token = localStorage.getItem("token");
+  // console.log("FRONT END CR line 17 token", localStorage.getItem("token"));
 
   // function should work to fetch the loggen in user and check if they are an admin then store admin to state
   useEffect(() => {
@@ -46,6 +47,34 @@ const CR = () => {
   }, []);
   
 
+  // function to get reviews
+  useEffect (() => {
+    // maps over each review and gets all the comments associated with any review on the page. then stores them all in an array in state
+    async function getReviews() {
+      const promises = items.map(async (item) => {
+        const res = await fetch(`http://localhost:3000/api/items/${item.id}/reviews/`)
+        const api = await res.json()
+        return api.getReviews
+      })
+      const results = await Promise.all(promises)
+      const flattenedResults= results.flat()
+      console.log(flattenedResults);
+      setReviews(flattenedResults)
+    }
+    getReviews()
+  },[items])
+
+  function getStars (id) {
+    const itemReviews = reviews.filter((review) => review.item_id === id) 
+    console.log(itemReviews);
+    if (reviews.length !== 0) {
+      const sum = itemReviews.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue.rating
+      } , 0 )
+      const average = sum / itemReviews.length
+      console.log(average);
+    }
+  }
   // fetches all items and stores them in state
   useEffect(() => {
     async function fetchItems() {
