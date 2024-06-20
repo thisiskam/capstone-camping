@@ -18,6 +18,7 @@ const {
 const { isLoggedIn } = require("../db/users.js");
 
 const jwt = require("jsonwebtoken");
+const JWT = process.env.JWT_SECRET;
 
 //get all users: USE http://localhost:3000/api/users/
 usersRouter.get("/", async (req, res, next) => {
@@ -32,7 +33,7 @@ usersRouter.get("/", async (req, res, next) => {
   }
 });
 
-//register api call - CONFIRMED THIS IS WORKING AS DESIGNED
+//r-----------------------------------------------------------REGISTER-----------------------------------------------------------
 usersRouter.post("/register", async (req, res, next) => {
   const { username, email, password } = req.body;
 
@@ -75,16 +76,7 @@ usersRouter.post("/register", async (req, res, next) => {
   }
 });
 
-// call this after login
-usersRouter.get("/me", async (req, res, next) => {
-  try {
-    res.send(req.user);
-  } catch (error) {
-    next(error);
-  }
-});
-
-//log in a user: USE http://localhost:3000/api/users/login
+//------------------------------------------------LOGIN USE http://localhost:3000/api/users/login
 usersRouter.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -128,48 +120,7 @@ usersRouter.post("/login", async (req, res, next) => {
   //   return token;
 });
 
-usersRouter.post("/register", async (req, res, next) => {
-  const { name, email, password } = req.body;
-
-  try {
-    const _user = await getUserByEmail(email);
-
-    if (_user) {
-      next({
-        name: "UserExistsError",
-        message: "A user with that email already exists",
-      });
-    }
-
-    //create users
-    const user = await createUser({
-      name,
-      email,
-      password,
-    });
-
-    const token = jwt.sign(
-      {
-        id: user.id,
-        email,
-      },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "1w",
-      }
-    );
-
-    res.send({
-      message: "Sign up successful!",
-      token,
-    });
-    console.log("this is the token you want to use:", token);
-  } catch ({ name, message }) {
-    next({ name, message });
-  }
-});
-
-//log out a user: USE http://localhost:3000/api/logout
+//------------------------------------------------LOGOUT -----------------------------------------------------------
 usersRouter.post("/logout", async (req, res, next) => {
   console.log("where is the break, it is not here");
 
@@ -184,21 +135,36 @@ usersRouter.post("/logout", async (req, res, next) => {
     next(err);
   }
 });
-
+//------------------------------------------------GET ME INFO-----------------------------------------------------------
 usersRouter.get("/me", isLoggedIn, async (req, res, next) => {
   try {
-    const user_id = req.user.id;
-    const accountInfo = await getUserAccount(user_id);
-    if (!accountInfo) {
-      return res.status(404).json({ error: "Account not found" });
-    }
-    res.status(200).json(accountInfo);
+    res.send(req.user);
+    console.log(
+      "----------------------BACKEND API users.js ROW 142 req.user",
+      req.user
+    );
+    // const user = req.meLoggedIn;
+    // console.log(
+    //   "*****************BACKEND api/users.js row 190: req.user",
+    //   req.meLoggedIn
+    // );
+    // res.send(`User loggedin: ${user.user}`);
+    // console.log(
+    //   "*****************BACKEND api/users.js row 192: req.user",
+    //   user.user
+    // );
+    // const user_id = req.token;
+    // const accountInfo = await getUserAccount(user_id);
+    // if (!accountInfo) {
+    //   return res.status(404).json({ error: "Account not found" });
+    // }
+    // res.status(200).json(accountInfo);
   } catch (error) {
     console.error("Error retrieving account information", error.message);
     next(error);
   }
 });
-
+//------------------------------------------------GET ME REVIEWS-----------------------------------------------------------
 usersRouter.get("/me/reviews", isLoggedIn, async (req, res, next) => {
   try {
     const user_id = req.user.id;
@@ -228,3 +194,54 @@ usersRouter.get("/me/comments", isLoggedIn, async (req, res, next) => {
 });
 
 module.exports = usersRouter;
+
+// -------------------------------------------------DUPLICATE IGNORE!!! REGISTER-----------------------------------------------------------
+// usersRouter.post("/register", async (req, res, next) => {
+//   const { name, email, password } = req.body;
+
+//   try {
+//     const _user = await getUserByEmail(email);
+
+//     if (_user) {
+//       next({
+//         name: "UserExistsError",
+//         message: "A user with that email already exists",
+//       });
+//     }
+
+//     //create users
+//     const user = await createUser({
+//       name,
+//       email,
+//       password,
+//     });
+
+//     const token = jwt.sign(
+//       {
+//         id: user.id,
+//         email,
+//       },
+//       process.env.JWT_SECRET,
+//       {
+//         expiresIn: "1w",
+//       }
+//     );
+
+//     res.send({
+//       message: "Sign up successful!",
+//       token,
+//     });
+//     console.log("this is the token you want to use:", token);
+//   } catch ({ name, message }) {
+//     next({ name, message });
+//   }
+// });
+
+// // call this after login
+// usersRouter.get("/me", async (req, res, next) => {
+//   try {
+//     res.send(req.user);
+//   } catch (error) {
+//     next(error);
+//   }
+// });

@@ -20,15 +20,19 @@ apiRouter.use(async (req, res, next) => {
     // if the Authorization header was found and starts with the string "Bearer"
 
     const token = auth.replace("Bearer ", ""); // get rid of the "Bearer " part of the string
+    // console.log("BACKEND API index.js row 23token", token);
+    req.token = token; // set the token to the request object
+    console.log("BACKEND API index.js row 25 token", req.token);
+    next();
 
-    try {
-      const myuser = await findUserByToken(token); // pass token to find user in the ../db/index.js file
-      console.log("myuser", myuser);
-      return myuser;
-      next();
-    } catch (error) {
-      next(error);
-    }
+    // try {
+    //   const meLoggedIn = await findUserByToken(token); // pass token to find user in the ../db/index.js file
+    //   console.log("meLoggedIn", meLoggedIn);
+    //   req.meLoggedIn = meLoggedIn;
+    //   next();
+    // } catch (error) {
+    //   next(error);
+    // }
   } else {
     next({
       name: "AuthorizationHeaderError",
