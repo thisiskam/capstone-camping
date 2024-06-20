@@ -41,24 +41,34 @@ const getAllUsers = async () => {
   }
 };
 
-const isLoggedIn = (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1];
-
-  if (!token) {
-    console.log("No token provided on line 48 of isLoggedin");
+const isLoggedIn = async (req, res, next) => {
+  console.log("BACKEND DB USERS.JS ROW 45", req.token);
+  // const token = req.token;
+  // console.log("------------------BACKEND DB/users.jsline 46", token);
+  // console.log("47 something else");
+  // if (!token) {
+  //   console.log("No token provided on line 48 of isLoggedin");
+  //   return res
+  //     .status(401)
+  //     .json({ message: "Unauthorized: not token provided" });
+  // }
+  // console.log("something else");
+  try {
+    console.log("EFFORTING ROW 57 isLoggedIn");
+    const token = req.token;
+    req.user = await findUserByToken(token);
+    // req.token = decode;
+    console.log("BACKEND DB USERS.JS ROW 58", req.user);
+    next();
+    // const decoded = jwt.verify(token, JWT);
+    // req.token = decoded;
+    // console.log("BACKEND DB USERS.JS ROW 58", req.user);
+    // next();
+  } catch (error) {
+    console.log("invalid token, line 66 isLoggedIn");
     return res
       .status(401)
-      .json({ message: "Unauthorized: not token provided" });
-  }
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
-    console.log("line 55", req.user);
-    next();
-  } catch (error) {
-    console.log("invalid token, line 60 isLoggedIn");
-    return res.status(401).json({ message: "Unauthorized: invalid token" });
+      .json({ message: " DB users.js row 64 Unauthorized: invalid token" });
   }
 };
 
@@ -121,7 +131,8 @@ const findUserByToken = async (token) => {
     error.status = 401;
     throw error;
   }
-  return response.rows[0];
+  user = response.rows[0];
+  return user;
 };
 
 //log out
@@ -206,6 +217,34 @@ const getUserAccount = async (user_id) => {
   } catch (error) {}
 };
 
+const getUserReviews = async (user_id) => {
+  try {
+    const SQL = /*sql*/ `
+    SELECT *
+    FROM reviews 
+    WHERE user_id = $1
+    `;
+    const response = await db.query(SQL, [user_id]);
+    return response.rows;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getUserComments = async (user_id) => {
+  try {
+    const SQL = /*sql*/ `
+    SELECT *
+    FROM comments
+    WHERE user_id = $1
+    `;
+    const response = await db.query(SQL, [user_id]);
+    return response.rows;
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   createUser,
   authenticate,
@@ -217,4 +256,6 @@ module.exports = {
   isLoggedIn,
   isAdmin,
   getUserAccount,
+  getUserReviews,
+  getUserComments,
 };
