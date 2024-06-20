@@ -444,7 +444,7 @@ main {
 }
 
 .num-input {
-  color: var(--primary-color);
+  color: var(--primary-color) !important;
   margin: 20px 0px;
 }
 
@@ -479,6 +479,57 @@ main {
   margin-left: 20px;
   color: var(--secondary-color) !important;
 }
+
+.button_box_reviews {
+  display: flex;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+.button_box_comments {
+  display: flex;
+  justify-content: center;
+}
+
+.button_box_items {
+  display: flex;
+  justify-content: center;
+}
+
+.delete_button {
+  margin: 5px;
+  background-color: red !important;
+}
+
+.edit_button {
+  margin: 5px;
+  background-color: #333 !important;
+}
+
+.item_input_title {
+  margin-top: 20px;
+  font-size: 22px;
+  margin-bottom: 20px;
+  margin-left: 5px;
+}
+
+.item_input_description {
+  margin-bottom: 20px;
+}
+
+
+.items_a {
+  color: var(--quaternary-color) !important;
+  margin-bottom: 20px;
+}
+
+.cat_input {
+  width: 90px;
+}
+
+.cat_select, .input_image{
+  color: var(--primary-color);
+}
 /* another page */
 
 /* another thing */
@@ -504,3 +555,5 @@ main {
 } */
 
 /* Add more styling for other elements if needed */
+
+
