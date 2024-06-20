@@ -9,13 +9,44 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const CR = () => {
+
+
+  // state storage
   const [items, setItems] = useState([]);
-  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
-  // const token = localStorage.getItem("token");
+  const [isAdmin, setIsAdmin] = useState(true);
+
+  // variable to use navigate
+  const navigate = useNavigate();
+
+  // grab token
+  const token = localStorage.getItem("token");
   console.log("FRONT END CR line 17 token", localStorage.getItem("token"));
 
+  // function should work to fetch the loggen in user and check if they are an admin then store admin to state
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        console.log("FRONT END ACCOUNT PAGE line 18 token", token);
+        const apiResponse = await fetch("/api/users/me", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log(apiResponse);
+        const result = await apiResponse.json();
+        console.log(result);
+        setIsAdmin(result.is_admin)
+      } catch (error) {
+        console.error("account me route not worky cuz", error);
+      }
+    }
+    fetchUser();
+  }, []);
+  
+
+  // fetches all items and stores them in state
   useEffect(() => {
     async function fetchItems() {
       const response = await fetch("http://localhost:3000/api/items");
@@ -23,17 +54,20 @@ const CR = () => {
       setItems(api.items);
     }
     fetchItems();
-
-    // token ? setIsAdmin(true) : setIsAdmin(false);
   }, []);
 
+  // diplayed items change if there are search params. only displays items that match search params
   const displayedItems = !searchParams
     ? items
     : items.filter((item) =>
         item.title.toLowerCase().includes(searchParams.toLowerCase())
       );
+
+
   return (
     <div className="App">
+
+      {/* hero section */}
       <img
         src="src/client/assets/pexels-bazil-elias-1351340-2612228.jpg"
         alt=""
@@ -41,8 +75,12 @@ const CR = () => {
       />
       <h1 className="main-header">LOCALLY REVIEWED CAMPING ITEMS</h1>
       <div className="home-content">
+
+        {/* search box */}
         <div className="left-container">
           <div className="search-header">SEARCH</div>
+
+          {/* input sets search params to imputed  */}
           <input
             type="text"
             className="search-input"
@@ -51,6 +89,8 @@ const CR = () => {
               setSearchParams(e.target.value);
             }}
           />
+
+          {/* returns buttons for admin only, for all item page and all users page. navigates admin to those pages */}
           {isAdmin === true ? (
             <div>
               <img
@@ -85,6 +125,8 @@ const CR = () => {
         </div>
         <div className="center-container">
           <h2 className="items-header">REVIEWED ITEMS</h2>
+
+          {/* maps over each item and displayes it on the page, each item is a link that will navigate you to that item */}
           {displayedItems.map((item) => {
             return (
               <div key={item.id} className="single-item">
