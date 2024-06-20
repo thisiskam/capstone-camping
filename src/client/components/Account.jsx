@@ -22,8 +22,8 @@ export default function Account() {
             Authorization: `Bearer ${token}`,
           },
         });
-        const result = await apiResponse.json();
-        return setLoggedInUser(result);
+        const user = await apiResponse.json();
+        return setLoggedInUser(user);
       } catch (error) {
         console.error("account me route not worky cuz", error);
       }
