@@ -1,5 +1,5 @@
 import { useState , useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
 export default function SingleItem() {
 
@@ -34,6 +34,7 @@ export default function SingleItem() {
   const [newImage, setNewImage] = useState('')
   const [newCategory, setNewCategory] = useState('')
   const [editRating, setEditRating] = useState(null)
+  const [enlarged, setEnlarged] = useState(false)
 
 
   // used for disabling buttons
@@ -132,12 +133,13 @@ export default function SingleItem() {
         return api
       })
       const results = await Promise.all(promises)
-      setComments(results[0])
+      const flattenedResults = results.flat()
+      setComments(flattenedResults)
     }
     getComments()
-  },[itemReviews])
+  },[itemReviews, commentClicked])
 
-
+  console.log(comments);
   // returns the whole category stored in an object that matches the item.id 
   function getCategory() {
     return categories.filter(category => category.id === itemDetails.category_id);
@@ -192,6 +194,20 @@ export default function SingleItem() {
     setImage()
   },[itemDetails])
 
+  function starCount (rating) {
+    if(rating === 1 ) {
+      return <img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/>
+    } if(rating === 2) {
+      return <><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/></>
+    } if(rating === 3) {
+      return <><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/></>
+    } if(rating === 4) {
+      return <><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/></>
+    } if(rating === 5) {
+      return <><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/><img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/></>
+    }
+  }
+
   // for each review, if statement that updates the state of ratings for each number rating
   function howManyStars() {
     itemReviews.forEach((review) => {
@@ -234,7 +250,8 @@ export default function SingleItem() {
           return accumulator + currentValue.rating
         } , 0 )
         const average = sum / itemReviews.length
-        setAverage(average)
+        const avRounded = average.toFixed(1)
+        setAverage(avRounded)
       }
     }
     reviewAverage()
@@ -247,45 +264,54 @@ function getUserName (id) {
     return user ? user.username : "unknown user"
   }
 
+// check for comments
+function commentsQ (id) {
+  const filtered = comments.filter(comment => id === comment.review_id)
+  if (filtered.length !== 0) {
+    return true
+  } else {
+    return false
+  }
+}
 
 // submit new review
   async function submitReview (e) {
-    e.preventDefault()
-    console.log("got here");
     try{
       const response = await fetch("http://localhost:3000/api/items/" + id + "/reviews", {
         method: 'POST',
-        body: {
-          "review-text" : reviewInput,
-          "rating" : numInput
-        },
         headers: {
-          authorization: "bearer " + token,
+          authorization: "Bearer " + token,
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+          "review_text" : reviewInput,
+          "rating" : numInput
+        })
       })
       const json = await response.json()
-      console.log("response", json);
       console.log("review submitted");
     } catch(error) {
       console.log(error);
     }
     setNumInput(0)
     setReviewInput("")
+    setReviewClicked(false)
   }
 
 
 // submit new comment
   async function submitComment (id) {
+    console.log(commentInput);
+    console.log(id);
     try{
-      const response = await fetch("http://localhost:3000/api/items/reviews" + id + "/comments",  {
+      const response = await fetch("http://localhost:3000/api/items/reviews/" + id + "/comments",  {
         method: 'POST',
-        body: {
-          "comment-text" : commentInput
-        },
+        body: JSON.stringify({
+          "comment_text" : commentInput
+        }),
         headers: {
           'Content-Type': 'application/json',
-          authorization: "bearer " + token
+          authorization: "Bearer " + token
         }
       })
       const json = await response.json()
@@ -295,6 +321,7 @@ function getUserName (id) {
       console.log(error);
     }
     setCommentInput(null)
+    setCommentClicked(false)
   }
 
 
@@ -550,14 +577,14 @@ function getUserName (id) {
                           <div className="first-line-review">
                             <h6 style={{ color: '#' + Math.floor(Math.random()*16777215).toString(16)}}>{user && user.username}</h6>
                             <input className="num-input" type="number" min='1' max='5' value={numInput} onChange={(e) => {setNumInput(e.target.value)}}/>
-                            <img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/>
+                            <img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-edit"/>
                           </div>
                           <div className="text-submit">
                             <textarea className="text-input" type="textarea" rows="6" cols="50" value={reviewInput} onChange={(e) => {setReviewInput(e.target.value)}}/>
                             <br />
 
                             {/* button is disabled unless the user writes a review and inputs a number rating. then calls the submit review function. cancel button hides review box by changing state of setreviewclicked */}
-                            <button disabled={!numInput || !reviewInput ? disabled : notDisabled} onClick={(e) => {submitReview(e)}}>submit</button>
+                            <button disabled={!numInput || !reviewInput ? disabled : notDisabled} onClick={(e) => {submitReview(e);}}>submit</button>
                             <a onClick={() => {setReviewClicked(false)}}>cancel</a>
                           </div>
                       </form>
@@ -571,14 +598,15 @@ function getUserName (id) {
                         <div className="first-line-review">
 
                           {/* returns user that posted the review by calling get username function  */}
-                          <h6 style={{ color: '#' + Math.floor(Math.random()*16777215).toString(16)}}>{getUserName(review.user_id)}</h6>
+                          <h6 className="username" style={{ color: '#' + Math.floor(Math.random()*16777215).toString(16)}}>{getUserName(review.user_id)}</h6>
 
                           {/* reviewEditable stores the id of the review when any "edit review" button has been clicked. this ternary checks to see if an edit button was clicked and then makes the rating it was clicked for editable. if not it just returns the number rating  */}
                           {review.id === reviewEditable ? 
-                              <input className="num-input" type="number" min='1' max='5' value={editRating} onChange={(e) => {setEditRating(e.target.value)}}/>
+                              <><input className="num-input" type="number" min='1' max='5' value={editRating} onChange={(e) => {setEditRating(e.target.value)}}/>
+                              <img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-edit"/></>
                               : 
-                              <p>{review.rating}</p>}
-                              <img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-review"/>
+                              starCount(review.rating)
+                              }
                         </div>
 
                         {/* reviewEditable stores the id of the review when any "edit review" button has been clicked. this ternary checks to see if an edit button was clicked and then makes the review it was clicked for editable. if not it just returns the review text  */}
@@ -614,7 +642,7 @@ function getUserName (id) {
 
                         {/* comments section */}
                         <div className="item-comments">
-                          <h5>COMMENTS</h5>
+                          {commentsQ(review.id) === true  && <h5>COMMENTS</h5>}
 
                           {/* waits for comments to load in state, then checks if there are comments. if there are comments it calls a function to filter through the comments and returns comments that are associated with the specific review. else returns a p with "no comments" */}
                           {comments && comments.length > 0  ? 
@@ -647,8 +675,8 @@ function getUserName (id) {
           {/* right container */}
           <div className="right-container">
 
-            {/* item image takes item from state after it finds the right path */}
-            <img src={imagePath}/>
+            {/* item image takes item from state after it finds the right path. when item is clicked it gives it a class name of enlarged and elarges on css*/}
+            <img onClick={() => {!enlarged ? setEnlarged(true) : setEnlarged(false)}} className={`right-image ${enlarged && 'enlarged'}`} src={imagePath}/>
 
             {/* if "edit item" is clicked it returns a inport for someone to send a new image, populates with the path of the old image */}
             {itemEditable && (<div><label>Image Url</label><input value={newImage} className="input_image" onChange={(e) => {setNewImage(e.target.value)}}></input></div>)}
