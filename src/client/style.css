@@ -427,11 +427,10 @@ main {
 .first-line-review {
   display: flex;
   align-items: center;
-  margin-top: -5px;
 }
 
 .first-line-review h6 {
-  margin-right: 30px;
+  margin-right: 20px;
 }
 
 .review {

@@ -1,5 +1,5 @@
 import { useState , useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
 export default function SingleItem() {
 
@@ -133,12 +133,13 @@ export default function SingleItem() {
         return api
       })
       const results = await Promise.all(promises)
-      setComments(results[0])
+      const flattenedResults = results.flat()
+      setComments(flattenedResults)
     }
     getComments()
-  },[itemReviews])
+  },[itemReviews, commentClicked])
 
-
+  console.log(comments);
   // returns the whole category stored in an object that matches the item.id 
   function getCategory() {
     return categories.filter(category => category.id === itemDetails.category_id);
@@ -249,7 +250,8 @@ export default function SingleItem() {
           return accumulator + currentValue.rating
         } , 0 )
         const average = sum / itemReviews.length
-        setAverage(average)
+        const avRounded = average.toFixed(1)
+        setAverage(avRounded)
       }
     }
     reviewAverage()
@@ -262,45 +264,54 @@ function getUserName (id) {
     return user ? user.username : "unknown user"
   }
 
+// check for comments
+function commentsQ (id) {
+  const filtered = comments.filter(comment => id === comment.review_id)
+  if (filtered.length !== 0) {
+    return true
+  } else {
+    return false
+  }
+}
 
 // submit new review
   async function submitReview (e) {
-    e.preventDefault()
-    console.log("got here");
     try{
       const response = await fetch("http://localhost:3000/api/items/" + id + "/reviews", {
         method: 'POST',
-        body: {
-          "review-text" : reviewInput,
-          "rating" : numInput
-        },
         headers: {
-          authorization: "bearer " + token,
+          authorization: "Bearer " + token,
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+          "review_text" : reviewInput,
+          "rating" : numInput
+        })
       })
       const json = await response.json()
-      console.log("response", json);
       console.log("review submitted");
     } catch(error) {
       console.log(error);
     }
     setNumInput(0)
     setReviewInput("")
+    setReviewClicked(false)
   }
 
 
 // submit new comment
   async function submitComment (id) {
+    console.log(commentInput);
+    console.log(id);
     try{
-      const response = await fetch("http://localhost:3000/api/items/reviews" + id + "/comments",  {
+      const response = await fetch("http://localhost:3000/api/items/reviews/" + id + "/comments",  {
         method: 'POST',
-        body: {
-          "comment-text" : commentInput
-        },
+        body: JSON.stringify({
+          "comment_text" : commentInput
+        }),
         headers: {
           'Content-Type': 'application/json',
-          authorization: "bearer " + token
+          authorization: "Bearer " + token
         }
       })
       const json = await response.json()
@@ -310,6 +321,7 @@ function getUserName (id) {
       console.log(error);
     }
     setCommentInput(null)
+    setCommentClicked(false)
   }
 
 
@@ -572,7 +584,7 @@ function getUserName (id) {
                             <br />
 
                             {/* button is disabled unless the user writes a review and inputs a number rating. then calls the submit review function. cancel button hides review box by changing state of setreviewclicked */}
-                            <button disabled={!numInput || !reviewInput ? disabled : notDisabled} onClick={(e) => {submitReview(e)}}>submit</button>
+                            <button disabled={!numInput || !reviewInput ? disabled : notDisabled} onClick={(e) => {submitReview(e);}}>submit</button>
                             <a onClick={() => {setReviewClicked(false)}}>cancel</a>
                           </div>
                       </form>
@@ -630,7 +642,7 @@ function getUserName (id) {
 
                         {/* comments section */}
                         <div className="item-comments">
-                          <h5>COMMENTS</h5>
+                          {commentsQ(review.id) === true  && <h5>COMMENTS</h5>}
 
                           {/* waits for comments to load in state, then checks if there are comments. if there are comments it calls a function to filter through the comments and returns comments that are associated with the specific review. else returns a p with "no comments" */}
                           {comments && comments.length > 0  ? 
