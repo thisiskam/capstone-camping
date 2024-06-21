@@ -221,8 +221,9 @@ const getUserReviews = async (user_id) => {
   try {
     const SQL = /*sql*/ `
     SELECT *
-    FROM reviews 
-    WHERE user_id = $1
+    FROM reviews
+    JOIN items ON reviews.item_id = items.id
+    WHERE reviews.user_id = $1
     `;
     const response = await db.query(SQL, [user_id]);
     return response.rows;

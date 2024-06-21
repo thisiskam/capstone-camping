@@ -1,13 +1,28 @@
 // import stuff to import
 import "./AllUsers.css";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 
 export default function AdminItems() {
   const navigate = useNavigate();
   const [items, setItems] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
   const token = localStorage.getItem("token");
+
+  const [categories, setCategories] = useState([]);
+
+  const sampleCategories = [
+    { id: 1, name: "Backpack" },
+    { id: 2, name: "Tent" },
+    { id: 3, name: "Hiking Boots" },
+    { id: 4, name: "Cookware" },
+    { id: 5, name: "Sleeping Bag" },
+    { id: 6, name: "Water Bottle" },
+  ];
+  function findCategory(id) {
+    const cat = categories.find((category) => id === category.id);
+    return cat.name;
+  }
 
   useEffect(() => {
     async function getAllItems() {
@@ -17,13 +32,12 @@ export default function AdminItems() {
       setItems(api.items);
     }
     getAllItems();
+    setCategories(sampleCategories);
 
     token ? setIsAdmin(true) : setIsAdmin(false);
   }, []);
-
   //   console.log("items", items);
   const itemsToDisplay = items;
-
   return (
     <div className="App1">
       <h1 className="h1">ITEMS</h1>
@@ -71,8 +85,18 @@ export default function AdminItems() {
                   return (
                     <tr key={item.id}>
                       <td className="h2">{item.id}</td>
-                      <td className="h2">{item.title}</td>
-                      <td className="h2">{item.category_id}</td>
+                      <td className="h2">
+                        <a
+                          className="h2"
+                          href=""
+                          onClick={() => {
+                            navigate(`/items/${item.id}`);
+                          }}
+                        >
+                          {item.title}
+                        </a>
+                      </td>
+                      <td className="h2">{findCategory(item.category_id)}</td>
                       {/* <td className="h2">{user.is_admin ? "true" : "false"}</td> */}
                     </tr>
                   );
@@ -83,11 +107,20 @@ export default function AdminItems() {
         <div className="right-container1">
           {isAdmin === true ? (
             <div>
+              {/* <p>
+                <NavLink
+                  to="additem"
+                  className="text-link"
+                  className="green-btn"
+                >
+                  +ITEM
+                </NavLink>
+              </p> */}
               <button
                 className="green-btn"
-                // onClick={() => {
-                //   navigate("/allusers");
-                // }}
+                onClick={() => {
+                  navigate("/adminitems/additem");
+                }}
               >
                 +ITEM
               </button>
