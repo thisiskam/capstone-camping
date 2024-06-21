@@ -1,5 +1,5 @@
 import { useState , useEffect } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function SingleItem() {
 
@@ -35,6 +35,8 @@ export default function SingleItem() {
   const [newCategory, setNewCategory] = useState('')
   const [editRating, setEditRating] = useState(null)
   const [enlarged, setEnlarged] = useState(false)
+  const [colors, setColors] = useState([])
+  const navigate = useNavigate()
 
 
   // used for disabling buttons
@@ -60,40 +62,41 @@ export default function SingleItem() {
     {id:6,  name: "Water Bottle"}]
 
   
-    // temporary function to decode the token and exract the id from it
-  function getIdFromToken (token) {
-    try {
-        const tokenParts = token.split('.');
-        const encodedPayload = tokenParts[1];
-        const decodedPayload = atob(encodedPayload);
-        const payloadObject = JSON.parse(decodedPayload);
-        const id = payloadObject.id;
-        return id
-    } catch (error) {
-        console.error('Error decoding or extracting email from JWT:', error);
-        return null;
-    }
-  }
+  // generates random color for each user
+  useEffect(() => {
+    if(colors.length == 0) {
+      const generateColors = users.map(() => '#' + Math.floor(Math.random() * 16777215).toString(16));
+      const generateColors2 = users.map(() => '#' + Math.floor(Math.random() * 16777215).toString(16));
+      const newColors = generateColors.concat(generateColors2);
+      setColors(newColors)}
+  }, [users]);
 
 
-  // uses temporary function that decodes the token and uses it to search through all users and store the logged in users info
-  useEffect (() => {
-     function findMe() {
-      const id = getIdFromToken(token);    
-      const me = users.find(user => user.id === id)
-      setUser(me)
+
+
+  // function should work to fetch the loggen in user and check if they are an admin then store admin to state
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const apiResponse = await fetch("/api/users/me", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const result = await apiResponse.json()
+        setIsLoggedIn(true)
+        setUser(result)
+      } catch (error) {
+        console.error("account me route not worky cuz", error);
+      }
     }
-    if(users) {findMe()} 
-  },[users, getIdFromToken])
-  
+    fetchUser();
+  }, []);
   
 
   // only runs on initial render
   useEffect (() => {
-
-    // if a token exists, sets in state that the user is logged in
-    token ? setIsLoggedIn(true) : setIsLoggedIn(false)
-
     // sets categories to temporary array
     setCategories(sampleCategories)
 
@@ -139,7 +142,6 @@ export default function SingleItem() {
     getComments()
   },[itemReviews, commentClicked])
 
-  console.log(comments);
   // returns the whole category stored in an object that matches the item.id 
   function getCategory() {
     return categories.filter(category => category.id === itemDetails.category_id);
@@ -327,7 +329,38 @@ function commentsQ (id) {
 
   // edit exsisting review
   async function editReview (id) {
+    try {
+      console.log("got here");
+      const response = await fetch(`http://localhost:3000/api/items/${itemDetails.id}/reviews/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          review_text: editReviewText,
+          rating: editRating
+        })
+      });
 
+      if (response.ok) {
+        console.log("Review updated successfully:");
+        const updatedReview = await response.json();
+        setReviewEditable(false)
+        setEditReviewText('')
+        setEditRating(0)
+        setItemReviews(prevReviews => 
+          prevReviews.map(review => 
+            review.id === id ? updatedReview : review
+          )
+        );
+      } else {
+        console.log("Failed to update review:");
+      }
+    } catch (error) {
+      console.error("Error updating review:", error);
+      setMessage('Error updating review');
+    }
   }
 
 
@@ -335,17 +368,64 @@ function commentsQ (id) {
   async function deleteReview (id) {
     const confirmed = window.confirm("Are you sure you want to delete this item?");
     if (confirmed) {
-    
+      if (confirmed) {
+        try{
+            const response = await fetch("http://localhost:3000/api/items/" + itemDetails.id + "/reviews/" + id,  {
+              method: 'DELETE',
+              headers: {
+                'Content-Type': 'application/json',
+                authorization: "Bearer " + token
+              }
+            })
+            if(response.ok){
+              console.log("Review Deleted");
+              setItemReviews(prevReviews => prevReviews.filter(review => review.id !== id));
+            }
+            else {
+              console.log(json);
+            }
+        } catch(error) {
+          console.log(error);
+        }
     } else {
     console.log("Deletion cancelled by user");
   }
 
-  }
+  }}
 
 
   // edit existing comment
-  async function editComment (id) {
+  async function editComment (id, review_id) {
+    try {
+      const response = await fetch(`http://localhost:3000/api/items/reviews/${review_id}/comments/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          comment_text: editCommentText
+        })
+      });
 
+      if (response.ok) {
+        console.log("Comment updated successfully:");
+        const updatedComment = await response.json();
+        setCommentEditable(false)
+        setEditCommentText('')
+        setComments(prevComments => 
+          prevComments.map(comment => 
+            comment.id === id ? updatedComment : comment
+          )
+        );
+
+      } else {
+        console.log("Failed to update comment");
+      }
+    } catch (error) {
+      console.error("Error updating comment:", error);
+      setMessage('Error updating comment');
+    }
   }
 
 
@@ -353,12 +433,28 @@ function commentsQ (id) {
   async function deleteComment (id) {
     const confirmed = window.confirm("Are you sure you want to delete this item?");
     if (confirmed) {
-    
+      try{
+          const response = await fetch("http://localhost:3000/api/items/comments/" + id,  {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              authorization: "Bearer " + token
+            }
+          })
+          if(response.ok){
+            console.log("Comment Deleted");
+            setComments(prevComments => prevComments.filter(comment => comment.id !== id));
+          }
+          else {
+            console.log(json);
+          }
+      } catch(error) {
+        console.log(error);
+      }
     } else {
     console.log("Deletion cancelled by user");
     }
   }
-
 
   // edit the item on the page
   async function editItem (id) {
@@ -368,13 +464,57 @@ function commentsQ (id) {
     console.log(newTitle);
     console.log(newItemDecription);
     console.log(newImage);
+    console.log(itemDetails.id);
+      try {
+        const response = await fetch("http://localhost:3000/api/items/" + id, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            authorization: "Bearer " + token
+          },
+          body: JSON.stringify({
+            title: newTitle,
+            description: newItemDecription,
+            imageURL: newImage,
+            category_id: catId
+          }),
+        });
+    
+        if (!response.ok) {
+          throw new Error('Failed to update item');
+        }
+    
+        const updatedItem = await response.json();
+        setItemEditable(false)
+        setItemDetails(updatedItem)
+      } catch (error) {
+        console.error('Error updating item:', error);
+        throw error; 
+      }
   }
 
   // delete the item all together
   async function deleteItem (id) {
     const confirmed = window.confirm("Are you sure you want to delete this item?");
     if (confirmed) {
-    
+        try {
+          const response = await fetch(`http://localhost:3000/api/items/${id}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              authorization: `Bearer ${token}`
+            }
+          });
+          if (!response.ok) {
+            throw new Error('Failed to delete item');
+          }
+          console.log('Item deleted successfully:')
+          navigate("/")
+        } catch (error) {
+          console.error('Error deleting item:', error);
+          throw error;
+        }
+      
     } else {
     console.log("Deletion cancelled by user");
     }
@@ -392,7 +532,7 @@ function commentsQ (id) {
       <div className="comment" key={comment.id}>
 
         {/* gets random color for username, gets username associated with the comment using the getUserName function */}
-        <h6 style={{ color: '#' + Math.floor(Math.random()*16777215).toString(16)}}>{getUserName(comment.user_id)}</h6>
+        <h6 style={{ color: colors[comment.user_id] }}>{getUserName(comment.user_id)}</h6>
 
         {/* when "edit comment" is clicked it stores the comments id. this checks to see if the comment had its edit button clicked. if it was it returns a form for the user to edit their comment, if not it just returns the comment tect in a p */}
         {comment.id === commentEditable ? 
@@ -418,7 +558,7 @@ function commentsQ (id) {
                   <div>
 
                     {/* calls function to edit the comment */}
-                    <button onSubmit={() => editComment(comment.id)}>submit</button>
+                    <button onClick={() => editComment(comment.id, comment.review_id )}>submit</button>
                     <br />
 
                     {/* cancels the edit */}
@@ -575,7 +715,7 @@ function commentsQ (id) {
                     <div className="review">
                       <form>
                           <div className="first-line-review">
-                            <h6 style={{ color: '#' + Math.floor(Math.random()*16777215).toString(16)}}>{user && user.username}</h6>
+                            <h6 style={{ color: colors[user.id] }}>{user && user.username}</h6>
                             <input className="num-input" type="number" min='1' max='5' value={numInput} onChange={(e) => {setNumInput(e.target.value)}}/>
                             <img src="/src/client/assets/star-icon.svg" alt="star" className="star-icon-edit"/>
                           </div>
@@ -598,7 +738,7 @@ function commentsQ (id) {
                         <div className="first-line-review">
 
                           {/* returns user that posted the review by calling get username function  */}
-                          <h6 className="username" style={{ color: '#' + Math.floor(Math.random()*16777215).toString(16)}}>{getUserName(review.user_id)}</h6>
+                          <h6 className="username" style={{ color: colors[review.user_id] }}>{getUserName(review.user_id)}</h6>
 
                           {/* reviewEditable stores the id of the review when any "edit review" button has been clicked. this ternary checks to see if an edit button was clicked and then makes the rating it was clicked for editable. if not it just returns the number rating  */}
                           {review.id === reviewEditable ? 
@@ -631,7 +771,7 @@ function commentsQ (id) {
                                     <div>
 
                                       {/* submit button calls edit review function */}
-                                      <button onSubmit={() => editReview(review.id)}>submit</button>
+                                      <button onClick={() => editReview(review.id)}>submit</button>
                                       <br />
 
                                       {/* cancel rests edited text in state */}
@@ -657,7 +797,7 @@ function commentsQ (id) {
                           {/* if "leave comment" button is clicked, returns a form for the user to leave a comment only for the review that matches the id that is stored in commentClicked state (or else forms would show up in every review on the page). shows username of the logged in user in an h6 with a random color. i wrote {user && user.username} so the render waits till the user has been stored in state before it looks for a username. the number input allows you to pick a number between 1 and 5 and then stores that in state. the text area stores the new review in state to be submitted later*/}
                           {commentClicked === review.id &&
                             (<div className="comment">
-                              <h6 style={{ color: '#' + Math.floor(Math.random()*16777215).toString(16)}}>{user && user.username}</h6>
+                              <h6 style={{ color: colors[user.id]}}>{user && user.username}</h6>
                               <form className="comment-form">
                                 <textarea className="text-input" type="textarea" rows="4" cols="50" value={commentInput} onChange={(e) => {setCommentInput(e.target.value)}}/>
 
