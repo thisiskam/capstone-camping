@@ -16,6 +16,7 @@ import Register from "./components/Register";
 import Account from "./components/Account";
 import AllUsers from "./components/AllUsers";
 import AdminItems from "./components/AdminItems";
+import AddItem from "./components/AddItem";
 
 // bring in the layouts
 import RootLayout from "./layouts/RootLayout";
@@ -32,7 +33,8 @@ const router = createBrowserRouter(
         <Route path="login/register" element={<Register />} />
         <Route path="allusers" element={<AllUsers />} />
         <Route path="adminitems" element={<AdminItems />} />
-        <Route path="register" element={<Register />} />
+        <Route path="adminitems/additem" element={<AddItem />} />
+        {/* <Route path="register" element={<Register />} /> */}
         {/* <Route path="login/register" element={<Register />} /> */}
       </Route>
     </>
