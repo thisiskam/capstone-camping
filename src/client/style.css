@@ -176,7 +176,7 @@ main {
 }
 
 .items-header {
-  text-decoration:overline;
+  text-decoration: overline;
   font-weight: bold;
   margin: 10px;
   color: var(--primary-color);
@@ -218,7 +218,6 @@ main {
   cursor: pointer;
 }
 
-
 .no_reviews {
   font-size: 10px;
   color: var(--primary-color);
@@ -244,6 +243,10 @@ main {
   align-items: center;
   text-align: center;
   cursor: pointer;
+}
+
+.green-btn:hover {
+  background: #05541d;
 }
 
 /* Place the login in the center */
@@ -312,17 +315,16 @@ main {
   width: 100%;
   border-radius: 10px;
   transition: transform 0.3s ease, z-index 0s ease 0.3s;
-  transform-origin: top right;  /* This will make the item grow down and to the left */
+  transform-origin: top right; /* This will make the item grow down and to the left */
 }
 
 .right-image:hover {
   border: var(--quaternary-color) 1px solid;
-
 }
 
 .right-image.enlarged {
-  transform: scale(4);  /* Adjust the scale factor as needed */
-  z-index: 1;  /* Ensure the enlarged item appears above others */
+  transform: scale(4); /* Adjust the scale factor as needed */
+  z-index: 1; /* Ensure the enlarged item appears above others */
   transition: transform 0.3s ease, z-index 0s ease 0s;
 }
 
@@ -413,8 +415,8 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 20px; 
-} 
+  margin-right: 20px;
+}
 .item-reviews h4 {
   margin-bottom: 20px;
 }
@@ -481,11 +483,12 @@ main {
   margin-bottom: 20px;
 }
 
-.comment p, .comment h6 {
+.comment p,
+.comment h6 {
   color: var(--primary-color);
 }
 
-.item-reviews button{
+.item-reviews button {
   margin-bottom: 20px;
   background-color: var(--quaternary-color);
 }
@@ -564,7 +567,6 @@ main {
   margin-bottom: 20px;
 }
 
-
 .items_a {
   color: var(--quaternary-color) !important;
   margin-bottom: 20px;
@@ -574,14 +576,14 @@ main {
   width: 90px;
 }
 
-.cat_select, .input_image{
+.cat_select,
+.input_image {
   color: var(--primary-color);
 }
 .star-icon-review {
   padding-top: 20px;
   width: 20px;
   margin-left: 3px;
-
 }
 /* another page */
 
@@ -608,5 +610,3 @@ main {
 } */
 
 /* Add more styling for other elements if needed */
-
-

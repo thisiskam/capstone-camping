@@ -85,7 +85,7 @@ const users = [
     username: "A",
     email: "a@a.com",
     password: "a",
-    is_admin: false,
+    is_admin: true,
   },
   {
     username: "Isabella García",

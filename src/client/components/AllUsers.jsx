@@ -6,7 +6,9 @@ import { useNavigate } from "react-router-dom";
 export default function AllUsers() {
   const navigate = useNavigate();
   const [users, setUsers] = useState();
-  const [addUser, setAddUser] = useState(false)
+  const [addUser, setAddUser] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     async function getAllUsers() {
@@ -16,6 +18,7 @@ export default function AllUsers() {
       setUsers(api.users);
     }
     getAllUsers();
+    token ? setIsAdmin(true) : setIsAdmin(false);
   }, []);
 
   // console.log("users", users);
@@ -27,27 +30,27 @@ export default function AllUsers() {
       <h1 className="h1">USERS</h1>
       <div className="home-content1">
         <div className="left-container1">
-            <div>
-              <img
-                src="src/client/assets/user-id-svgrepo-com (1).svg"
-                width="30px"
-                alt=""
-              />
-              <button className="selected">USERS</button>
-              <br />
-              <img
-                src="src/client/assets/tent-4-svgrepo-com.svg"
-                width="30px"
-                alt=""
-              />
-              <button
-                onClick={() => {
-                  navigate("/adminitems");
-                }}
-              >
-                ITEMS
-              </button>
-            </div>
+          <div>
+            <img
+              src="src/client/assets/user-id-svgrepo-com (1).svg"
+              width="30px"
+              alt=""
+            />
+            <button className="selected">USERS</button>
+            <br />
+            <img
+              src="src/client/assets/tent-4-svgrepo-com.svg"
+              width="30px"
+              alt=""
+            />
+            <button
+              onClick={() => {
+                navigate("/adminitems");
+              }}
+            >
+              ITEMS
+            </button>
+          </div>
         </div>
         <div className="center-container1">
           <table>
@@ -67,26 +70,28 @@ export default function AllUsers() {
                       <td className="h2">{user.id}</td>
                       <td className="h2">{user.username}</td>
                       <td className="h2">{user.email}</td>
-                      <td className="h2">{user.is_admin ? "true" : "false"}</td>
+                      <td className="h2">{user.is_admin ? "YES" : "NO"}</td>
                     </tr>
                   );
                 })}
             </tbody>
           </table>
         </div>
-
         <div className="right-container1">
+          {isAdmin === true ? (
             <div>
               <button
                 className="green-btn"
-                // onClick={() => {
-                //   navigate("/allusers");
-                // }}
+                onClick={() => {
+                  navigate("/allusers/adduser");
+                }}
               >
                 +USER
               </button>
-              <br />
             </div>
+          ) : (
+            <div></div>
+          )}
         </div>
       </div>
     </div>
