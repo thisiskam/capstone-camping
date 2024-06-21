@@ -1,4 +1,5 @@
 // import stuff
+import "/src/client/components/Account.css"
 import Logout from "./Logout";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,8 +12,8 @@ export default function Account() {
   const token = localStorage.getItem("token");
   console.log("FRONT END ACCOUNT PAGE line 12 token", token);
   const [loggedInUser, setLoggedInUser] = useState(null);
-  const [myReviews, setMyReviews] = useState(null);
-  const [myComments, setMyComments] = useState(null);
+  const [myReviews, setMyReviews] = useState([]);
+  const [myComments, setMyComments] = useState([]);
   const Navigate = useNavigate();
 
   useEffect(() => {
@@ -90,79 +91,86 @@ export default function Account() {
   //   }
   // };
   return (
-    <>
-      <div>
-        {loggedInUser && (
-          <div>
-            <section>
-              <label>My Username:</label>
-              <label>{loggedInUser.username}</label>
-              <br></br>
-              <label>My email:</label>
-              <label>{loggedInUser.email}</label>
-              <br></br>
-              {/* <td className="h2">{user.is_admin ? "true" : "false"}</td> */}
-              <label>My Role:</label>
-              <label>
-                {loggedInUser.is_admin ? "Admin" : "Non-Admin-User"}
-              </label>
-            </section>
-          </div>
-        )}
-      </div>
-      <div>
-        {myReviews && (
-          <div>
-            <section>
-              <h2>My Reviews:</h2>
-              {myReviews.map((review) => {
-                return (
-                  <div key={review.id}>
-                    <p
-                      className="single-item-title"
-                      onClick={() => {
-                        Navigate(`/items/${review.id}`);
-                      }}
-                    >
-                      {review.title}
-                    </p>
+    <div className="app">
+      <h1 className="myaccount-title">My Account</h1>
+      <div className="home-content">
+        <div className="left-container user-details">
+          {loggedInUser && (
+            <>
+                <label><b>My Username:</b></label>
+                <label>{loggedInUser.username}</label>
+                <br />
+                <label><b>My email:</b></label>
+                <label>{loggedInUser.email}</label>
+                <br />
+                {/* <td className="h2">{user.is_admin ? "true" : "false"}</td> */}
+                <label><b>My Role:</b></label>
+                <label>
+                  {loggedInUser.is_admin ? "Admin" : "Non-Admin-User"}
+                </label>
+            </>
+          )}
+        </div>
+        <div className="center-container account-center">
+          {myReviews.length > 0 && myComments.length > 0 
+          ?
+            <>
+              <div>
+                {myReviews.length > 0 && (
+                  <div>
+                    <section>
+                      <h2>My Reviews:</h2>
+                      {myReviews && myReviews.map((review) => {
+                        return (
+                          <div key={review.id}>
+                            <p
+                              className="single-item-title"
+                              onClick={() => {
+                                Navigate(`/items/${review.id}`);
+                              }}
+                            >
+                              {review.title}
+                            </p>
+                          </div>
+                        );
+                      })}
+                    </section>
                   </div>
-                );
-              })}
-            </section>
-          </div>
-        )}
-      </div>
-      <br></br>
-      <br></br>
-      <div>
-        {myComments && (
-          <div>
-            <section>
-              <h2>My Comments:</h2>
-              {myComments.map((comment) => {
-                return (
-                  <div key={comment.id}>
-                    <p
-                      className="single-item-title"
-                      onClick={() => {
-                        Navigate(`/items/${comment.id}`);
-                      }}
-                    >
-                      {comment.title}
-                    </p>
+                )}
+              </div>
+              <div>
+                {myComments.length > 0 && (
+                  <div>
+                    <section>
+                      <h2>My Comments:</h2>
+                      {myComments && myComments.map((comment) => {
+                        return (
+                          <div key={comment.id}>
+                            <p
+                              className="single-item-title"
+                              onClick={() => {
+                                Navigate(`/items/${comment.id}`);
+                              }}
+                            >
+                              {comment.title}
+                            </p>
+                          </div>
+                        );
+                      })}
+                    </section>
                   </div>
-                );
-              })}
-            </section>
-          </div>
-        )}
+                )}
+              </div>
+            </>
+            :
+            <p className="no-reviews">No Comments Or Reviews Yet</p>
+          }
+        </div>
+        <div className="right-container logout-box">
+          <Logout />
+        </div>
       </div>
-      <br></br>{" "}
-      <div>
-        <Logout />
-      </div>
-    </>
+    </div>
   );
 }
 

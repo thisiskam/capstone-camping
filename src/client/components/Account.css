@@ -1,0 +1,55 @@
+.logout-box {
+    max-width: 80px !important;
+    display: flex;
+    justify-content: center;
+    max-height: 40px;
+}
+.app {
+    width: 100%;
+    align-items: center;
+}
+
+.home-content {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-left: 25px;
+}
+
+.account-center {
+    min-width: 50%;
+}
+
+.no-reviews {
+    color: var(--primary-color);
+    font-weight: bold;
+    text-align: center;
+    margin-right: 20px;
+    font-size: 20px;
+    margin-top: 50px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+    text-decoration: underline;
+}
+
+.user-details {
+    padding: 20px;
+    max-width: 200px !important;
+    align-items: flex-start;
+}
+
+.user-details label {
+    color: rgba(0, 0, 0, 0.573);
+    font-size: 18px;
+}
+
+label b {
+    color: var(--primary-color);
+    text-transform: uppercase;
+    font-size: 17px;
+}
+
+.myaccount-title {
+    text-align: center;
+}

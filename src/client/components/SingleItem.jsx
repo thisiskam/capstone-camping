@@ -85,8 +85,12 @@ export default function SingleItem() {
           },
         });
         const result = await apiResponse.json()
-        setIsLoggedIn(true)
-        setUser(result)
+        if (result.id) {
+          setIsLoggedIn(true)
+          setUser(result)
+        } 
+        console.log("not Logged In");
+        
       } catch (error) {
         console.error("account me route not worky cuz", error);
       }
@@ -278,6 +282,7 @@ function commentsQ (id) {
 
 // submit new review
   async function submitReview (e) {
+    event.preventDefault()
     try{
       const response = await fetch("http://localhost:3000/api/items/" + id + "/reviews", {
         method: 'POST',
@@ -290,21 +295,21 @@ function commentsQ (id) {
           "rating" : numInput
         })
       })
-      const json = await response.json()
+      const newReview = await response.json();
+      setNumInput(0)
+      setReviewInput("")
+      setReviewClicked(false)
+      setItemReviews([...itemReviews, newReview]);
       console.log("review submitted");
     } catch(error) {
       console.log(error);
     }
-    setNumInput(0)
-    setReviewInput("")
-    setReviewClicked(false)
   }
 
 
 // submit new comment
   async function submitComment (id) {
-    console.log(commentInput);
-    console.log(id);
+    event.preventDefault()
     try{
       const response = await fetch("http://localhost:3000/api/items/reviews/" + id + "/comments",  {
         method: 'POST',
@@ -316,14 +321,12 @@ function commentsQ (id) {
           authorization: "Bearer " + token
         }
       })
-      const json = await response.json()
-      console.log(json);
       console.log("comment submitted");
+      setCommentInput(null)
+      setCommentClicked(false)
     } catch(error) {
       console.log(error);
     }
-    setCommentInput(null)
-    setCommentClicked(false)
   }
 
 
