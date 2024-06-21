@@ -1,7 +1,7 @@
 // import stuff
 import Logout from "./Logout";
 import { useEffect, useState } from "react";
-// import { getUserAccount } from "../src/server/db/users.js";
+import { useNavigate } from "react-router-dom";
 
 // the main page stuff
 export default function Account() {
@@ -11,6 +11,9 @@ export default function Account() {
   const token = localStorage.getItem("token");
   console.log("FRONT END ACCOUNT PAGE line 12 token", token);
   const [loggedInUser, setLoggedInUser] = useState(null);
+  const [myReviews, setMyReviews] = useState(null);
+  const [myComments, setMyComments] = useState(null);
+  const Navigate = useNavigate();
 
   useEffect(() => {
     async function fetchUser() {
@@ -41,13 +44,34 @@ export default function Account() {
             Authorization: `Bearer ${token}`,
           },
         });
-        const user = await apiResponse.json();
-        return setLoggedInUser(user);
+        const reviews = await apiResponse.json();
+        console.log("FRONT END ACCOUNT PAGE line 46 reviews", reviews);
+        return setMyReviews(reviews);
       } catch (error) {
-        console.error("account me route not worky cuz", error);
+        console.error("my reviews route no-worky cuz", error);
       }
     }
     fetchMyReviews();
+  }, []);
+
+  useEffect(() => {
+    async function fetchMyComments() {
+      try {
+        console.log("FRONT END ACCOUNT PAGE line 37 token", token);
+        const apiResponse = await fetch("/api/users/me/comments", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const comments = await apiResponse.json();
+        console.log("FRONT END ACCOUNT PAGE line 67 reviews", comments);
+        return setMyComments(comments);
+      } catch (error) {
+        console.error("my comments no-worky cuz", error);
+      }
+    }
+    fetchMyComments();
   }, []);
   // const handleLogout = async () => {
   //   try {
@@ -82,6 +106,54 @@ export default function Account() {
               <label>
                 {loggedInUser.is_admin ? "Admin" : "Non-Admin-User"}
               </label>
+            </section>
+          </div>
+        )}
+      </div>
+      <div>
+        {myReviews && (
+          <div>
+            <section>
+              <h2>My Reviews:</h2>
+              {myReviews.map((review) => {
+                return (
+                  <div key={review.id}>
+                    <p
+                      className="single-item-title"
+                      onClick={() => {
+                        Navigate(`/items/${review.id}`);
+                      }}
+                    >
+                      {review.title}
+                    </p>
+                  </div>
+                );
+              })}
+            </section>
+          </div>
+        )}
+      </div>
+      <br></br>
+      <br></br>
+      <div>
+        {myComments && (
+          <div>
+            <section>
+              <h2>My Comments:</h2>
+              {myComments.map((comment) => {
+                return (
+                  <div key={comment.id}>
+                    <p
+                      className="single-item-title"
+                      onClick={() => {
+                        Navigate(`/items/${comment.id}`);
+                      }}
+                    >
+                      {comment.title}
+                    </p>
+                  </div>
+                );
+              })}
             </section>
           </div>
         )}
