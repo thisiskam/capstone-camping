@@ -235,9 +235,11 @@ const getUserReviews = async (user_id) => {
 const getUserComments = async (user_id) => {
   try {
     const SQL = /*sql*/ `
-    SELECT *
+    SELECT items.*
     FROM comments
-    WHERE user_id = $1
+    JOIN reviews ON comments.review_id = reviews.id
+    JOIN items ON reviews.item_id = items.id
+    WHERE comments.user_id = $1
     `;
     const response = await db.query(SQL, [user_id]);
     return response.rows;
