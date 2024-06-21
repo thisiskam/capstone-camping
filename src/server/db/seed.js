@@ -1,5 +1,6 @@
 const db = require("./client");
 const { createUser } = require("./users");
+const { createItem, createReview, createComment } = require("./items");
 
 const loremIpsum = require("lorem-ipsum").loremIpsum;
 
@@ -904,6 +905,110 @@ const reviews = [
     user_id: 3,
     rating: 5,
   },
+  {
+    review_text: loremIpsum({
+      count: 1,
+      units: "paragraphs",
+      sentenceLowerBound: 5,
+      sentenceUpperBound: 15,
+      paragraphLowerBound: 1,
+      paragraphUpperBound: 5,
+    }),
+    item_id: 11,
+    user_id: 2,
+    rating: 5,
+  },
+  {
+    review_text: loremIpsum({
+      count: 1,
+      units: "paragraphs",
+      sentenceLowerBound: 5,
+      sentenceUpperBound: 15,
+      paragraphLowerBound: 1,
+      paragraphUpperBound: 5,
+    }),
+    item_id: 22,
+    user_id: 2,
+    rating: 5,
+  },
+  {
+    review_text: loremIpsum({
+      count: 1,
+      units: "paragraphs",
+      sentenceLowerBound: 5,
+      sentenceUpperBound: 15,
+      paragraphLowerBound: 1,
+      paragraphUpperBound: 5,
+    }),
+    item_id: 33,
+    user_id: 2,
+    rating: 5,
+  },
+  {
+    review_text: loremIpsum({
+      count: 1,
+      units: "paragraphs",
+      sentenceLowerBound: 5,
+      sentenceUpperBound: 15,
+      paragraphLowerBound: 1,
+      paragraphUpperBound: 5,
+    }),
+    item_id: 44,
+    user_id: 2,
+    rating: 5,
+  },
+  {
+    review_text: loremIpsum({
+      count: 1,
+      units: "paragraphs",
+      sentenceLowerBound: 5,
+      sentenceUpperBound: 15,
+      paragraphLowerBound: 1,
+      paragraphUpperBound: 5,
+    }),
+    item_id: 55,
+    user_id: 2,
+    rating: 5,
+  },
+  {
+    review_text: loremIpsum({
+      count: 1,
+      units: "paragraphs",
+      sentenceLowerBound: 5,
+      sentenceUpperBound: 15,
+      paragraphLowerBound: 1,
+      paragraphUpperBound: 5,
+    }),
+    item_id: 66,
+    user_id: 2,
+    rating: 5,
+  },
+  {
+    review_text: loremIpsum({
+      count: 1,
+      units: "paragraphs",
+      sentenceLowerBound: 5,
+      sentenceUpperBound: 15,
+      paragraphLowerBound: 1,
+      paragraphUpperBound: 5,
+    }),
+    item_id: 77,
+    user_id: 2,
+    rating: 5,
+  },
+  {
+    review_text: loremIpsum({
+      count: 1,
+      units: "paragraphs",
+      sentenceLowerBound: 5,
+      sentenceUpperBound: 15,
+      paragraphLowerBound: 1,
+      paragraphUpperBound: 5,
+    }),
+    item_id: 88,
+    user_id: 2,
+    rating: 5,
+  },
 ];
 
 //---------------------------------------------------------CREATE REVIEW function---------------------------------------------------------
@@ -1038,7 +1143,7 @@ const comments = [
   },
 ];
 
-//---------------------------------------------------------CREATE COMMENT function---------------------------------------------------------
+//---------------------------------------------------------INSERT COMMENT function---------------------------------------------------------
 // const createComment = async ({ comment_text, user_id, review_id }) => {
 //   try {
 //     const {
