@@ -1,8 +1,7 @@
 // require("dotenv").config();
 const { Client } = require("pg");
 const connectionString =
-  process.env.DATABASE_URL ||
-  `${process.env.BASEURL}:${process.env.PORT}/${process.env.DBname}`;
+  process.env.DATABASE_URL || `postgres://localhost:5432/camping-reviews`;
 const db = new Client({
   connectionString,
   ssl:
@@ -12,3 +11,5 @@ const db = new Client({
 });
 
 module.exports = db;
+
+// `${process.env.BASEURL}:${process.env.PORT}/${process.env.DBname}`

@@ -31,6 +31,24 @@ export default function Account() {
     fetchUser();
   }, []);
 
+  useEffect(() => {
+    async function fetchMyReviews() {
+      try {
+        console.log("FRONT END ACCOUNT PAGE line 37 token", token);
+        const apiResponse = await fetch("/api/users/me/reviews", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const user = await apiResponse.json();
+        return setLoggedInUser(user);
+      } catch (error) {
+        console.error("account me route not worky cuz", error);
+      }
+    }
+    fetchMyReviews();
+  }, []);
   // const handleLogout = async () => {
   //   try {
   //     console.log("love coding");
@@ -59,6 +77,11 @@ export default function Account() {
               <label>My email:</label>
               <label>{loggedInUser.email}</label>
               <br></br>
+              {/* <td className="h2">{user.is_admin ? "true" : "false"}</td> */}
+              <label>My Role:</label>
+              <label>
+                {loggedInUser.is_admin ? "Admin" : "Non-Admin-User"}
+              </label>
             </section>
           </div>
         )}
