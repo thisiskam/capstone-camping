@@ -14,37 +14,33 @@ const CR = () => {
   // state storage
   const [items, setItems] = useState([]);
   const [searchParams, setSearchParams] = useState("");
-  const [isAdmin, setIsAdmin] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [reviews, setReviews] = useState([])
 
   // variable to use navigate
   const navigate = useNavigate();
 
   // grab token
-    // const token = localStorage.getItem("token");
-    // console.log("FRONT END CR line 17 token", localStorage.getItem("token"));
+  const token = localStorage.getItem("token");
 
   // function should work to fetch the loggen in user and check if they are an admin then store admin to state
-    // useEffect(() => {
-    //   async function fetchUser() {
-    //     try {
-    //       console.log("FRONT END ACCOUNT PAGE line 18 token", token);
-    //       const apiResponse = await fetch("/api/users/me", {
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //           Authorization: `Bearer ${token}`,
-    //         },
-    //       });
-    //       console.log(apiResponse);
-    //       const result = await apiResponse.json();
-    //       console.log(result);
-    //       setIsAdmin(result.is_admin)
-    //     } catch (error) {
-    //       console.error("account me route not worky cuz", error);
-    //     }
-    //   }
-    //   fetchUser();
-    // }, []);
+    useEffect(() => {
+      async function fetchUser() {
+        try {
+          const apiResponse = await fetch("/api/users/me", {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          const result = await apiResponse.json()
+          setIsAdmin(result.is_admin)
+        } catch (error) {
+          console.error("account me route not worky cuz", error);
+        }
+      }
+      fetchUser();
+    }, []);
   
 
   // function to get reviews

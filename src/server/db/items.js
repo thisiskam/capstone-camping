@@ -44,8 +44,8 @@ const createItem = async ({ title, description, category_id, imageURL }) => {
 
 const updateItem = async (itemId, newData) => {
   await db.query(
-    `UPDATE items SET title = $1, description = $2, imageURL = $3 WHERE id = $4`,
-    [newData.title, newData.description, newData.imageURL, itemId]
+    `UPDATE items SET title = $1, description = $2, imageURL = $3, category_id = $4 WHERE id = $5`,
+    [newData.title, newData.description, newData.imageURL, newData.category_id, itemId]
   );
   const updatedItem = await db.query(`SELECT * FROM items WHERE id = $1`, [
     itemId,

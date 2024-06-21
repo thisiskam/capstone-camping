@@ -63,13 +63,15 @@ itemsRouter.post("/", isLoggedIn, isAdmin, async (req, res, next) => {
 
 itemsRouter.put("/:id", isLoggedIn, isAdmin, async (req, res, next) => {
   const itemId = req.params.id;
-  const { title, description, imageURL } = req.body;
+  const { title, description, imageURL, category_id } = req.body;
   try {
     const updatedItem = await updateItem(itemId, {
       title,
       description,
       imageURL,
+      category_id
     });
+    console.log("here it is" + updatedItem);
     res.status(200).json(updatedItem);
   } catch (error) {
     next(error);
