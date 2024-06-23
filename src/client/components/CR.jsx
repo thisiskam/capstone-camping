@@ -214,7 +214,7 @@ const CR = () => {
           <input
             type="text"
             className="search-input"
-            placeholder="Hydroflask"
+            placeholder="search"
             onChange={(e) => {
               setSearchParams(e.target.value);
             }}
