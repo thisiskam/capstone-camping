@@ -1,20 +1,18 @@
-body {
+/* body { */
   /* display: flex; */
-  justify-content: center;
-  align-items: flex-start;
-  margin: 0;
+  /* justify-content: center; */
+  /* align-items: flex-start; */
+  /* margin: 0;
   padding: 20px;
-
   height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
-  background-color: var(--secondary-color);
-}
+  background-color: var(--secondary-color); */
+/* } */
 
-.home-content1 {
+.App1 {
+  margin-top: 0.5rem;
   display: flex;
-  width: 95%;
-  justify-content: space-between;
-  margin-bottom: 20px;
+  flex-direction: column;
 }
 
 .h1 {
@@ -22,14 +20,18 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 1rem;
-  flex-direction: column;
-  margin-top: 10%;
+  margin-top: 10%; 
+}
+
+.home-content1 {
+  display: flex;
+  /* width: 95%; */
+  /* justify-content: space-between; */
+  margin-bottom: 20px;
 }
 
 .h2 {
   color: black;
-
   justify-content: center;
   align-items: center;
   margin-top: 1rem;
@@ -37,24 +39,13 @@ body {
   margin-top: 10%;
 }
 
-.App1 {
-  margin-top: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .left-container1 {
   width: 15%;
-  min-width: 150px;
-  height: 200px;
-  background-color: var(--quinary-color);
-  margin-top: 30px;
-  margin-right: 20px;
+  max-height: 100px;
+  margin: 10px 10px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  align-items: left;
 }
 
 .center-container1 {
@@ -64,7 +55,7 @@ body {
   padding-left: 20px;
   justify-content: center;
   text-align: center;
-  margin-top: 30px;
+  margin-top: 20px;
   width: 850px;
   display: flex;
   flex-direction: column;
