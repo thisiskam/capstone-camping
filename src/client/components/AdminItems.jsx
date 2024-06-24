@@ -2,6 +2,8 @@
 import "./AllUsers.css";
 import { useState, useEffect } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faTent } from "@fortawesome/free-solid-svg-icons";
 
 export default function AdminItems() {
   const navigate = useNavigate();
@@ -43,30 +45,33 @@ export default function AdminItems() {
       <h1 className="h1">ITEMS</h1>
       <div className="home-content1">
         <div className="left-container1">
-          {isAdmin === true ? (
-            <div>
-              <img
-                src="src/client/assets/user-id-svgrepo-com (1).svg"
-                width="30px"
-                alt=""
-              />
-              <button
-                onClick={() => {
-                  navigate("/allusers");
-                }}
-              >
-                USERS
-              </button>
-              <br />
-              <img
-                src="src/client/assets/tent-4-svgrepo-com.svg"
-                width="30px"
-                alt=""
-              />
-              <button className="selected">ITEMS</button>
+          {isAdmin && (
+            <div className="admin-btn-box">
+              <div className="admin-user-btn">
+                <button
+                  onClick={() => {
+                    navigate("/allusers");
+                  }}
+                >
+                  <i>
+                    <FontAwesomeIcon icon={faUser} />
+                  </i>
+                  USERS
+                </button>
+              </div>
+              <div className="admin-items-btn">
+                <button
+                  onClick={() => {
+                    navigate("/adminitems");
+                  }}
+                >
+                  <i>
+                    <FontAwesomeIcon icon={faTent} />
+                  </i>
+                  ITEMS
+                </button>
+              </div>
             </div>
-          ) : (
-            <div></div>
           )}
         </div>
         <div className="center-container1">

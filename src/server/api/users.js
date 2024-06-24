@@ -13,9 +13,10 @@ const {
   getUserAccount,
   getUserReviews,
   getUserComments,
+  adminCreateUser,
 } = require("../db");
 
-const { isLoggedIn } = require("../db/users.js");
+const { isLoggedIn, isAdmin } = require("../db/users.js");
 
 const jwt = require("jsonwebtoken");
 const JWT = process.env.JWT_SECRET;
@@ -28,6 +29,37 @@ usersRouter.get("/", async (req, res, next) => {
     res.send({
       users,
     });
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
+//--------------------------------------------------ADMIN CREATES A USER-----------------------------------------------------------
+usersRouter.post("/createuser", async (req, res, next) => {
+  const { username, email, password, is_admin } = req.body;
+
+  try {
+    const _user = await getUserByEmail(email);
+
+    if (_user) {
+      next({
+        name: "UserExistsError",
+        message: "A user with that email already exists",
+      });
+    }
+
+    //create user
+    const newUser = await adminCreateUser({
+      username,
+      email,
+      password,
+      is_admin,
+    });
+
+    res.send({
+      message: "User Created, good job yo, Admin!",
+    });
+    //consider showing the message on the page -KB
   } catch ({ name, message }) {
     next({ name, message });
   }

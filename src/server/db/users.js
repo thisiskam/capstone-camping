@@ -4,6 +4,7 @@ const SALT_COUNT = 2;
 const jwt = require("jsonwebtoken");
 const JWT = process.env.JWT_SECRET;
 
+//----------------create a user because of registration
 const createUser = async ({ username, email, password, is_admin }) => {
   const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
   try {
@@ -19,6 +20,28 @@ const createUser = async ({ username, email, password, is_admin }) => {
       [username, email, hashedPassword, is_admin]
     );
     return user;
+  } catch (err) {
+    console.error(err.message);
+    throw err;
+  }
+};
+
+//--------------------------------------------------CREATE USER AS ADMIN, CUZ ADMIN-----------------------------------------------------------
+const adminCreateUser = async ({ username, email, password, is_admin }) => {
+  const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
+  try {
+    const {
+      rows: [newUser],
+    } = await db.query(
+      /*sql*/
+      `
+        INSERT INTO users(username, email, password, is_admin)
+        VALUES($1, $2, $3, $4)
+        ON CONFLICT (email) DO NOTHING
+        RETURNING *`,
+      [username, email, hashedPassword, is_admin]
+    );
+    return newUser;
   } catch (err) {
     console.error(err.message);
     throw err;
@@ -261,4 +284,5 @@ module.exports = {
   getUserAccount,
   getUserReviews,
   getUserComments,
+  adminCreateUser,
 };

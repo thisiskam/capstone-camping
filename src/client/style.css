@@ -28,12 +28,15 @@ a:hover {
 }
 
 button {
-  border: 0;
+  display: flex;
+  align-items: center;
+  min-width: 45px;
   padding: 8px;
   border-radius: 4px;
-  color: white;
-  background: var(--primary-color);
   cursor: pointer;
+  text-align: left;
+  width: 100%;
+  background-color: var(--primary-color);
 }
 
 button:hover {
@@ -90,12 +93,13 @@ main {
   width: 15%;
   min-width: 150px;
   background-color: var(--quinary-color);
+  color: black !important;
   margin-top: 30px;
   margin-right: 20px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
 }
 
 .center-container {
@@ -120,7 +124,7 @@ main {
 .main-img {
   width: 100%;
   margin-top: -200px;
-  max-width: 1800px;
+  max-width: 1250px;
   min-height: 500px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -174,9 +178,38 @@ main {
 .search-button:hover {
   background-color: #0056b3;
 }
+.admin-btn-box {
+  background-color: var(--quinary-color);
+  margin-top: 50px;
+  margin-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 50px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* min-height: 100px; */
+}
+.admin-user-btn {
+  display: flex;
+  margin-top: 20px;
+  width: 100%;
+
+  /* color: var(--primary-color); */
+}
+.admin-items-btn {
+  display: flex;
+  margin-top: 20px;
+  width: 100%;
+}
+
+i {
+  margin-right: 10px;
+}
 
 .items-header {
-  text-decoration:overline;
+  text-decoration: overline;
   font-weight: bold;
   margin: 10px;
   color: var(--primary-color);
@@ -218,7 +251,6 @@ main {
   cursor: pointer;
 }
 
-
 .no_reviews {
   font-size: 10px;
   color: var(--primary-color);
@@ -244,6 +276,10 @@ main {
   align-items: center;
   text-align: center;
   cursor: pointer;
+}
+
+.green-btn:hover {
+  background: #05541d;
 }
 
 /* Place the login in the center */
@@ -280,24 +316,6 @@ main {
   font-weight: bold;
 }
 
-.admin-items-btn {
-  display: flex;
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
-
-.admin-user-btn {
-  display: flex;
-  margin-top: 20px;
-}
-
-.admin-btn-box {
-  background-color: var(--quinary-color);
-  margin-top: 50px;
-  padding-left: 20px;
-  padding-right: 20px;
-  border-radius: 10px;
-}
 /* single item */
 .item-category {
   color: var(--primary-color);
@@ -312,17 +330,16 @@ main {
   width: 100%;
   border-radius: 10px;
   transition: transform 0.3s ease, z-index 0s ease 0.3s;
-  transform-origin: top right;  /* This will make the item grow down and to the left */
+  transform-origin: top right; /* This will make the item grow down and to the left */
 }
 
 .right-image:hover {
   border: var(--quaternary-color) 1px solid;
-
 }
 
 .right-image.enlarged {
-  transform: scale(4);  /* Adjust the scale factor as needed */
-  z-index: 1;  /* Ensure the enlarged item appears above others */
+  transform: scale(4); /* Adjust the scale factor as needed */
+  z-index: 1; /* Ensure the enlarged item appears above others */
   transition: transform 0.3s ease, z-index 0s ease 0s;
 }
 
@@ -413,8 +430,8 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 20px; 
-} 
+  margin-right: 20px;
+}
 .item-reviews h4 {
   margin-bottom: 20px;
 }
@@ -481,11 +498,12 @@ main {
   margin-bottom: 20px;
 }
 
-.comment p, .comment h6 {
+.comment p,
+.comment h6 {
   color: var(--primary-color);
 }
 
-.item-reviews button{
+.item-reviews button {
   margin-bottom: 20px;
   background-color: var(--quaternary-color);
 }
@@ -564,7 +582,6 @@ main {
   margin-bottom: 20px;
 }
 
-
 .items_a {
   color: var(--quaternary-color) !important;
   margin-bottom: 20px;
@@ -574,15 +591,16 @@ main {
   width: 90px;
 }
 
-.cat_select, .input_image{
+.cat_select,
+.input_image {
   color: var(--primary-color);
 }
 .star-icon-review {
   padding-top: 20px;
   width: 20px;
   margin-left: 3px;
-
 }
+
 /* another page */
 
 /* another thing */
@@ -608,5 +626,3 @@ main {
 } */
 
 /* Add more styling for other elements if needed */
-
-
