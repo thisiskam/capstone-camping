@@ -82,8 +82,12 @@ export default function SingleItem() {
           },
         });
         const result = await apiResponse.json();
-        setIsLoggedIn(true);
-        setUser(result);
+        if (result.id) {
+          setIsLoggedIn(true);
+          setUser(result);
+        } 
+        console.log("not Logged In");
+        
       } catch (error) {
         console.error("account me route not worky cuz", error);
       }
@@ -398,10 +402,10 @@ export default function SingleItem() {
     setReviewClicked(false);
   }
 
+
   // submit new comment
   async function submitComment(id) {
-    console.log(commentInput);
-    console.log(id);
+    event.preventDefault()
     try {
       const response = await fetch(
         "http://localhost:3000/api/items/reviews/" + id + "/comments",

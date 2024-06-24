@@ -133,6 +133,8 @@ main {
 
 .main-left {
   max-height: 130px;
+  display: flex;
+  align-items: center;
 }
 .main-header {
   margin-top: -25%;
@@ -393,6 +395,8 @@ i {
 #left-container-single-item {
   height: 260px;
   min-width: 200px;
+  display: flex;
+  align-items: center;
 }
 
 #center-container-single-item h2 {
@@ -576,7 +580,8 @@ i {
   margin-top: 20px;
   font-size: 22px;
   margin-bottom: 20px;
-  margin-left: 5px;
+  align-self: center;
+  margin-right: 20px;
 }
 
 .item_input_description {
@@ -601,6 +606,8 @@ i {
   width: 20px;
   margin-left: 3px;
 }
+
+
 
 /* another page */
 
