@@ -85,9 +85,8 @@ export default function SingleItem() {
         if (result.id) {
           setIsLoggedIn(true);
           setUser(result);
-        } 
+        }
         console.log("not Logged In");
-        
       } catch (error) {
         console.error("account me route not worky cuz", error);
       }
@@ -402,10 +401,9 @@ export default function SingleItem() {
     setReviewClicked(false);
   }
 
-
   // submit new comment
   async function submitComment(id) {
-    event.preventDefault()
+    event.preventDefault();
     try {
       const response = await fetch(
         "http://localhost:3000/api/items/reviews/" + id + "/comments",
@@ -914,6 +912,7 @@ export default function SingleItem() {
               {/* checks to see if its a logged in user and that the button to leave a review hasnt already been clicked. returns a button that sets review clicked to true which will be checked later to return a review form. also setscommentclicked to false which doesnt allow the user to write a review and a comment at the same time */}
               {isLoggedIn && !reviewClicked && (
                 <button
+                  className="admin-user-btn"
                   onClick={() => {
                     setReviewClicked(true), setCommentClicked(false);
                   }}
