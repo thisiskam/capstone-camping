@@ -273,6 +273,10 @@ const getUserComments = async (user_id) => {
 
 const updateUser = async (user_id, { username, email, password, is_admin }) => {
   try {
+    let hashedPassword = password;
+    if (password) {
+      hashedPassword = await bcrypt.hash(password, SALT_COUNT);
+    }
     const SQL = /*sql*/ `
     UPDATE users
     SET username = COALESCE($1, username),
@@ -285,7 +289,7 @@ const updateUser = async (user_id, { username, email, password, is_admin }) => {
     const response = await db.query(SQL, [
       username,
       email,
-      password,
+      hashedPassword,
       is_admin,
       user_id,
     ]);
