@@ -1,3 +1,11 @@
+body {
+  margin: 0;
+  padding-top: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--secondary-color);
+  background-image: url("https://images.unsplash.com/photo-1519681393784-d120267933ba");
+}
+
 :root {
   --primary-color: #1f222b;
   --secondary-color: #8f9294;
@@ -5,44 +13,9 @@
   --quaternary-color: #045804;
   --quinary-color: #d9e0e2;
 }
-
-body {
-  margin: 0;
-  padding-top: 20px;
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: var(--secondary-color);
-}
-
 * {
   color: #fff;
   margin: 0;
-}
-
-p {
-  margin: 20px 0;
-}
-
-a:hover {
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-button {
-  display: flex;
-  align-items: center;
-  min-width: 45px;
-  max-width: 165px;
-  padding: 8px;
-  border-radius: 4px;
-  cursor: pointer;
-  text-align: center;
-  width: 100%;
-  background-color: var(--primary-color);
-}
-
-button:hover {
-  cursor: pointer;
-  color: #8f9294;
 }
 
 /* nav bar */
@@ -75,33 +48,63 @@ header nav a.active {
   background: var(--primary-color);
 }
 
-/* main content */
-
 main {
-  margin: 0;
+  /* margin: 0; */
   background-color: var(quaternary-color);
-  display: flex;
-  justify-content: center;
+  /* display: flex; */
+  /* justify-content: center; */
 }
+
 .App {
   margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
-.left-container {
-  width: 15%;
-  min-width: 150px;
-  background-color: var(--quinary-color);
-  color: black !important;
-  margin-top: 30px;
-  margin-right: 20px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: left;
+.main-header {
+  margin-top: 10%;
+  padding-left: 10px;
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+  max-width: 1750px;
 }
+p {
+  margin: 20px 0;
+}
+.drop-shadow-text {
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+}
+
+a:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  min-width: 45px;
+  max-width: 165px;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  border-color: #379493;
+  background-color: #379493;
+  color: var(--quinary-color);
+}
+
+button:hover {
+  cursor: pointer;
+  color: var(--primary-color);
+  background-color: var(--quinary-color);
+  border: #379493;
+  box-shadow: 1px 1px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  transition-duration: 0.4s;
+}
+
+/* main content */
 
 .center-container {
   background-color: var(--quinary-color);
@@ -136,10 +139,6 @@ main {
   display: flex;
   align-items: center;
 }
-.main-header {
-  margin-top: -25%;
-  padding-left: 10px;
-}
 
 .home-content {
   display: flex;
@@ -148,6 +147,17 @@ main {
   margin-bottom: 20px;
 }
 
+.left-container {
+  width: 275px;
+  background-color: var(--quinary-color);
+  color: black !important;
+  margin-top: 30px;
+  margin-right: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
 .search-header {
   font-size: 20px;
   margin-bottom: 10px;
@@ -165,46 +175,32 @@ main {
   color: var(--secondary-color);
 }
 
-.search-button {
-  padding: 8px 15px;
-  border-radius: 5px;
-  background-color: var(--secondary-color);
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-  width: 75px;
-  transition: background-color 0.3s ease;
-  margin-top: 5px;
-}
-
-.search-button:hover {
-  background-color: #0056b3;
-}
 .admin-btn-box {
   background-color: var(--quinary-color);
-  margin-top: 50px;
-  margin-bottom: 20px;
+  margin-top: 40px;
+  width: 230px;
+  margin-bottom: 10px;
   padding-left: 20px;
   padding-right: 20px;
-  padding-bottom: 50px;
+  padding-bottom: 20px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  /* align-items: flex-start; */
   /* min-height: 100px; */
 }
 .admin-user-btn {
-  display: flex;
-  margin-top: 20px;
+  /* display: flex; */
+  margin-top: 5px;
   width: 100%;
 
   /* color: var(--primary-color); */
 }
 .admin-items-btn {
-  display: flex;
-  margin-top: 20px;
+  /* display: flex; */
+  margin-top: 5px;
   width: 100%;
+  margin-bottom: 5px;
 }
 
 i {
@@ -607,8 +603,6 @@ i {
   margin-left: 3px;
 }
 
-
-
 /* another page */
 
 /* another thing */
@@ -634,3 +628,21 @@ i {
 } */
 
 /* Add more styling for other elements if needed */
+
+/* dont need the below stuff */
+/* .search-button {
+  padding: 8px 15px;
+  border-radius: 5px;
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  width: 75px;
+  transition: background-color 0.3s ease;
+  margin-top: 5px;
+}
+
+.search-button:hover {
+  background-color: #0056b3;
+} */

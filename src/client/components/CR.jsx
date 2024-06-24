@@ -200,11 +200,11 @@ const CR = () => {
   return (
     <div className="App">
       {/* hero section */}
-      <img
+      {/* <img
         src="src/client/assets/pexels-bazil-elias-1351340-2612228.jpg"
         alt=""
         className="main-img"
-      />
+      /> */}
       <h1 className="main-header">LOCALLY REVIEWED CAMPING ITEMS</h1>
       <div className="home-content">
         {/* search box */}
@@ -214,7 +214,7 @@ const CR = () => {
           <input
             type="text"
             className="search-input"
-            placeholder="search"
+            placeholder="type to search"
             onChange={(e) => {
               setSearchParams(e.target.value);
             }}
@@ -223,6 +223,9 @@ const CR = () => {
           page. navigates admin to those pages */}
           {isAdmin && (
             <div className="admin-btn-box">
+              <p className="drop-shadow-text" style={{ color: "#2D464C" }}>
+                ADMIN CONTROLS
+              </p>
               <div className="admin-user-btn">
                 <button
                   onClick={() => {
@@ -251,7 +254,7 @@ const CR = () => {
           )}
         </div>
         <div className="center-container">
-          <h2 className="items-header">REVIEWED ITEMS</h2>
+          {/* <h2 className="items-header">REVIEWED ITEMS</h2> */}
 
           {/* maps over each item and displayes it on the page, each item is a link that will navigate you to that item */}
           {displayedItems.map((item) => {
