@@ -8,8 +8,6 @@ import { faUser, faTent } from "@fortawesome/free-solid-svg-icons";
 export default function AllUsers() {
   const navigate = useNavigate();
   const [users, setUsers] = useState();
-  const [addUser, setAddUser] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [secured, setSecured] = useState(false);
   const token = localStorage.getItem("token");
 
@@ -33,7 +31,6 @@ export default function AllUsers() {
           },
         });
         const result = await apiResponse.json();
-        console.log(result);
         setSecured(result.is_admin);
       } catch (error) {
         console.error("account me route not worky cuz", error);
@@ -53,7 +50,6 @@ export default function AllUsers() {
           <h1 className="h1">USERS</h1>
           <div className="home-content1">
             <div className="left-container1">
-              {isAdmin && (
                 <div className="admin-btn-box">
                   <div className="admin-user-btn">
                     <button
@@ -80,7 +76,6 @@ export default function AllUsers() {
                     </button>
                   </div>
                 </div>
-              )}
             </div>
             <div className="center-container1">
               <table>
@@ -113,7 +108,6 @@ export default function AllUsers() {
               </table>
             </div>
             <div className="right-container1">
-              {isAdmin === true ? (
                 <div>
                   <button
                     className="green-btn"
@@ -124,9 +118,6 @@ export default function AllUsers() {
                     +USER
                   </button>
                 </div>
-              ) : (
-                <div></div>
-              )}
             </div>
           </div>
         </div>
