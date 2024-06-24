@@ -12,8 +12,9 @@ export default function AddItem() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [message, setMessage] = useState("");
-  const [newCategory, setNewCategory] = useState("")
-  const [categories, setCategories] = useState([])
+  const [newCategory, setNewCategory] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [secured, setSecured] = useState(false);
 
   const sampleCategories = [
     { id: 1, name: "Backpack" },
@@ -23,7 +24,27 @@ export default function AddItem() {
     { id: 5, name: "Sleeping Bag" },
     { id: 6, name: "Water Bottle" },
   ];
-  useEffect(() => {setCategories(sampleCategories)},[])
+  useEffect(() => {
+    setCategories(sampleCategories);
+  }, []);
+
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const apiResponse = await fetch("/api/users/me", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const result = await apiResponse.json();
+        setSecured(result.is_admin);
+      } catch (error) {
+        console.error("account me route not worky cuz", error);
+      }
+    }
+    fetchUser();
+  }, [token]);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -42,7 +63,9 @@ export default function AddItem() {
 
     console.log("Categories array:", categories);
 
-    const category = categories.find(category => selectedCategoryName === category.name);
+    const category = categories.find(
+      (category) => selectedCategoryName === category.name
+    );
 
     if (category) {
       const catId = category.id;
@@ -101,27 +124,28 @@ export default function AddItem() {
 
   return (
     <>
-      <div className="App1">
-        <h1 className="h1">ITEM</h1>
-        <br></br>
-        <form onSubmit={handleSubmit} className="form">
-          <div className="form-container">
-            <div>
-              <label for="itemTitle">ITEM TITLE: </label>
-              <input
-                type="text"
-                id="itemTitle"
-                name="itemTitle"
-                style={{ color: "black" }}
-                value={title}
-                onChange={handleTitleChange}
-                required
-              />
-            </div>
-            <br></br>
-            <div>
-              <label for="category_id">CATEGORY: </label>
-              <select
+      {secured && (
+        <div className="App1">
+          <h1 className="h1">ITEM</h1>
+          <br></br>
+          <form onSubmit={handleSubmit} className="form">
+            <div className="form-container">
+              <div>
+                <label htmlFor="itemTitle">ITEM TITLE: </label>
+                <input
+                  type="text"
+                  id="itemTitle"
+                  name="itemTitle"
+                  style={{ color: "black" }}
+                  value={title}
+                  onChange={handleTitleChange}
+                  required
+                />
+              </div>
+              <br></br>
+              <div>
+                <label htmlFor="category_id">CATEGORY: </label>
+                <select
                   className="cat_select"
                   value={newCategory}
                   onChange={handleCategoryChange}
@@ -132,41 +156,47 @@ export default function AddItem() {
                     </option>
                   ))}
                 </select>
-            </div>
-            <br></br>
-            <div>
-              <label for="description">DESCRIPTION: </label>
-              <textarea
-                id="description"
-                name="description"
-                rows="20"
-                style={{ color: "black" }}
-                value={description}
-                onChange={handleDescriptionChange}
-                required
-              ></textarea>
-            </div>
-            <br></br>
-            <div>
-              <label for="imageUrl">IMAGE URL: </label>
-              <input
-                type="url"
-                id="imageUrl"
-                name="imageUrl"
-                style={{ color: "black" }}
-                value={imageURL}
-                onChange={handleImageURLChange}
-                required
-              />
-            </div>
+              </div>
+              <br></br>
+              <div>
+                <label htmlFor="description">DESCRIPTION: </label>
+                <textarea
+                  id="description"
+                  name="description"
+                  rows="20"
+                  style={{ color: "black" }}
+                  value={description}
+                  onChange={handleDescriptionChange}
+                  required
+                ></textarea>
+              </div>
+              <br></br>
+              <div>
+                <label htmlFor="imageUrl">IMAGE URL: </label>
+                <input
+                  type="url"
+                  id="imageUrl"
+                  name="imageUrl"
+                  style={{ color: "black" }}
+                  value={imageURL}
+                  onChange={handleImageURLChange}
+                  required
+                />
+              </div>
 
-            <br></br>
-            <button className="green-btn" type="submit">
-              CREATE
-            </button>
-          </div>
-        </form>
-      </div>
+              <br></br>
+              <button className="green-btn" type="submit">
+                CREATE
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+      {!secured && (
+        <>
+          <p>Not Authorized</p>
+        </>
+      )}
     </>
   );
 }
