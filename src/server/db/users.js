@@ -271,6 +271,23 @@ const getUserComments = async (user_id) => {
   }
 };
 
+const updateUser = async (user_id, { username, email, is_admin }) => {
+  try {
+    const SQL = /*sql*/ `
+    UPDATE users
+    SET username = COALESCE($1, username),
+        email = COALESCE($2, email),
+        is_admin = COALESCE($3, is_admin)
+        WHERE id = $4
+        RETURNING *
+    `;
+    const response = await db.query(SQL, [username, email, is_admin, user_id]);
+    return response.rows[0];
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   createUser,
   authenticate,
@@ -285,4 +302,5 @@ module.exports = {
   getUserReviews,
   getUserComments,
   adminCreateUser,
+  updateUser,
 };
