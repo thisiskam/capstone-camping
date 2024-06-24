@@ -15,6 +15,7 @@ const {
   getUserComments,
   adminCreateUser,
   updateUser,
+  getUserById,
 } = require("../db");
 
 const { isLoggedIn, isAdmin } = require("../db/users.js");
@@ -226,14 +227,30 @@ usersRouter.get("/me/comments", isLoggedIn, async (req, res, next) => {
   }
 });
 
+usersRouter.get("/:id", isLoggedIn, isAdmin, async (req, res, next) => {
+  const user_id = req.params.id;
+  try {
+    const user = await getUserById(user_id);
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).json({ error: "usernot found" });
+    }
+  } catch (error) {
+    console.error("error fetching user:", error);
+    next(error);
+  }
+});
+
 usersRouter.put("/:id", isLoggedIn, isAdmin, async (req, res, next) => {
   try {
     const { id: user_id } = req.params;
-    const { username, email, is_admin } = req.body;
+    const { username, email, password, is_admin } = req.body;
 
     const updatedUser = await updateUser(user_id, {
       username,
       email,
+      password,
       is_admin,
     });
     if (!updatedUser) {
