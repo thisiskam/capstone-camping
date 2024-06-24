@@ -15,10 +15,26 @@ export default function UpdateUser() {
   const [userDetails, setUserDetails] = useState([])
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const isTrue = true
-  const isFalse = false
+  const [secured, setSecured] = useState(false)
 
-  
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const apiResponse = await fetch("/api/users/me", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const result = await apiResponse.json();
+        setSecured(result.is_admin);
+      } catch (error) {
+        console.error("account me route not worky cuz", error);
+      }
+    }
+    fetchUser();
+  }, []);
+
 
   useEffect(() => {
     async function fetchUserDetail() {
@@ -30,7 +46,6 @@ export default function UpdateUser() {
         });
         if (response.ok) {
           const user = await response.json();
-          console.log("FRONTEND ROW 34 from UPDATE USER expect user:", user[0]);
           setUserDetails(user[0])
           setEmail(user[0].email)
           setUsername(user[0].username)
@@ -55,13 +70,8 @@ export default function UpdateUser() {
   };
 
   const handleIsAdminChange = (e) => {
-    console.log("worked");
     setIsAdmin(e.target.value === "true");
   };
-
-  console.log(is_admin);
-  console.log(username);
-  console.log(email);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -120,8 +130,9 @@ export default function UpdateUser() {
   
   return (
     <>
-      <div className="App1">
-        <h2>USER</h2>
+      {secured && <div className="App1">
+        <h1 className="myaccount-title">Edit User</h1>
+        <div className="home-content">
         <br></br>
         <form onSubmit={handleSubmit} className="form">
           <div className="form-container">
@@ -188,6 +199,8 @@ export default function UpdateUser() {
         </form>
         <p style={{ color: "red" }}>{message}</p>
       </div>
+      </div> }
+      {!secured && <><p>Not Authorized</p></>}
     </>)
 }
 
