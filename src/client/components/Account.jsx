@@ -15,6 +15,16 @@ export default function Account() {
   const [myComments, setMyComments] = useState(null);
   const Navigate = useNavigate();
 
+  //show message to users that are not logged in that choose to go to account page IN CASE the other security feature breaks
+  if (localStorage.getItem("token") === null) {
+    return (
+      <>
+        <h1>Account</h1>
+        <h2>Log in to view your account</h2>
+      </>
+    );
+  }
+
   useEffect(() => {
     async function fetchUser() {
       try {
