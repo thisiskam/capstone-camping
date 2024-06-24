@@ -31,10 +31,11 @@ button {
   display: flex;
   align-items: center;
   min-width: 45px;
+  max-width: 165px;
   padding: 8px;
   border-radius: 4px;
   cursor: pointer;
-  text-align: left;
+  text-align: center;
   width: 100%;
   background-color: var(--primary-color);
 }
