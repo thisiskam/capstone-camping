@@ -68,8 +68,54 @@ export default function UpdateUser() {
     editUser();
   };
 
-  const editUser = async () => {
+  const deleteUser = async () => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this user?"
+    );
+    if (confirmed) {
+      try {
+        const response = await fetch(`/api/users/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            authorization: "Bearer " + token
+          },
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const deletedUser = await response.json();
+        console.log('User deleted:', deletedUser);
+        navigate("/allusers")
+      } catch (error) {
+        console.error('Error deleting user:', error.message);
+      }
+    } else {
+      console.log("Deletion cancelled by user");
+    }
+  }
 
+  const editUser = async () => {
+    try {
+      const response = await fetch(`/api/users/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          username: username,
+          email: email,
+          is_admin: is_admin
+        }),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      navigate("/allusers")
+    } catch (error) {
+      console.error('Error updating user:', error.message);
+    }
   }
   
   return (
@@ -137,6 +183,7 @@ export default function UpdateUser() {
             <button className="green-btn" type="submit">
               UPDATE
             </button>
+            <button className="red-btn" onClick={() => {deleteUser()}}>DELETE USER</button>
           </div>
         </form>
         <p style={{ color: "red" }}>{message}</p>
