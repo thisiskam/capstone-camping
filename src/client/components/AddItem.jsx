@@ -6,19 +6,52 @@ import { useState, useEffect } from "react";
 
 export default function AddItem() {
   const [title, setTitle] = useState("");
-  const [category_id, setCategory_id] = useState("");
+  const [category_id, setCategory_id] = useState(null);
   const [description, setDescription] = useState("");
   const [imageURL, setImageURL] = useState("");
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [message, setMessage] = useState("");
+  const [newCategory, setNewCategory] = useState("")
+  const [categories, setCategories] = useState([])
+
+  const sampleCategories = [
+    { id: 1, name: "Backpack" },
+    { id: 2, name: "Tent" },
+    { id: 3, name: "Hiking Boots" },
+    { id: 4, name: "Cookware" },
+    { id: 5, name: "Sleeping Bag" },
+    { id: 6, name: "Water Bottle" },
+  ];
+  useEffect(() => {setCategories(sampleCategories)},[])
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
   };
 
-  const handleCategoryChange = (e) => {
-    setCategory_id(e.target.value);
+  const handleCategoryChange = async (e) => {
+    const selectedCategoryName = e.target.value;
+    console.log("Selected category name:", selectedCategoryName);
+
+    setNewCategory(selectedCategoryName);
+
+    if (!categories || categories.length === 0) {
+      console.log("Categories are not defined or empty:", categories);
+      return;
+    }
+
+    console.log("Categories array:", categories);
+
+    const category = categories.find(category => selectedCategoryName === category.name);
+
+    if (category) {
+      const catId = category.id;
+      console.log("Found category ID:", catId);
+      setCategory_id(catId);
+    } else {
+      console.log("Category not found for name:", selectedCategoryName);
+      setCategory_id(null);
+    }
   };
 
   const handleDescriptionChange = (e) => {
@@ -66,7 +99,6 @@ export default function AddItem() {
     createItem();
   };
 
-  console.log("I love arthur");
   return (
     <>
       <div className="App1">
@@ -88,19 +120,18 @@ export default function AddItem() {
             </div>
             <br></br>
             <div>
-              <label for="category_id">CATEGORY (choose between 1-6): </label>
-              <input
-                type="number"
-                min="1"
-                max="6"
-                id="category_id"
-                name="category_id"
-                style={{ color: "black" }}
-                value={category_id}
-                defaultValue="1"
-                onChange={handleCategoryChange}
-                required
-              />
+              <label for="category_id">CATEGORY: </label>
+              <select
+                  className="cat_select"
+                  value={newCategory}
+                  onChange={handleCategoryChange}
+                >
+                  {categories.map((category) => (
+                    <option key={category.id} value={category.name}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
             </div>
             <br></br>
             <div>

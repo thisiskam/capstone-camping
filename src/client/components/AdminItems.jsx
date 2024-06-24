@@ -1,7 +1,7 @@
 // import stuff to import
 import "./AllUsers.css";
 import { useState, useEffect } from "react";
-import { useNavigate, NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faTent } from "@fortawesome/free-solid-svg-icons";
 
@@ -21,9 +21,10 @@ export default function AdminItems() {
     { id: 5, name: "Sleeping Bag" },
     { id: 6, name: "Water Bottle" },
   ];
+
   function findCategory(id) {
-    const cat = categories.find((category) => id === category.id);
-    return cat.name;
+    const cat = categories.find(category => id === category.id)?.name
+    return cat
   }
 
   useEffect(() => {
@@ -85,7 +86,7 @@ export default function AdminItems() {
               </tr>
             </thead>
             <tbody>
-              {itemsToDisplay &&
+              {itemsToDisplay && categories &&
                 itemsToDisplay.map((item) => {
                   return (
                     <tr key={item.id}>
