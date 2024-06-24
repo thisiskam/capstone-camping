@@ -4,6 +4,9 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: var(--secondary-color);
   background-image: url("https://images.unsplash.com/photo-1519681393784-d120267933ba");
+  /* background-size: cover; */
+  background-size: 1800px;
+  background-repeat: no-repeat;
 }
 
 :root {
@@ -558,18 +561,28 @@ i {
 }
 
 .button_box_items {
+  /* display: flex;
+  justify-content: center; */
+  background-color: var(--quinary-color);
+  /* margin-top: 40px;
+  width: 675px;
+  margin-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  border-radius: 10px;
   display: flex;
-  justify-content: center;
+  flex-direction: row; */
 }
 
 .delete_button {
   margin: 5px;
-  background-color: red !important;
+  background-color: #bc6a43 !important;
 }
 
 .edit_button {
   margin: 5px;
-  background-color: #333 !important;
+  background-color: #75787c !important;
 }
 
 .item_input_title {
