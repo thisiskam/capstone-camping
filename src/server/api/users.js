@@ -16,6 +16,7 @@ const {
   adminCreateUser,
   updateUser,
   getUserById,
+  deleteUser,
 } = require("../db");
 
 const { isLoggedIn, isAdmin } = require("../db/users.js");
@@ -260,6 +261,17 @@ usersRouter.put("/:id", isLoggedIn, isAdmin, async (req, res, next) => {
   } catch (error) {
     console.error("Error updating user:", error.message);
     next(error);
+  }
+});
+
+usersRouter.delete("/:id", isLoggedIn, isAdmin, async (req, res, next) => {
+  const user_id = req.params.id;
+  try {
+    const deletedUser = await deleteUser(user_id);
+    res.json({ message: "user deleted successfully", user: deletedUser });
+  } catch (error) {
+    console.error("error deleting user:", error.message);
+    res.status(500).json({ error: error.message });
   }
 });
 

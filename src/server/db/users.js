@@ -273,6 +273,10 @@ const getUserComments = async (user_id) => {
 
 const updateUser = async (user_id, { username, email, password, is_admin }) => {
   try {
+    let hashedPassword = password;
+    if (password) {
+      hashedPassword = await bcrypt.hash(password, SALT_COUNT);
+    }
     const SQL = /*sql*/ `
     UPDATE users
     SET username = COALESCE($1, username),
@@ -285,7 +289,7 @@ const updateUser = async (user_id, { username, email, password, is_admin }) => {
     const response = await db.query(SQL, [
       username,
       email,
-      password,
+      hashedPassword,
       is_admin,
       user_id,
     ]);
@@ -309,6 +313,41 @@ const getUserById = async (user_id) => {
   }
 };
 
+const deleteUser = async (user_id) => {
+  try {
+    const commentsQuery = /*sql*/ `
+    SELECT * FROM comments WHERE user_id = $1
+    `;
+    const commentsResponse = await db.query(commentsQuery, [user_id]);
+
+    if (commentsResponse.rows.length > 0) {
+      throw new Error("Cannot delete user with related comments");
+    }
+
+    const reviewsQuery = /*sql*/ `
+    SELECT * FROM reviews WHERE user_id = $1
+    `;
+    const reviewsResponse = await db.query(reviewsQuery, [user_id]);
+
+    if (reviewsResponse.rows.length > 0) {
+      throw new Error("cannot delete user with related reviews");
+    }
+
+    const deleteUserQuery = /*sql*/ `
+    DELETE FROM users WHERE id = $1 RETURNING *
+    `;
+    const deleteUserResponse = await db.query(deleteUserQuery, [user_id]);
+
+    if (deleteUserResponse.rows.length === 0) {
+      throw new Error("User not found or already deleted");
+    }
+
+    return deleteUserResponse.rows[0];
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   createUser,
   authenticate,
@@ -325,4 +364,5 @@ module.exports = {
   adminCreateUser,
   updateUser,
   getUserById,
+  deleteUser,
 };
