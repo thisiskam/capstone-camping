@@ -18,6 +18,7 @@ import AllUsers from "./components/AllUsers";
 import AdminItems from "./components/AdminItems";
 import AddItem from "./components/AddItem";
 import AddUser from "./components/AddUser";
+import UpdateUser from "./components/UpdateUser";
 
 // bring in the layouts
 import RootLayout from "./layouts/RootLayout";
@@ -34,6 +35,7 @@ const router = createBrowserRouter(
         <Route path="login/register" element={<Register />} />
         <Route path="allusers" element={<AllUsers />} />
         <Route path="allusers/adduser" element={<AddUser />} />
+        <Route path="allusers/:id" element={<UpdateUser />} />
         <Route path="adminitems" element={<AdminItems />} />
         <Route path="adminitems/additem" element={<AddItem />} />
         {/* <Route path="register" element={<Register />} /> */}

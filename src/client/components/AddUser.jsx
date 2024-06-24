@@ -88,7 +88,7 @@ export default function AddItem() {
             </div>
             <br></br>
             <div>
-              <label htmoFor="email">EMAIL: </label>
+              <label htmlFor="email">EMAIL: </label>
               <input
                 type="email"
                 id="email"
@@ -116,7 +116,7 @@ export default function AddItem() {
             </div>
             <br></br>
             <div>
-              <label for="is_admin">IS_Admin: </label>
+              <label htmlFor="is_admin">IS_Admin: </label>
               <input
                 type="radio"
                 id="is_admin"
@@ -126,7 +126,7 @@ export default function AddItem() {
                 onChange={handleIsAdminChange}
                 checked
               />
-              <label for="no" className="radio-btn">
+              <label htmlFor="no" className="radio-btn">
                 NO
               </label>
               <input type="radio" id="yes" name="is_admin" value="true" />

@@ -39,6 +39,9 @@
   margin-top: 10%;
 }
 
+.h2:hover{
+  cursor: pointer;
+}
 .left-container1 {
   width: 15%;
   max-height: 100px;
@@ -115,7 +118,6 @@
   align-items: left;
   text-align: left;
 } 
-
 
 /* .form-container create-user-input {
   margin-top: 0.4rem;
