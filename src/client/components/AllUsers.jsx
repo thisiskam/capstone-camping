@@ -14,7 +14,7 @@ export default function AllUsers() {
 
   useEffect(() => {
     async function getAllUsers() {
-      const response = await fetch("http://localhost:3000/api/users");
+      const response = await fetch("/api/users");
       const api = await response.json();
       // console.log(api.users);
       setUsers(api.users);
@@ -77,7 +77,12 @@ export default function AllUsers() {
                   return (
                     <tr key={user.id}>
                       <td className="h2">{user.id}</td>
-                      <td className="h2">{user.username}</td>
+                      <td
+                        className="h2"
+                        onClick={() => navigate(`/allusers/${user.id}`)}
+                      >
+                        {user.username}
+                      </td>
                       <td className="h2">{user.email}</td>
                       <td className="h2">{user.is_admin ? "YES" : "NO"}</td>
                     </tr>
