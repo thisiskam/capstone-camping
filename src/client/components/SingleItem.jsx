@@ -165,22 +165,22 @@ export default function SingleItem() {
   // function that takes in a two letter key from the image name and then sets the correct path of the image based on that key
   function findImage(key) {
     if (key === "bp") {
-      setImagePath("/src/client/assets/backpacks/" + itemDetails.imageurl);
+      setImagePath("/assets/backpacks/" + itemDetails.imageurl);
     }
     if (key === "bo") {
-      setImagePath("/src/client/assets/boots/" + itemDetails.imageurl);
+      setImagePath("/assets/boots/" + itemDetails.imageurl);
     }
     if (key === "cw") {
-      setImagePath("/src/client/assets/cookware/" + itemDetails.imageurl);
+      setImagePath("/assets/cookware/" + itemDetails.imageurl);
     }
     if (key === "sb") {
-      setImagePath("/src/client/assets/sleepingBags/" + itemDetails.imageurl);
+      setImagePath("/assets/sleepingBags/" + itemDetails.imageurl);
     }
     if (key === "te") {
-      setImagePath("/src/client/assets/tents/" + itemDetails.imageurl);
+      setImagePath("/assets/tents/" + itemDetails.imageurl);
     }
     if (key === "wb") {
-      setImagePath("/src/client/assets/boots/" + itemDetails.imageurl);
+      setImagePath("/assets/boots/" + itemDetails.imageurl);
     }
   }
 
@@ -202,7 +202,7 @@ export default function SingleItem() {
     if (rating === 1) {
       return (
         <img
-          src="/src/client/assets/star-icon.svg"
+          src="/assets/star-icon.svg"
           alt="star"
           className="star-icon-review"
         />
@@ -212,12 +212,12 @@ export default function SingleItem() {
       return (
         <>
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-icon-review"
           />
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-icon-review"
           />
@@ -228,17 +228,17 @@ export default function SingleItem() {
       return (
         <>
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-icon-review"
           />
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-icon-review"
           />
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-icon-review"
           />
@@ -249,22 +249,22 @@ export default function SingleItem() {
       return (
         <>
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-icon-review"
           />
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-icon-review"
           />
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-icon-review"
           />
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-icon-review"
           />
@@ -275,27 +275,27 @@ export default function SingleItem() {
       return (
         <>
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-icon-review"
           />
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-icon-review"
           />
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-icon-review"
           />
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-icon-review"
           />
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-icon-review"
           />
@@ -758,11 +758,11 @@ export default function SingleItem() {
             <div className="review-overview">
               <div className="star-category">
                 <div className="star-box">
-                  <img src="/src/client/assets/star-icon.svg" alt="" />
-                  <img src="/src/client/assets/star-icon.svg" alt="" />
-                  <img src="/src/client/assets/star-icon.svg" alt="" />
-                  <img src="/src/client/assets/star-icon.svg" alt="" />
-                  <img src="/src/client/assets/star-icon.svg" alt="" />
+                  <img src="/assets/star-icon.svg" alt="" />
+                  <img src="/assets/star-icon.svg" alt="" />
+                  <img src="/assets/star-icon.svg" alt="" />
+                  <img src="/assets/star-icon.svg" alt="" />
+                  <img src="/assets/star-icon.svg" alt="" />
                 </div>
                 <div className="num-reviews">
                   <h6>{fiveStar}</h6>
@@ -770,10 +770,10 @@ export default function SingleItem() {
               </div>
               <div className="star-category">
                 <div className="star-box">
-                  <img src="/src/client/assets/star-icon.svg" alt="" />
-                  <img src="/src/client/assets/star-icon.svg" alt="" />
-                  <img src="/src/client/assets/star-icon.svg" alt="" />
-                  <img src="/src/client/assets/star-icon.svg" alt="" />
+                  <img src="/assets/star-icon.svg" alt="" />
+                  <img src="/assets/star-icon.svg" alt="" />
+                  <img src="/assets/star-icon.svg" alt="" />
+                  <img src="/assets/star-icon.svg" alt="" />
                 </div>
                 <div className="num-reviews">
                   <h6>{fourStar}</h6>
@@ -781,9 +781,9 @@ export default function SingleItem() {
               </div>
               <div className="star-category">
                 <div className="star-box">
-                  <img src="/src/client/assets/star-icon.svg" alt="" />
-                  <img src="/src/client/assets/star-icon.svg" alt="" />
-                  <img src="/src/client/assets/star-icon.svg" alt="" />
+                  <img src="/assets/star-icon.svg" alt="" />
+                  <img src="/assets/star-icon.svg" alt="" />
+                  <img src="/assets/star-icon.svg" alt="" />
                 </div>
                 <div className="num-reviews">
                   <h6>{threeStar}</h6>
@@ -791,8 +791,8 @@ export default function SingleItem() {
               </div>
               <div className="star-category">
                 <div className="star-box">
-                  <img src="/src/client/assets/star-icon.svg" alt="" />
-                  <img src="/src/client/assets/star-icon.svg" alt="" />
+                  <img src="/assets/star-icon.svg" alt="" />
+                  <img src="/assets/star-icon.svg" alt="" />
                 </div>
                 <div className="num-reviews">
                   <h6>{twoStar}</h6>
@@ -800,7 +800,7 @@ export default function SingleItem() {
               </div>
               <div className="star-category">
                 <div className="star-box">
-                  <img src="/src/client/assets/star-icon.svg" alt="" />
+                  <img src="/assets/star-icon.svg" alt="" />
                 </div>
                 <div className="num-reviews">
                   <h6>{oneStar}</h6>
@@ -813,7 +813,7 @@ export default function SingleItem() {
               <h5>REVIEW AVERAGE:</h5>
               <div>
                 <img
-                  src="/src/client/assets/star-icon.svg"
+                  src="/assets/star-icon.svg"
                   width="30px"
                   alt=""
                 />
@@ -938,7 +938,7 @@ export default function SingleItem() {
                         }}
                       />
                       <img
-                        src="/src/client/assets/star-icon.svg"
+                        src="/assets/star-icon.svg"
                         alt="star"
                         className="star-icon-edit"
                       />
@@ -1006,7 +1006,7 @@ export default function SingleItem() {
                             }}
                           />
                           <img
-                            src="/src/client/assets/star-icon.svg"
+                            src="/assets/star-icon.svg"
                             alt="star"
                             className="star-icon-edit"
                           />
