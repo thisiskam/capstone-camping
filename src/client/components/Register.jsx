@@ -63,7 +63,7 @@ const Register = () => {
       <div className="login">
         <h1>REGISTER</h1>
         <br></br>
-        <form onSubmit={handleSubmit}>
+        <form className="login-register-form" onSubmit={handleSubmit}>
           <div className="form-container">
             <div>
               <label htmlFor="email" className="email-lable">
@@ -108,11 +108,7 @@ const Register = () => {
             </button>
           </div>
         </form>
-        <br />
-        <br />
         <p style={{ color: "red" }}>{message}</p>
-        <br />
-        <br />
         <p>
           ALREADY HAVE AN ACCOUNT?{" "}
           <NavLink to="/login" className="text-link">

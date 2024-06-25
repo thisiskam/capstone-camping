@@ -58,7 +58,7 @@ const Login = () => {
     <div className="login">
       <h1>LOGIN</h1>
       <br></br>
-      <form onSubmit={handleSubmit}>
+      <form className="login-register-form"onSubmit={handleSubmit}>
         <div className="form-container">
           <div>
             <label htmlFor="email" className="email-lable">
@@ -91,11 +91,7 @@ const Login = () => {
           </button>
         </div>
       </form>
-      <br />
-      <br />
       <p style={{ color: "red" }}>{message}</p>
-      <br />
-      <br />
       <p>
         DON'T HAVE AN ACCOUNT?{" "}
         <NavLink to="register" className="text-link">

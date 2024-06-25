@@ -101,7 +101,7 @@ export default function Account() {
   //   }
   // };
   return (
-    <div className="app">
+    <div className="app account">
       <h1 className="myaccount-title">My Account</h1>
       <div className="home-content">
         <div className="left-container user-details">

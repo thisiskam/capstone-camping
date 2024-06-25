@@ -206,7 +206,8 @@ const CR = () => {
         className="main-img"
       /> */}
       <h1 className="main-header">LOCALLY REVIEWED CAMPING ITEMS</h1>
-      <div className="home-content">
+      <p className="header-p">This is a website to review some of the most popular camping gear out right now. Check out what fellow campers have to say about these great items.</p>
+      <div className="home-content mainpage">
         {/* search box */}
         <div className="left-container main-left">
           <div className="search-header">SEARCH</div>
@@ -223,7 +224,7 @@ const CR = () => {
           page. navigates admin to those pages */}
           {isAdmin && (
             <div className="admin-btn-box">
-              <p className="drop-shadow-text" style={{ color: "#2D464C" }}>
+              <p style={{ color: "#2D464C" }}>
                 ADMIN CONTROLS
               </p>
               <div className="admin-user-btn">

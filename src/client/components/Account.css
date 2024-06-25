@@ -1,12 +1,16 @@
 .logout-box {
     max-width: 80px !important;
     display: flex;
-    justify-content: center;
+    justify-content: center !important;
     max-height: 40px;
+    margin-right: 10px !important;
+    margin-left: 10px;
 }
-.app {
+.account {
     width: 100%;
+    display: flex;
     align-items: center;
+    flex-direction: column;
 }
 
 .home-content {
@@ -18,6 +22,8 @@
 
 .account-center {
     min-width: 50%;
+    margin-right: 10px !important;
+    margin-left: 10px !important;
 }
 
 .no-reviews {
@@ -39,6 +45,8 @@
     align-items: flex-start;
     overflow: hidden;
     height: 160px;
+    margin-right: 10px !important;
+    margin-left: 10px !important;
 }
 
 .user-details label {
@@ -70,3 +78,4 @@ h2 {
     margin-top: 15px;
     color: var(--primary-color);
 }
+

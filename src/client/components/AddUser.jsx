@@ -89,14 +89,14 @@ export default function AddItem() {
   return (
     <>
       {secured && (
-        <div className="App1">
-          <h2>USER</h2>
+        <div className="App">
+          <h2>ADD USER</h2>
           <br></br>
           <form onSubmit={handleSubmit} className="form">
             <div className="form-container">
               <p>ALL FIELDS ARE REQUIRED</p>
               <div>
-                <label htmlFor="username">UserName: </label>
+                <label htmlFor="username">USERNAME: </label>
                 <input
                   type="text"
                   id="username"
@@ -137,8 +137,8 @@ export default function AddItem() {
                 />
               </div>
               <br></br>
-              <div>
-                <label htmlFor="is_admin">IS_Admin: </label>
+              <div className="radio-admin">
+                <label htmlFor="is_admin">ADMIN: </label>
                 <input
                   type="radio"
                   id="is_admin"
