@@ -23,7 +23,6 @@ body {
   margin: 0;
 }
 
-/* nav bar */
 header nav {
   display: flex;
   gap: 16px;
@@ -110,7 +109,6 @@ button:hover {
   transition-duration: 0.4s;
 }
 
-/* main content */
 
 .center-container {
   background-color: color-mix(in srgb, var(--quinary-color) 85%, transparent 15%);;
@@ -131,7 +129,7 @@ button:hover {
   margin-right: 20px;
 }
 
-/* all items page */
+
 .main-img {
   width: 100%;
   margin-top: -200px;
@@ -266,7 +264,7 @@ i {
 }
 
 
-/* Place the login in the center */
+
 .login {
   display: flex;
   justify-content: center;
@@ -275,7 +273,7 @@ i {
   flex-direction: column;
 }
 
-/* this is form container */
+
 .form-container {
   display: flex;
   justify-content: center;
@@ -300,7 +298,7 @@ i {
   font-weight: bold;
 }
 
-/* single item */
+
 .item-category {
   color: var(--primary-color);
   margin-top: 20px;
