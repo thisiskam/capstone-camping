@@ -180,7 +180,7 @@ export default function SingleItem() {
       setImagePath("/assets/tents/" + itemDetails.imageurl);
     }
     if (key === "wb") {
-      setImagePath("/assets/boots/" + itemDetails.imageurl);
+      setImagePath("/assets/waterBottles/" + itemDetails.imageurl);
     }
   }
 
