@@ -39,7 +39,7 @@ export default function UpdateUser() {
   useEffect(() => {
     async function fetchUserDetail() {
       try {
-        const response = await fetch("http://localhost:3000/api/users/" + id, {
+        const response = await fetch("/api/users/" + id, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

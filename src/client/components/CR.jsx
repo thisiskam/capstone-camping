@@ -48,7 +48,7 @@ const CR = () => {
     async function getReviews() {
       const promises = items.map(async (item) => {
         const res = await fetch(
-          `http://localhost:3000/api/items/${item.id}/reviews/`
+          `/api/items/${item.id}/reviews/`
         );
         const api = await res.json();
         return api.getReviews;
@@ -183,7 +183,7 @@ const CR = () => {
   // fetches all items and stores them in state
   useEffect(() => {
     async function fetchItems() {
-      const response = await fetch("http://localhost:3000/api/items");
+      const response = await fetch("/api/items");
       const api = await response.json();
       setItems(api.items);
     }

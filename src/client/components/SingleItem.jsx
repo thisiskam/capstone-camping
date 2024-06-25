@@ -101,7 +101,7 @@ export default function SingleItem() {
 
     // gets the single items details from the api and stores them in state
     async function fetchItemDetails(id) {
-      const response = await fetch("http://localhost:3000/api/items/" + id);
+      const response = await fetch("/api/items/" + id);
       const api = await response.json();
       setItemDetails(api.singleItem[0]);
     }
@@ -110,7 +110,7 @@ export default function SingleItem() {
     // gets item reviews
     async function fetchItemReviews(id) {
       const response = await fetch(
-        "http://localhost:3000/api/items/" + id + "/reviews"
+        "/api/items/" + id + "/reviews"
       );
       const api = await response.json();
       setItemReviews(api.getReviews);
@@ -119,7 +119,7 @@ export default function SingleItem() {
 
     // fetches all users and stores them in state
     async function fetchUsers() {
-      const response = await fetch("http://localhost:3000/api/users/");
+      const response = await fetch("/api/users/");
       const api = await response.json();
       setUsers(api.users);
     }
@@ -132,7 +132,7 @@ export default function SingleItem() {
     async function getComments() {
       const promises = itemReviews.map(async (review) => {
         const res = await fetch(
-          `http://localhost:3000/api/items/reviews/${review.id}/comments`
+          `/api/items/reviews/${review.id}/comments`
         );
         const api = await res.json();
         return api;
@@ -378,7 +378,7 @@ export default function SingleItem() {
   async function submitReview(e) {
     try {
       const response = await fetch(
-        "http://localhost:3000/api/items/" + id + "/reviews",
+        "/api/items/" + id + "/reviews",
         {
           method: "POST",
           headers: {
@@ -406,7 +406,7 @@ export default function SingleItem() {
     event.preventDefault();
     try {
       const response = await fetch(
-        "http://localhost:3000/api/items/reviews/" + id + "/comments",
+        "/api/items/reviews/" + id + "/comments",
         {
           method: "POST",
           body: JSON.stringify({
@@ -433,7 +433,7 @@ export default function SingleItem() {
     try {
       console.log("got here");
       const response = await fetch(
-        `http://localhost:3000/api/items/${itemDetails.id}/reviews/${id}`,
+        `/api/items/${itemDetails.id}/reviews/${id}`,
         {
           method: "PUT",
           headers: {
@@ -476,7 +476,7 @@ export default function SingleItem() {
       if (confirmed) {
         try {
           const response = await fetch(
-            "http://localhost:3000/api/items/" +
+            "/api/items/" +
               itemDetails.id +
               "/reviews/" +
               id,
@@ -509,7 +509,7 @@ export default function SingleItem() {
   async function editComment(id, review_id) {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/items/reviews/${review_id}/comments/${id}`,
+        `/api/items/reviews/${review_id}/comments/${id}`,
         {
           method: "PUT",
           headers: {
@@ -549,7 +549,7 @@ export default function SingleItem() {
     if (confirmed) {
       try {
         const response = await fetch(
-          "http://localhost:3000/api/items/comments/" + id,
+          "/api/items/comments/" + id,
           {
             method: "DELETE",
             headers: {
@@ -584,7 +584,7 @@ export default function SingleItem() {
     console.log(newImage);
     console.log(itemDetails.id);
     try {
-      const response = await fetch("http://localhost:3000/api/items/" + id, {
+      const response = await fetch("/api/items/" + id, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -618,7 +618,7 @@ export default function SingleItem() {
     );
     if (confirmed) {
       try {
-        const response = await fetch(`http://localhost:3000/api/items/${id}`, {
+        const response = await fetch(`/api/items/${id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

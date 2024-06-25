@@ -30,7 +30,7 @@ export default function AdminItems() {
 
   useEffect(() => {
     async function getAllItems() {
-      const response = await fetch("http://localhost:3000/api/items");
+      const response = await fetch("/api/items");
       const api = await response.json();
       // console.log(api.items);
       setItems(api.items);
