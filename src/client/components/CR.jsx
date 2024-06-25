@@ -76,7 +76,7 @@ const CR = () => {
     if (average <= 1) {
       return (
         <img
-          src="/src/client/assets/star-icon.svg"
+          src="/assets/star-icon.svg"
           alt="star"
           className="star-mainpage"
         />
@@ -86,12 +86,12 @@ const CR = () => {
       return (
         <>
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-mainpage"
           />
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-mainpage"
           />
@@ -102,17 +102,17 @@ const CR = () => {
       return (
         <>
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-mainpage"
           />
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-mainpage"
           />
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-mainpage"
           />
@@ -123,22 +123,22 @@ const CR = () => {
       return (
         <>
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-mainpage"
           />
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-mainpage"
           />
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-mainpage"
           />
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-mainpage"
           />
@@ -149,27 +149,27 @@ const CR = () => {
       return (
         <>
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-mainpage"
           />
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-mainpage"
           />
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-mainpage"
           />
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-mainpage"
           />
           <img
-            src="/src/client/assets/star-icon.svg"
+            src="/assets/star-icon.svg"
             alt="star"
             className="star-mainpage"
           />
@@ -199,12 +199,6 @@ const CR = () => {
 
   return (
     <div className="App">
-      {/* hero section */}
-      {/* <img
-        src="src/client/assets/pexels-bazil-elias-1351340-2612228.jpg"
-        alt=""
-        className="main-img"
-      /> */}
       <h1 className="main-header">LOCALLY REVIEWED CAMPING ITEMS</h1>
       <p className="header-p">This is a website to review some of the most popular camping gear out right now. Check out what fellow campers have to say about these great items.</p>
       <div className="home-content mainpage">
