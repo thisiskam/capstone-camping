@@ -46,10 +46,10 @@ export default function AllUsers() {
   return (
     <>
       {secured && (
-        <div className="App1">
+        <div className="App">
           <h1 className="h1">USERS</h1>
-          <div className="home-content1">
-            <div className="left-container1">
+          <div className="home-content">
+            <div className="left-container admin-box">
                 <div className="admin-btn-box">
                   <div className="admin-user-btn">
                     <button
@@ -77,7 +77,7 @@ export default function AllUsers() {
                   </div>
                 </div>
             </div>
-            <div className="center-container1">
+            <div className="center-container admin-center">
               <table>
                 <thead>
                   <tr>
@@ -94,7 +94,7 @@ export default function AllUsers() {
                         <tr key={user.id}>
                           <td className="h2">{user.id}</td>
                           <td
-                            className="h2"
+                            className="h2 clickable"
                             onClick={() => navigate(`/allusers/${user.id}`)}
                           >
                             {user.username}
@@ -107,7 +107,7 @@ export default function AllUsers() {
                 </tbody>
               </table>
             </div>
-            <div className="right-container1">
+            <div className="right-container add-box">
                 <div>
                   <button
                     className="green-btn"

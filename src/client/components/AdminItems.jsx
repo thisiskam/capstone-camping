@@ -64,10 +64,10 @@ export default function AdminItems() {
   return (
     <>
       {secured && (
-        <div className="App1">
+        <div className="App">
           <h1 className="h1">ITEMS</h1>
-          <div className="home-content1">
-            <div className="left-container1">
+          <div className="home-content">
+            <div className="left-container admin-box">
               <div className="admin-btn-box">
                 <div className="admin-user-btn">
                   <button
@@ -95,7 +95,7 @@ export default function AdminItems() {
                 </div>
               </div>
             </div>
-            <div className="center-container1">
+            <div className="center-container admin-center">
               <table>
                 <thead>
                   <tr>
@@ -112,16 +112,10 @@ export default function AdminItems() {
                       return (
                         <tr key={item.id}>
                           <td className="h2">{item.id}</td>
-                          <td className="h2">
-                            <a
-                              className="h2"
-                              href=""
-                              onClick={() => {
+                          <td className="h2 clickable" onClick={() => {
                                 navigate(`/items/${item.id}`);
-                              }}
-                            >
+                              }}>
                               {item.title}
-                            </a>
                           </td>
                           <td className="h2">
                             {findCategory(item.category_id)}
@@ -133,7 +127,7 @@ export default function AdminItems() {
                 </tbody>
               </table>
             </div>
-            <div className="right-container1">
+            <div className="right-container add-box">
               <button
                 className="green-btn"
                 onClick={() => {

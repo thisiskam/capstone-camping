@@ -125,8 +125,8 @@ export default function AddItem() {
   return (
     <>
       {secured && (
-        <div className="App1">
-          <h1 className="h1">ITEM</h1>
+        <div className="App">
+          <h2>ADD ITEM</h2>
           <br></br>
           <form onSubmit={handleSubmit} className="form">
             <div className="form-container">
@@ -139,6 +139,7 @@ export default function AddItem() {
                   style={{ color: "black" }}
                   value={title}
                   onChange={handleTitleChange}
+                  className="create-user-input"
                   required
                 />
               </div>
@@ -163,10 +164,11 @@ export default function AddItem() {
                 <textarea
                   id="description"
                   name="description"
-                  rows="20"
+                  rows="10"
                   style={{ color: "black" }}
                   value={description}
                   onChange={handleDescriptionChange}
+                  className="create-user-input"
                   required
                 ></textarea>
               </div>
@@ -180,6 +182,7 @@ export default function AddItem() {
                   style={{ color: "black" }}
                   value={imageURL}
                   onChange={handleImageURLChange}
+                  className="create-user-input"
                   required
                 />
               </div>

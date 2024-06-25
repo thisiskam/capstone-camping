@@ -130,15 +130,15 @@ export default function UpdateUser() {
   
   return (
     <>
-      {secured && <div className="App1">
-        <h1 className="myaccount-title">Edit User</h1>
+      {secured && <div className="App">
+        <h2>Edit User</h2>
         <div className="home-content">
         <br></br>
         <form onSubmit={handleSubmit} className="form">
-          <div className="form-container">
+          <div className="form-container admin-form">
             <p>ALL FIELDS ARE REQUIRED</p>
             <div>
-              <label htmlFor="username">UserName: </label>
+              <label htmlFor="username">USERNAME: </label>
               <input
                 type="text"
                 id="username"
@@ -166,7 +166,7 @@ export default function UpdateUser() {
             </div>
             <br></br>
             <div>
-              <label htmlFor="is_admin">IS_Admin: </label>
+              <label htmlFor="is_admin">ADMIN: </label>
               <label htmlFor="no" className="radio-btn">
                 NO
               </label>

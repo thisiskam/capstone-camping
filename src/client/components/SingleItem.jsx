@@ -672,7 +672,7 @@ export default function SingleItem() {
 
           {/* this is the button box that will show up for authorized users. waits until user is in state. then checks to see if the user is an admin, or the user that is logged in matches the user that posted the comment. if either is true, it shows an edit and a delete button for the comment */}
           {user && (user.is_admin || user.id === comment.user_id) && (
-            <div className="button_box_comments">
+            <div className="button-box-comments">
               {/* ternary that returns an edit and delete button if edit hasnt been pressed already. if it has been pressed, returns a submit button for the user to submit that edit, and a cancel link for the user to cancel the edit. the delete button calls a delete function and the submit button calls an edit function for the item. the cancel updates commentEditbile in state. */}
               {comment.id !== commentEditable ? (
                 <div>
@@ -705,7 +705,6 @@ export default function SingleItem() {
                   >
                     SUBMIT
                   </button>
-                  <br />
 
                   {/* cancels the edit */}
                   <a
@@ -890,7 +889,6 @@ export default function SingleItem() {
                         SUBMIT
                       </button>
                       <br />
-                      <br />
                       <a
                         className="items_a"
                         onClick={() => {
@@ -1035,7 +1033,7 @@ export default function SingleItem() {
 
                     {/* this is the button box that will show up for authorized users. waits until user is in state. then checks to see if the user is an admin, or the user that is logged in matches the user that posted the review. if either istrue, it shows an edit and a delete button for the review */}
                     {user && (user.is_admin || user.id === review.user_id) && (
-                      <div className="button_box_reviews">
+                      <div className="button-box-reviews">
                         {/* ternary that returns an edit and delete button if edit hasnt been pressed already. if it has been pressed, returns a submit button for the user to submit that edit, and a cancel link for the user to cancel the edit. the delete button calls a delete function and the submit button calls an edit function for the item. the cancel updates reviewEditbile in state. */}
                         {review.id !== reviewEditable ? (
                           <div>
@@ -1066,8 +1064,6 @@ export default function SingleItem() {
                             <button onClick={() => editReview(review.id)}>
                               SUBMIT
                             </button>
-                            <br />
-
                             {/* cancel rests edited text in state */}
                             <a
                               onClick={() => {
